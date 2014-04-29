@@ -8,6 +8,7 @@ config.ECHO = False
 from models.post import Post
 from models.tag import Tag
 from models.comment import Comment
+from models.user import User
 from common.db import init_db, session
 
 def test_add_post():
@@ -27,7 +28,7 @@ def test_add_post():
   assert session.query(Comment).count() == 0
 
   post.comments = [Comment(**dict(
-    user_name='jerry',
+    username='jerry',
     user_email='iammfw@163.com',
     content='fuckyou',
     post_id=post.id

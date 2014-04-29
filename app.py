@@ -9,7 +9,12 @@ app.config.from_object(config)
 
 @app.route('/')
 def index():
-  return send_file('static/index.html')
+  data = {'title': 'Livora\'s Blog'}
+  return render_template('index.html', **data)
+
+@app.route('/admin')
+def admin():
+  return render_template('admin.html')
 
 @app.errorhandler(404)
 def check_static(error):
@@ -20,7 +25,19 @@ def check_static(error):
     return render_template('404.html'), 404
 
 
+# Register all blueprints here
+from blueprints.admin import admin_bp
+def register_all_bps():
+  buleprints_candidates = (admin_bp,)
+  for bp in buleprints_candidates:
+    app.register_blueprint(bp)
+
+
+# Initialize works would be done here
+# Including database inlitialization and blueprints registers
 db.init_db()
+register_all_bps()
+
 
 if __name__ == '__main__':
   app.run(debug=True)
