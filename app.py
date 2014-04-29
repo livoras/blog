@@ -9,7 +9,7 @@ app.config.from_object(config)
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  return send_file('static/index.html')
 
 @app.errorhandler(404)
 def check_static(error):
