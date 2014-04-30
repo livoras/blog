@@ -11,10 +11,11 @@
     </ul>
   </div>
   <span>{{post.update_time}}</span>
-  <pre>{{post.content}}<pre>
+  <pre>{{post.content}}</pre>
 
   <div class="new-comment">
     <form id="new-comment-form">
+      <input type="hidden" name="post_id" value="{{post.id}}">
       <div>Email: <input type="text" name="user_email"></div>
       <div>Username: <input type="text" name="username"></div>
       <textarea name="content"></textarea>
