@@ -1,6 +1,30 @@
 {% extends "layout.html" %}
+
 {% block content %}
+
 <div class="posts">
-  all posts
+  {% for post in posts %}
+  <div class="post">
+    <a href="/post/{{post.id}}">
+      <div>{{post.title}}<div>
+      <div>{{post.content}}<div>
+      <div>{{post.update_time}}<div>
+      <div>{{post.tags}}<div>
+      <div>{{post.status}}<div>
+    </a>    
+  </div>
+  <hr>
+  {% endfor %}
 </div>
+
+<div class="pages-nav">
+  {% for page in pages %}
+    {% if page == active_page %}
+      <a class="active">{{page}}</a>
+    {% else %}  
+      <a href="/page/{{page}}">{{page}}</a>
+    {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock %}

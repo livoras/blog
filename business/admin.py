@@ -40,6 +40,7 @@ def login(data):
   else:  
     return ['password is not correct']
 
+
 def get_current_admin():
   if sess.get('is_admin'):
     admin_dict = eval(sess.get('user'))

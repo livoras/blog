@@ -1,8 +1,8 @@
-debug = True
+debug = False
 
 SECRET_KEY = '9687d209a9ff0713da8edae47dce398fuckyoublog'
 
-DATABASE_URI = 'sqlite:///blog.db'
+DATABASE_URI = 'sqlite:///blog.db?check_same_thread=False'
 
 ECHO = False
 

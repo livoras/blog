@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="new-post">
+  <form id="create-new-post-form">
+    <div>
+      title: <input type="text" name="title">
+    </div>
+    <div>
+      content: <textarea name="content"></textarea>
+    </div>
+    <div>
+      status: 
+      > public: <input type='radio' name="status" checked="checked" value="public">
+      > private: <input type='radio' name="status" value="private">
+    </div>
+    <div>
+      tags: <input type="text" name="tags">
+    </div>
+    <button id="create">create!</button>
+  </form>
+</div>
+<script src="{{url_for('static', filename='js/new_post.js')}}"></script>
+{% endblock %}

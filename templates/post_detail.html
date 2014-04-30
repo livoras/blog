@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="post-detail">
+  <h1>{{post.title}}</h1>
+  <div>{{post.status}}</div>
+  <div>
+    <ul>
+    {% for tag in post.tags %}
+      <li>{{tag}}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <span>{{post.update_time}}</span>
+  <pre>{{post.content}}<pre>
+</div>
+{% endblock %}

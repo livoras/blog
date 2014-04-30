@@ -3,11 +3,12 @@
 {% block content %}
 <div class="admin-login-form">
   <div>
-    <label><input type="text"></label>
+    <label><input id="username" type="text"></label>
   </div>
   <div>
-    <label><input type="password"></label>
+    <label><input id="password" type="password"></label>
   </div>
-  <button>button</button>
+  <button id="submit">button</button>
 </div>
+<script src="{{url_for('static', filename='js/admin_login.js')}}"></script>
 {% endblock %}

@@ -24,10 +24,9 @@ class Post(Base):
     self.status = status or 'public'
 
   def get_dict(self):
-    attrs = ('title', 'content', 'status')
+    attrs = ('id', 'title', 'content', 'status')
     post_dict = {attr: getattr(self, attr) for attr in attrs}
     post_dict['tags'] = [tag.tag_name for tag in self.tags]
-    post_dict['comments'] = [comment.get_dict() for comment in self.comments]
     return post_dict
 
   def __repr__(self):

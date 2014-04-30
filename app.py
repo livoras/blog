@@ -5,13 +5,20 @@ from flask import Flask, render_template, request, send_file
 from common import db
 from common.utils import debug
 from business.admin import create_default_administrator
+from business import post
 
 app = Flask(__name__)
 app.config.from_object(config)
 
 @app.route('/')
 def index():
-  data = {'title': 'Livora\'s Blog'}
+  posts = post.get_all_posts()
+  data = dict(
+    title='Livora\'s Blog',
+    posts=posts[0:10],
+    pages=range(1, len(posts) / 10 + 1),
+    active_page=1
+  )
   return render_template('index.html', **data)
 
 

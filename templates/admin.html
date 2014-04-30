@@ -2,12 +2,16 @@
 
 {% block content %}
 <div class="admin-content">
+  <button id="logout">logout</button>
+
   <!--update user profile-->
 
   <!--create new post-->
+  <a href="/new_post">create a new post!</a>
 
   <!--posts list with edit functionality-->
 
   <!--images management-->
 </div>
+<script src="{{url_for('static', filename='js/admin.js')}}"></script>
 {% endblock %}

@@ -18,8 +18,7 @@ class Tag(Base):
     self.tag_name = tag_name
 
   def get_dict(self):
-    attrs = ('post_id', 'tag_name')
-    return {attr: getattr(self, attr) for attr in attrs}
+    return self.tag_name
 
   def __repr__(self):
     return str(self.get_dict())
