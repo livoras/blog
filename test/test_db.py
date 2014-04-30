@@ -1,10 +1,4 @@
-import config
 from common.utils import debug
-
-debug('fuck..')
-config.DATABASE_URI = 'sqlite:///:memory:'
-config.ECHO = False
-
 from models.post import Post
 from models.tag import Tag
 from models.comment import Comment
@@ -38,7 +32,7 @@ def test_add_post():
   assert session.query(Comment).first().content == 'fuckyou'
 
 def test_create_default_administrator():
-  assert session.query(User).count() == 0
+  assert session.query(User).count() == 1
   from business.admin import create_default_administrator
   
   create_default_administrator()

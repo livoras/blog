@@ -14,9 +14,6 @@ def index():
   data = {'title': 'Livora\'s Blog'}
   return render_template('index.html', **data)
 
-@app.route('/admin')
-def admin():
-  return render_template('admin.html')
 
 @app.errorhandler(404)
 def check_static(error):

@@ -7,3 +7,7 @@ DATABASE_URI = 'sqlite:///blog.db'
 ECHO = False
 
 LOGGER_NAME = 'BLOG'
+
+DEFAULT_ADMIN_LOGIN_NAME = 'admin'
+DEFAULT_ADMIN_NICK_NAME = 'administrator'
+DEFAULT_ADMIN_PASSWORD = '123456'
