@@ -1,3 +1,4 @@
+# coding=utf8
 import config
 import os
 
@@ -15,8 +16,8 @@ def index():
   posts = post.get_all_posts()
   data = dict(
     title='Livora\'s Blog',
-    posts=posts[0:10],
-    pages=range(1, len(posts) / 10 + 1),
+    posts=posts[0:config.POSTS_PER_PAGE],
+    pages=range(1, len(posts) / config.POSTS_PER_PAGE + 1),
     active_page=1
   )
   return render_template('index.html', **data)
@@ -25,17 +26,19 @@ def index():
 @app.errorhandler(404)
 def check_static(error):
   path = 'static' + request.path
+  data = dict(notification="")
   if os.path.exists(path):
     return send_file(path)
   else:  
-    return render_template('404.html'), 404
+    return render_template('404.html', **data), 404
 
 
 # Register all blueprints here
 from blueprints.admin import admin_bp
 from blueprints.post import post_bp
+from blueprints.comment import comment_bp
 def register_all_bps():
-  buleprints_candidates = (admin_bp, post_bp)
+  buleprints_candidates = (admin_bp, post_bp, comment_bp)
   for bp in buleprints_candidates:
     app.register_blueprint(bp)
 

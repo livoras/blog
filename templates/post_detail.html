@@ -12,5 +12,27 @@
   </div>
   <span>{{post.update_time}}</span>
   <pre>{{post.content}}<pre>
+
+  <div class="new-comment">
+    <form id="new-comment-form">
+      <div>Email: <input type="text" name="user_email"></div>
+      <div>Username: <input type="text" name="username"></div>
+      <textarea name="content"></textarea>
+      <button id="submit-new-comment">发布！</button>
+    </form>
+  </div>
+
+  <div class="comments">
+    {% for comment in post.comments %}
+    <div class="comment">
+      <div>{{comment.username}}</div>
+      <div>{{comment.content}}</div>
+      <div>{{comment.create_time}}</div>
+    </div>
+    <hr>
+    {% endfor %}
+  </div>
+
 </div>
+<script src="{{url_for('static', filename='js/post.js')}}"></script>
 {% endblock %}

@@ -8,6 +8,20 @@ from common import db
 from models.post import Post
 from models.tag import Tag
 
+posts_count = db.session.query(Post).count()
+
+def add_new_post():
+  global posts_count
+  posts_count += 1
+  data = dict(
+    title="new_post_title_" + str(posts_count),
+    content="new_post_content",
+    status="public"
+  )
+  new_post = Post(**data)
+  db.session.add(new_post)
+  db.session.commit()
+
 def test_new_post():
   # If administrator doesn't login, and someon wants to visist
   # the create new post page. The app will redirect to 
@@ -44,3 +58,19 @@ def test_create_new_post():
     assert 'lucy' in tags
 
     assert post.author.username == 'admin'
+
+
+def test_get_post_by_page():
+  with app.test_client() as c:
+    for i in xrange(100):
+      add_new_post()
+    rv = c.get('/page/2')
+    
+    assert '"/post/1"' not in rv.data
+    assert '/post/11' in rv.data
+    assert '/post/20' in rv.data
+    assert '/post/21' not in rv.data
+    assert '<a class="active">2</a>' in rv.data
+
+    rv = c.get('/page/200')
+    assert '404' in rv.data

@@ -20,16 +20,17 @@ def test_add_post():
 
   debug(session.query(Tag).count())
   assert session.query(Tag).count() == 1
-  assert session.query(Comment).count() == 0
 
   post.comments = [Comment(**dict(
     username='jerry',
-    user_email='iammfw@163.com',
+    user_email='livoras@163.com',
     content='fuckyou',
     post_id=post.id
   ))]
 
-  assert session.query(Comment).first().content == 'fuckyou'
+
+  new_comment = session.query(Comment).filter_by(user_email='livoras@163.com').first()
+  assert new_comment.content == 'fuckyou'
 
 def test_create_default_administrator():
   assert session.query(User).count() == 1
