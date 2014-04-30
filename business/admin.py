@@ -16,6 +16,7 @@ def create_default_administrator():
     session.commit()
     return True
 
+
 def login(data):
   username = data.get('username')
   password = data.get('password')
@@ -30,7 +31,7 @@ def login(data):
 
   if not admin: 
     return ['user not found']
-    
+
   if admin.password == password:
     user_dict = admin.get_dict()
     sess['is_admin'] = True
