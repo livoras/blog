@@ -39,3 +39,10 @@ def login(data):
     return user_dict
   else:  
     return ['password is not correct']
+
+def get_current_admin():
+  if sess.get('is_admin'):
+    admin_dict = eval(sess.get('user'))
+    return session.query(User).filter_by(id=admin_dict['id']).first()
+  else:  
+    return None

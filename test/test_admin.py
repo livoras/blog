@@ -3,6 +3,7 @@ import config
 from app import app
 from flask import session
 from . import send_json
+from business import admin
 
 def test_admin_login_page():
   with app.test_client() as c:
@@ -64,3 +65,13 @@ def test_admin_logout():
     rv = send_json('post', '/admin_logout', {}, c)  
     assert session.get('is_admin', False) == False
     assert rv.status_code == 400
+
+
+def test_get_current_admin():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    rv = c.get('/')  
+    current_admin = admin.get_current_admin()
+    assert current_admin.id == 1

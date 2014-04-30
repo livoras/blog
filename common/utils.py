@@ -10,8 +10,10 @@ def encrypt(string):
   crypt.update(string)
   return crypt.hexdigest()
 
+
 def debug(data):
   logger.debug(data)
+
 
 def fail(error=None, status=400):
   error = error or ['something wrong']
@@ -19,6 +21,7 @@ def fail(error=None, status=400):
     result='failed',
     error=error
   )), status
+
 
 def success(data=None, status=200):
   data = data or {}

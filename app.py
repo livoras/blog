@@ -26,8 +26,9 @@ def check_static(error):
 
 # Register all blueprints here
 from blueprints.admin import admin_bp
+from blueprints.post import post_bp
 def register_all_bps():
-  buleprints_candidates = (admin_bp,)
+  buleprints_candidates = (admin_bp, post_bp)
   for bp in buleprints_candidates:
     app.register_blueprint(bp)
 

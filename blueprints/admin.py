@@ -25,7 +25,7 @@ def admin_logout():
 
 @admin_bp.route('/admin')
 def admin_page():
-  if session['is_admin']:
+  if session.get('is_admin'):
     return render_template('admin.html')
   else:
     return render_template('admin_login.html')
