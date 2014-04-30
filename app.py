@@ -3,6 +3,8 @@ import os
 
 from flask import Flask, render_template, request, send_file
 from common import db
+from common.utils import debug
+from business.admin import create_default_administrator
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -37,7 +39,7 @@ def register_all_bps():
 # Including database inlitialization and blueprints registers
 db.init_db()
 register_all_bps()
-
+create_default_administrator()
 
 if __name__ == '__main__':
   app.run(debug=True)

@@ -1,7 +1,7 @@
 import config
-import logging
-logger = logging.getLogger('blog')
+from common.utils import debug
 
+debug('fuck..')
 config.DATABASE_URI = 'sqlite:///:memory:'
 config.ECHO = False
 
@@ -24,6 +24,7 @@ def test_add_post():
   post.tags = [Tag(post.id, 'python')]
   session.commit()
 
+  debug(session.query(Tag).count())
   assert session.query(Tag).count() == 1
   assert session.query(Comment).count() == 0
 
@@ -35,3 +36,13 @@ def test_add_post():
   ))]
 
   assert session.query(Comment).first().content == 'fuckyou'
+
+def test_create_default_administrator():
+  assert session.query(User).count() == 0
+  from business.admin import create_default_administrator
+  
+  create_default_administrator()
+  assert session.query(User).count() == 1
+
+  create_default_administrator()
+  assert session.query(User).count() == 1
