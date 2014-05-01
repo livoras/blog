@@ -6,12 +6,15 @@
   {% for post in posts %}
   <div class="post">
     <a href="/post/{{post.id}}">
-      <div>{{post.title}}</div>
-      <div>{{post.content}}</div>
-      <div>{{post.update_time}}</div>
-      {% for tag in tags %}
+      <div>标题：{{post.title}}</div>
+      <div>内容：{{post.content}}</div>
+      <div>最后更新时间：{{post.update_time}}</div>
+      <div>创建时间：{{post.create_time}}</div>
+      <div>标签：
+      {% for tag in post.tags %}
         <span>{{tag}}</span>
       {% endfor %}
+      </div>
       <div>{{post.status}}</div>
     </a>    
   </div>
