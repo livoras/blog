@@ -22,4 +22,11 @@ utils.ajax = (data)->
     data.contentType = 'application/json'
   $.ajax(data)
 
+
+utils.getError = (error)->
+  error.responseJSON.error[0]
+
+utils.parseTagsStr = (tagsStr)->
+  if tagsStr then tagsStr.replace(/[;；]$/, '').split(/[;；]/g) else []
+
 module.exports = utils

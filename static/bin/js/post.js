@@ -12226,6 +12226,18 @@ utils.ajax = function(data) {
   return $.ajax(data);
 };
 
+utils.getError = function(error) {
+  return error.responseJSON.error[0];
+};
+
+utils.parseTagsStr = function(tagsStr) {
+  if (tagsStr) {
+    return tagsStr.replace(/[;；]$/, '').split(/[;；]/g);
+  } else {
+    return [];
+  }
+};
+
 module.exports = utils;
 
 

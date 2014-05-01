@@ -1,8 +1,8 @@
 $ = require 'jquery'
 utils = require './utils.coffee'
 
+# logout
 $button = $('#logout')
-
 $button.click ->
   promise = utils.ajax 
     type: 'post',
@@ -12,4 +12,47 @@ $button.click ->
     window.location.reload()
   
   promise.error (error)->
-    alert '退出失败：' + error.responseJSON.error[0]
+    alert '退出失败：' + utils.getError(error)
+
+
+# profile update
+$updateProfile = $('button.update-profile:eq(0)')
+$updateProfileForm = $('form.profile-update:eq(0)')
+
+$updateProfile.click (event)->
+  event.preventDefault()
+  data = $updateProfileForm.serializeObject()
+
+  promise = utils.ajax 
+    type: 'post',
+    url: '/update_admin_profile'
+    data: data
+
+  promise.success (data)->
+    for key, value of data.data
+      $updateProfileForm.find("input[name=#{key}]").val(value)
+    alert 'OK!'  
+  
+  promise.error (error)->
+    alert '修改失败：' + utils.getError(error)
+
+
+# password update    
+$updatePassword = $('button.update-password:eq(0)')
+$updatePasswordForm = $('form.password-update:eq(0)')
+
+$updatePassword.click (event)->
+  event.preventDefault()
+  data = $updatePasswordForm.serializeObject()
+
+  promise = utils.ajax 
+    type: 'put',
+    url: '/update_admin_password'
+    data: data
+
+  promise.success (data)->
+    $updatePasswordForm.find('input').val('')
+    alert 'OK!'  
+  
+  promise.error (error)->
+    alert '修改失败：' + utils.getError(error)

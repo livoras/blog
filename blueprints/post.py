@@ -1,5 +1,6 @@
 # coding=utf-8
 import config
+import json
 
 from business import post
 from common import utils
@@ -19,12 +20,12 @@ def show_create_new_post_page():
   else:  
     return redirect('/admin')
 
+
 @post_bp.route('/new_post', methods=['POST'])
 def create_new_post():
   if session.get('is_admin'):
     data = request.json
     new_post = post.create_new_post(data)
-
     if not isinstance(new_post, Post):
       error = new_post
       return utils.fail(error, 400)
@@ -50,7 +51,7 @@ def show_post_by_page(page_count):
   end = page_count * POSTS_PER_PAGE
   posts = post.get_all_posts()
   target_posts = posts[start:end]
-  if len(target_posts) == 0: abort(404)
+  if len(target_posts) == 0: return abort(404)
   data = dict(
     title=config.TITLE,
     posts=target_posts,
@@ -58,3 +59,28 @@ def show_post_by_page(page_count):
     active_page=page_count
   )
   return render_template('index.html', **data)
+
+
+@post_bp.route('/edit_post/<int:post_id>')
+def show_edit_post(post_id):
+  if not session['is_admin']:
+    return abort(404)
+  current_post = post.get_post_by_id(post_id)
+  if not current_post: return abort(404)
+  data = dict(
+    post=current_post, 
+    post_json=json.dumps(current_post.get_dict())
+  )
+  return render_template('edit_post.html', **data)
+
+
+@post_bp.route('/update_post', methods=['PUT'])
+def update_post():
+  data = request.json
+  if not session['is_admin']:
+    return utils.fail(['user not login'], 401)
+  current_post = post.update_post(data)
+  if not isinstance(current_post, Post):
+    error = current_post
+    return utils.fail(error, 400)
+  return utils.success(current_post.get_dict())

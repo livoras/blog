@@ -1,6 +1,7 @@
 # coding=utf-8
 from flask import Blueprint, jsonify, request, abort, session, render_template
 from business import admin
+from business import post
 from common import utils
 from models.user import User
 
@@ -28,7 +29,8 @@ def admin_logout():
 @admin_bp.route('/admin')
 def admin_page():
   if session.get('is_admin'):
-    return render_template('admin.html')
+    data = dict(posts=post.get_all_posts())
+    return render_template('admin.html', **data)
   else:
     return render_template('admin_login.html')
 

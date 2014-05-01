@@ -4,12 +4,41 @@
 <div class="admin-content">
   <button id="logout">logout</button>
 
-  <!--update user profile-->
-
   <!--create new post-->
   <a href="/new_post">create a new post!</a>
 
+  <hr>
+
+  <!--update user profile-->
+  <form class="profile-update">
+    username: <input type="text" name="username" value="{{session['username']}}">
+    name: <input type="text" name="name" value="{{session['name']}}">
+    email: <input type="text" name="email" value="{{session['email']}}">
+    <button class="update-profile">update</button>
+  </form>
+
+  <hr>
+
+  <!--update user password-->
+  <form class="password-update">
+    old password: <input name="old_password" type="password">
+    new password: <input name="new_password" type="password">
+    <button class="update-password">update</button>
+  </form>
+
   <!--posts list with edit functionality-->
+  <div>
+    <ul>
+    {% for post in posts %}
+    <li>
+      <div>title: {{post.title}}</div>
+      <div>last update time: {{post.update_time}}</div>
+      <div>status: {{post.status}}</div>
+      <a href="/edit_post/{{post.id}}">编辑</a>
+    </li>
+    {% endfor %}
+    </ul>
+  </div>
 
   <!--images management-->
 </div>

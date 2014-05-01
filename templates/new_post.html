@@ -1,23 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="new-post">
-  <form id="create-new-post-form">
-    <div>
-      title: <input type="text" name="title">
-    </div>
-    <div>
-      content: <textarea name="content"></textarea>
-    </div>
-    <div>
-      status: 
-      > public: <input type='radio' name="status" checked="checked" value="public">
-      > private: <input type='radio' name="status" value="private">
-    </div>
-    <div>
-      tags: <input type="text" name="tags">
-    </div>
-    <button id="create">create!</button>
-  </form>
+  {% include "edit_post_area.html" %}
 </div>
+<button class="create">create!</button>
 <script src="{{url_for('static', filename='bin/js/new_post.js')}}"></script>
 {% endblock %}

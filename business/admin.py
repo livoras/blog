@@ -36,8 +36,7 @@ def login(data):
 
   if admin.password == password:
     user_dict = admin.get_dict()
-    sess['is_admin'] = True
-    sess['user'] = str(user_dict)
+    set_session(admin)
     return user_dict
   else:  
     return ['password is not correct']
@@ -58,7 +57,7 @@ def update_profile(data):
   admin.email = data.get('email') or admin.email
   admin.name = data.get('name') or admin.name
 
-  sess['user'] = str(admin)
+  set_session(admin)
   session.commit()
   return admin
 
@@ -74,6 +73,11 @@ def update_password(data):
     return ['old password is not correct']
   else:    
     admin.password = utils.encrypt(new_password)
-    sess['user'] = str(admin)
+    set_session(admin)
     session.commit()
     return admin
+
+def set_session(admin):
+  sess['is_admin'] = True
+  sess['user'] = str(admin)
+  sess.update(admin.get_dict())

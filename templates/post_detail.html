@@ -3,6 +3,9 @@
 <div class="post-detail">
   <h1>{{post.title}}</h1>
   <div>{{post.status}}</div>
+  {% if session.get('is_admin') %}
+  <a href="/edit_post/{{post.id}}">编辑</a>
+  {% endif %}
   <div>
     <ul>
     {% for tag in post.tags %}

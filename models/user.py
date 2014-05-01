@@ -13,7 +13,7 @@ class User(Base):
   username = sc.Column(sc.String)
   password = sc.Column(sc.String)
   name = sc.Column(sc.String)
-  email = sc.Column(sc.String, default=config.ADMIN_EMAIL)
+  email = sc.Column(sc.String, server_default=config.ADMIN_EMAIL)
 
   def __init__(self, username, name, password):
     self.name = name
@@ -21,7 +21,7 @@ class User(Base):
     self.password = utils.encrypt(password)
 
   def get_dict(self):
-    attrs = ('id', 'name', 'username', 'password')
+    attrs = ('id', 'name', 'username', 'password', 'email')
     return {attr: getattr(self, attr) for attr in attrs}
 
   def __repr__(self):

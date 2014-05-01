@@ -80,3 +80,45 @@ def test_get_post_by_page():
 
     rv = c.get('/page/200')
     assert '404' in rv.data
+
+def test_edit_post():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = False
+    rv = c.get('/edit_post/1')  
+    assert '404' in rv.data
+
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    rv = c.get('/edit_post/1')  
+    assert '404' not in rv.data
+    assert 'edit-post'in rv.data
+
+    rv = c.get('/edit_post/19080890')  
+    assert '404' in rv.data
+
+def test_update_post():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = False
+    rv = send_json('put', '/update_post', {}, c)
+    assert 'failed' in rv.data
+    assert 'not login' in rv.data
+
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    data = dict(
+      id=1,
+      content='new content',
+      title='new title',
+      status='private',
+      tags=['newtag1', 'newtag2'],
+    )  
+    rv = send_json('put', '/update_post', data, c)
+    assert 'success' in rv.data
+    post = db.session.query(Post).filter_by(id=1).first()
+    for key, value in data.iteritems():
+      if key != 'tags':
+        assert getattr(post, key) == value

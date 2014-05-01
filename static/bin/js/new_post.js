@@ -11536,18 +11536,17 @@ utils = require('./utils.coffee');
 
 markdown = (require('markdown')).markdown;
 
-$form = $('#create-new-post-form');
+$form = $('form.edit-post-form');
 
-$submit = $('#create');
+$submit = $('button.create');
 
 console.log(markdown.toHTML('## fuckyou'));
 
 $submit.click(function(event) {
-  var data, promise, tagsStr;
+  var data, promise;
   event.preventDefault();
   data = $form.serializeObject();
-  tagsStr = data.tags;
-  data.tags = tagsStr ? tagsStr.split(/[;；]/g) : [];
+  data.tags = utils.parseTagsStr(data.tags);
   promise = utils.ajax({
     url: '/new_post',
     type: 'post',
@@ -11592,6 +11591,18 @@ utils.ajax = function(data) {
     data.contentType = 'application/json';
   }
   return $.ajax(data);
+};
+
+utils.getError = function(error) {
+  return error.responseJSON.error[0];
+};
+
+utils.parseTagsStr = function(tagsStr) {
+  if (tagsStr) {
+    return tagsStr.replace(/[;；]$/, '').split(/[;；]/g);
+  } else {
+    return [];
+  }
 };
 
 module.exports = utils;

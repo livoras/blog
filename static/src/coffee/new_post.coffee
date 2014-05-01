@@ -2,16 +2,15 @@ $ = require 'jquery'
 utils = require './utils.coffee'
 markdown = (require 'markdown').markdown
 
-$form = $('#create-new-post-form')
-$submit = $('#create')
+$form = $('form.edit-post-form')
+$submit = $('button.create')
 
 console.log(markdown.toHTML('## fuckyou'))
 
 $submit.click (event)->
   event.preventDefault()
   data = $form.serializeObject()
-  tagsStr = data.tags
-  data.tags = if tagsStr then tagsStr.split(/[;；]/g) else []
+  data.tags = utils.parseTagsStr(data.tags)
 
   promise = utils.ajax
     url: '/new_post'
