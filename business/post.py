@@ -1,3 +1,4 @@
+# coding=utf-8
 import config
 
 from models.post import Post
@@ -31,7 +32,7 @@ def create_new_post(data):
 
 def get_post_by_id(post_id):
   post = session.query(Post).filter_by(id=post_id).first()
-  if post.status == 'public':
+  if post and post.status == 'public':
     return post
   else:  
     return post if sess.get('is_admin') else None

@@ -14,8 +14,7 @@ clearForm = ->
 
 $submitComment.click (event)->
   event.preventDefault()
-  dataStr = $newCommentForm.serialize()
-  data = utils.getJSONFromQueryStr(dataStr)
+  data = $newCommentForm.serializeObject()
 
   promise = utils.ajax 
     url: '/new_comment',

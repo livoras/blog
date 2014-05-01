@@ -1,4 +1,6 @@
+# coding=utf-8
 import sqlalchemy as sc
+import json 
 
 from sqlalchemy.orm import relationship, backref
 from models.post import Post
@@ -21,4 +23,4 @@ class Tag(Base):
     return self.tag_name
 
   def __repr__(self):
-    return str(self.get_dict())
+    return self.tag_name

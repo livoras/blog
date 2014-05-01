@@ -1,4 +1,6 @@
+# coding=utf-8
 import sqlalchemy as sc
+import json
 
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
@@ -30,4 +32,4 @@ class Post(Base):
     return post_dict
 
   def __repr__(self):
-    return str(self.get_dict())
+    return json.dumps(self.get_dict())

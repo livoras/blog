@@ -9,9 +9,8 @@ console.log(markdown.toHTML('## fuckyou'))
 
 $submit.click (event)->
   event.preventDefault()
-  queryStr = $form.serialize()
-  data = utils.getJSONFromQueryStr(queryStr)
-  tagsStr = unescape(data.tags)
+  data = $form.serializeObject()
+  tagsStr = data.tags
   data.tags = if tagsStr then tagsStr.split(/[;；]/g) else []
 
   promise = utils.ajax

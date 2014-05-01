@@ -1,3 +1,4 @@
+# coding=utf-8
 import config
 
 from flask import Blueprint, jsonify, request, render_template

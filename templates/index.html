@@ -6,13 +6,13 @@
   {% for post in posts %}
   <div class="post">
     <a href="/post/{{post.id}}">
-      {% autoescape false %}
       <div>{{post.title}}</div>
       <div>{{post.content}}</div>
       <div>{{post.update_time}}</div>
-      <div>{{post.tags}}</div>
+      {% for tag in tags %}
+        <span>{{tag}}</span>
+      {% endfor %}
       <div>{{post.status}}</div>
-      {% endautoescape %}
     </a>    
   </div>
   <hr>

@@ -1,4 +1,6 @@
+# coding=utf-8
 import sqlalchemy as sc
+import json
 
 from common.db import Base
 from common import utils
@@ -21,4 +23,4 @@ class User(Base):
     return {attr: getattr(self, attr) for attr in attrs}
 
   def __repr__(self):
-    return str(self.get_dict())
+    return json.dumps(self.get_dict())

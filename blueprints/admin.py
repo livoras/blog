@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Blueprint, jsonify, request, abort, session, render_template
 from business import admin
 from common import utils

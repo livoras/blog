@@ -1,4 +1,6 @@
+# coding=utf-8
 import sqlalchemy as sc
+import json
 
 from datetime import datetime
 from sqlalchemy.orm import relationship, backref
@@ -28,4 +30,4 @@ class Comment(Base):
     return {attr: getattr(self, attr) for attr in attrs}
 
   def __repr__(self):
-    return str(self.get_dict())
+    return json.dumps(self.get_dict())

@@ -11543,11 +11543,10 @@ $submit = $('#create');
 console.log(markdown.toHTML('## fuckyou'));
 
 $submit.click(function(event) {
-  var data, promise, queryStr, tagsStr;
+  var data, promise, tagsStr;
   event.preventDefault();
-  queryStr = $form.serialize();
-  data = utils.getJSONFromQueryStr(queryStr);
-  tagsStr = unescape(data.tags);
+  data = $form.serializeObject();
+  tagsStr = data.tags;
   data.tags = tagsStr ? tagsStr.split(/[;；]/g) : [];
   promise = utils.ajax({
     url: '/new_post',
@@ -11570,24 +11569,29 @@ $ = require('jquery');
 
 utils = {};
 
+$.fn.serializeObject = function() {
+  var a, o;
+  o = {};
+  a = this.serializeArray();
+  $.each(a, function() {
+    if (o[this.name]) {
+      if (!o[this.name].push) {
+        o[this.name] = [o[this.name]];
+      }
+      return o[this.name].push(this.value || '');
+    } else {
+      return o[this.name] = this.value || '';
+    }
+  });
+  return o;
+};
+
 utils.ajax = function(data) {
   if (data.data) {
     data.data = JSON.stringify(data.data);
-    data.contentType = 'application/json;charset=UTF-8';
+    data.contentType = 'application/json';
   }
   return $.ajax(data);
-};
-
-utils.getJSONFromQueryStr = function(str) {
-  var data, dataItem, dataItems, i, tuple, _i, _len;
-  dataItems = str.split('&');
-  data = {};
-  for (i = _i = 0, _len = dataItems.length; _i < _len; i = ++_i) {
-    dataItem = dataItems[i];
-    tuple = dataItem.split('=');
-    data[tuple[0]] = tuple[1] || "";
-  }
-  return data;
 };
 
 module.exports = utils;

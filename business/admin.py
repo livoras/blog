@@ -1,4 +1,4 @@
-# coding=utf8
+# coding=utf-8
 import config
 
 from models.user import User
