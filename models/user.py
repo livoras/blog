@@ -1,6 +1,7 @@
 # coding=utf-8
 import sqlalchemy as sc
 import json
+import config
 
 from common.db import Base
 from common import utils
@@ -12,6 +13,7 @@ class User(Base):
   username = sc.Column(sc.String)
   password = sc.Column(sc.String)
   name = sc.Column(sc.String)
+  email = sc.Column(sc.String, default=config.ADMIN_EMAIL)
 
   def __init__(self, username, name, password):
     self.name = name

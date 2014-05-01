@@ -5,6 +5,8 @@ from flask import session
 from . import send_json
 from business import admin
 
+from common.utils import debug, encrypt
+
 def test_admin_login_page():
   with app.test_client() as c:
     with c.session_transaction() as sess:
@@ -75,3 +77,84 @@ def test_get_current_admin():
     rv = c.get('/')  
     current_admin = admin.get_current_admin()
     assert current_admin.id == 1
+
+def test_update_admin_profile():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    data =  dict(
+      username='lucy',
+      name='jerry',
+      email='livoras@163.com'
+    ) 
+    rv = send_json('post', '/update_admin_profile', data, c)
+    current_admin = admin.get_current_admin()
+    assert 'success' in rv.data
+    debug(current_admin)
+    assert current_admin.username == data['username']
+    assert current_admin.name == data['name']
+    assert current_admin.email == data['email']
+    assert 'lucy' in session['user']
+
+    with c.session_transaction() as sess:
+      sess.clear()
+    data =  dict(
+      username='lucy',
+      name='jerry',
+      email='livoras@163.com'
+    ) 
+    rv = send_json('post', '/update_admin_profile', data, c)
+    assert 'failed' in rv.data
+
+def test_update_admin_password():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    data =  dict(
+      old_password='123456',
+      new_password='jerry'
+    ) 
+    rv = send_json('put', '/update_admin_password', data, c)
+    current_admin = admin.get_current_admin()
+    assert 'success' in rv.data
+    assert current_admin.password == encrypt(data['new_password'])
+
+
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    data = dict(
+      old_password='fuckyou',
+      new_password='jerry'
+    ) 
+    rv = send_json('put', '/update_admin_password', data, c)
+    current_admin = admin.get_current_admin()
+    assert 'failed' in rv.data
+    assert 'not correct' in rv.data
+
+
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+    data = dict(
+      old_password='jerry',
+      new_password=''
+    ) 
+    rv = send_json('put', '/update_admin_password', data, c)
+    current_admin = admin.get_current_admin()
+    assert 'failed' in rv.data
+    assert 'empty' in rv.data
+
+
+    with c.session_transaction() as sess:
+      sess['is_admin'] = False
+    data = dict(
+      old_password='jerry',
+      new_password='lucyooo'
+    ) 
+    debug(rv.data)
+    rv = send_json('put', '/update_admin_password', data, c)
+    assert 'failed' in rv.data
+    assert 'not login' in rv.data

@@ -1,5 +1,6 @@
 # coding=utf-8
 import config
+import json
 
 from models.user import User
 from common import utils
@@ -44,7 +45,35 @@ def login(data):
 
 def get_current_admin():
   if sess.get('is_admin'):
-    admin_dict = eval(sess.get('user'))
+    admin_dict = json.loads(sess.get('user'))
     return session.query(User).filter_by(id=admin_dict['id']).first()
   else:  
     return None
+
+def update_profile(data):
+  admin_dict = json.loads(sess.get('user'))
+  admin = session.query(User).filter_by(id=admin_dict['id']).first()
+
+  admin.username = data.get('username') or admin.username
+  admin.email = data.get('email') or admin.email
+  admin.name = data.get('name') or admin.name
+
+  sess['user'] = str(admin)
+  session.commit()
+  return admin
+
+def update_password(data):
+  admin_dict = json.loads(sess.get('user'))
+  admin = session.query(User).filter_by(id=admin_dict['id']).first()
+
+  new_password = data.get('new_password')
+  if not new_password:
+    return ['new password is empty']
+
+  if admin.password != utils.encrypt(data.get('old_password')):
+    return ['old password is not correct']
+  else:    
+    admin.password = utils.encrypt(new_password)
+    sess['user'] = str(admin)
+    session.commit()
+    return admin
