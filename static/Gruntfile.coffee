@@ -1,5 +1,7 @@
 module.exports = (grunt)->
   process.env.DEBUG = 'facility'
+  coffeeify = require 'coffeeify'
+  stringify = require 'stringify'
 
   grunt.initConfig
     clean: 
@@ -8,8 +10,9 @@ module.exports = (grunt)->
     browserify: 
       dev: 
         options:
-          debug: true
-          transform: ['coffeeify']
+          preBundleCB: (b)->
+            b.transform(coffeeify)
+            b.transform(stringify({extensions: ['.hbs', '.html', '.tpl', '.txt']}))
         expand: true
         flatten: true
         src: ['src/**/*.coffee']
@@ -20,7 +23,7 @@ module.exports = (grunt)->
       compile:
         options:
           livereload: true
-        files: ["src/**/*.coffee", "src/**/*.less"]
+        files: ["src/**/*.coffee", "src/**/*.less", "src/**/*.hbs"]
         tasks: ["browserify:dev", "less:dev"]
 
     less:    
