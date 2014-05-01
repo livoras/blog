@@ -7,6 +7,7 @@ from common.utils import debug
 from common import db
 from models.post import Post
 from models.tag import Tag
+from business import post
 
 posts_count = db.session.query(Post).count()
 
@@ -14,8 +15,8 @@ def add_new_post():
   global posts_count
   posts_count += 1
   data = dict(
-    title="new_post_title_" + str(posts_count),
-    content="new_post_content",
+    title="new_post_title_",
+    content="new_post_content_" + str(posts_count),
     status="public"
   )
   new_post = Post(**data)
@@ -61,16 +62,21 @@ def test_create_new_post():
 
 
 def test_get_post_by_page():
+  import time
+  for i in xrange(100):
+    time.sleep(0.001)
+    add_new_post()
+
   with app.test_client() as c:
-    for i in xrange(100):
-      add_new_post()
-    rv = c.get('/page/2')
+    rv = c.get('/page/1')
+    posts = post.get_all_posts()
+    assert posts[0].update_time > posts[10].update_time
     
     assert '"/post/1"' not in rv.data
-    assert '/post/11' in rv.data
-    assert '/post/20' in rv.data
-    assert '/post/21' not in rv.data
-    assert '<a class="active">2</a>' in rv.data
+    assert 'new_post_content_100' in rv.data
+    assert 'new_post_content_91' in rv.data
+    assert 'new_post_content_90' not in rv.data
+    assert '<a class="active">1</a>' in rv.data
 
     rv = c.get('/page/200')
     assert '404' in rv.data

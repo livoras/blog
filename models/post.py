@@ -15,12 +15,14 @@ class Post(Base):
   title = sc.Column(sc.String)
   content = sc.Column(sc.String)
   status = sc.Column(sc.String)
-  update_time = sc.Column(sc.Date)
+  update_time = sc.Column(sc.DateTime)
+  create_time = sc.Column(sc.DateTime)
 
   author = relationship('User', backref=backref('posts'))
 
   def __init__(self, title=None, content=None, status=None):
-    self.update_time = datetime.now()
+    self.update_time = datetime.utcnow()
+    self.create_time = self.update_time
     self.title = title or 'Untitled'
     self.content = content or ''
     self.status = status or 'public'

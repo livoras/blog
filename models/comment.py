@@ -11,13 +11,13 @@ class Comment(Base):
   __tablename__ = 'comments'
 
   id = sc.Column(sc.Integer, primary_key=True)
-  create_time = sc.Column(sc.Date)
+  create_time = sc.Column(sc.DateTime)
   content = sc.Column(sc.String)
   user_email = sc.Column(sc.String)
   username = sc.Column(sc.String)
   post_id = sc.Column(sc.Integer, sc.ForeignKey('posts.id'))
 
-  post = relationship('Post', backref=backref('comments', order_by=create_time))
+  post = relationship('Post', backref=backref('comments', order_by=create_time.desc()))
 
   def __init__(self, **data):
     self.create_time = datetime.now()
