@@ -1,0 +1,18 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  font-family: 'Microsoft YaHei', "微软雅黑", Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', 'Droid Sans Fallback', 'SimSun', 'sans-serif';
+}
+textarea,
+input,
+select,
+button {
+  resize: none;
+  outline: none;
+}
+div.content {
+  margin: 0 auto;
+  width: 960px;
+}
