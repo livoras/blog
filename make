@@ -1,2 +1,3 @@
-rm blog.db
-python app.py
+python app.py & 
+cd static && grunt &
+sniffer &
