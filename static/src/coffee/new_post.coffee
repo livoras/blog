@@ -1,8 +1,11 @@
 $ = require 'jquery'
 utils = require './utils.coffee'
+markdown = (require 'markdown').markdown
 
 $form = $('#create-new-post-form')
 $submit = $('#create')
+
+console.log(markdown.toHTML('## fuckyou'))
 
 $submit.click (event)->
   event.preventDefault()

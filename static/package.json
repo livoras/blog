@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "jquery": "~2.1.0"
+    "jquery": "~2.1.0",
+    "markdown": "~0.5.0",
+    "handlebars": "~2.0.0-alpha.2",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "grunt-contrib-connect": "*",
@@ -12,8 +15,7 @@
     "coffeeify": "~0.6.0",
     "grunt-contrib-uglify": "~0.4.0",
     "stringify": "~2.0.0",
-    "through": "~2.3.4",
-    "handlebars": "~2.0.0-alpha.2"
+    "through": "~2.3.4"
   },
   "author": "Livoras"
 }
