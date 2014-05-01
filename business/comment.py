@@ -23,4 +23,5 @@ def create_new_comment(data):
 
   new_comment = Comment(**data)
   post.comments.append(new_comment)
+  session.commit()
   return new_comment
