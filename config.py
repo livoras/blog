@@ -2,7 +2,9 @@ debug = False
 
 SECRET_KEY = '9687d209a9ff0713da8edae47dce398fuckyoublog'
 
-DATABASE_URI = 'sqlite:///blog.db?check_same_thread=False?chartset=utf8'
+
+DB_FILE = 'blog.db'
+DATABASE_URI = 'sqlite:///' + DB_FILE + '?check_same_thread=False?chartset=utf8'
 
 ECHO = False
 

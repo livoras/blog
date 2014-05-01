@@ -1,5 +1,10 @@
 # coding=utf-8
-from flask import Blueprint, jsonify, request, abort, session, render_template
+import config
+
+from flask import Blueprint, jsonify, \
+                  request, abort, session, \
+                  render_template, send_file
+
 from business import admin
 from business import post
 from common import utils
@@ -65,3 +70,12 @@ def update_admin_password():
     else:  
       error = update_admin
       return utils.fail(error, 400)
+
+
+@admin_bp.route('/get_db')
+def get_db():
+  if not session.get('is_admin'):
+    return abort(404)
+  else:  
+    db_name = config.DB_FILE
+    return send_file(db_name, as_attachment=True, attachment_filename=db_name)
