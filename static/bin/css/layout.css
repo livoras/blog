@@ -16,3 +16,10 @@ div.content {
   margin: 0 auto;
   width: 960px;
 }
+a {
+  text-decoration: none;
+}
+a:active,
+a:visited {
+  color: #000;
+}

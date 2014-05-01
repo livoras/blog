@@ -1,5 +1,5 @@
 $ = require 'jquery'
-uitls = require './utils.coffee'
+utils = require './utils.coffee'
 
 $submit = $('#submit')
 $username = $('#username')
