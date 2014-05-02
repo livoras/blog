@@ -11,17 +11,6 @@ from business import post
 app = Flask(__name__)
 app.config.from_object(config)
 
-@app.route('/')
-def index():
-  posts = post.get_all_posts()
-  data = dict(
-    title='Livora\'s Blog',
-    posts=posts[0:config.POSTS_PER_PAGE],
-    pages=range(1, len(posts) / config.POSTS_PER_PAGE + 1),
-    active_page=1
-  )
-  return render_template('index.html', **data)
-
 
 @app.errorhandler(404)
 def check_static(error):

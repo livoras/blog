@@ -11,15 +11,16 @@ from business import post
 
 posts_count = db.session.query(Post).count()
 
-def add_new_post():
+def add_new_post(data=None, content="new_post_content_", tags=None, title=None):
   global posts_count
   posts_count += 1
-  data = dict(
-    title="new_post_title_",
-    content="new_post_content_" + str(posts_count),
+  data = data or dict(
+    title=title or "new_post_title_",
+    content=content + str(posts_count),
     status="public"
   )
   new_post = Post(**data)
+  new_post.tags = post.parse_tags(new_post.id, tags or [])
   db.session.add(new_post)
   db.session.commit()
 
@@ -74,8 +75,8 @@ def test_get_post_by_page():
     
     assert '"/post/1"' not in rv.data
     assert 'new_post_content_100' in rv.data
-    assert 'new_post_content_91' in rv.data
-    assert 'new_post_content_90' not in rv.data
+    assert 'new_post_content_' + str(100 - config.POSTS_PER_PAGE + 1) in rv.data
+    assert 'new_post_content_' + str(100 - config.POSTS_PER_PAGE) not in rv.data
     assert '<a class="active">1</a>' in rv.data
 
     rv = c.get('/page/200')
@@ -122,3 +123,24 @@ def test_update_post():
     for key, value in data.iteritems():
       if key != 'tags':
         assert getattr(post, key) == value
+
+def test_search_by_tag():
+  add_new_post(tags=['search-tag-1'])
+  add_new_post(tags=['search-tag-1'])
+  add_new_post(tags=['search-tag-1', 'search-tag-2'])
+  add_new_post(tags=['search-tag-1', 'search-tag-2'])
+  add_new_post(tags=['search-tag-1', 'search-tag-3'])
+  assert len(post.search_by_tag('search-tag-1')) == 5
+  assert len(post.search_by_tag('search-tag-2')) == 2
+  assert len(post.search_by_tag('search-tag-3')) == 1
+
+def test_search_by_keyword():
+  add_new_post(content='nonsense-nicegood', title='nonsense-merry')
+  add_new_post(content='nonsense-merry', title='nonsense-nicegood')
+  add_new_post(content='nonsense-jerry')
+  add_new_post(title='nonsense-no-title')
+
+  assert len(post.search_by_keyword('no-title')) == 1
+  assert len(post.search_by_keyword('nonsense-jerry')) == 1
+  assert len(post.search_by_keyword('nicegood')) == 2
+  assert len(post.search_by_keyword('nonsense')) == 4

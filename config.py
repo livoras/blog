@@ -15,6 +15,6 @@ DEFAULT_ADMIN_NICK_NAME = 'administrator'
 DEFAULT_ADMIN_PASSWORD = '123456'
 ADMIN_EMAIL = 'livoras@163.com'
 
-TITLE = 'Livora\'s Blog'
+TITLE = 'Livoras\' Blog'
 
-POSTS_PER_PAGE = 10
+POSTS_PER_PAGE = 7

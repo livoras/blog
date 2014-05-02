@@ -27,7 +27,7 @@
     {% if page == active_page %}
       <a class="active">{{page}}</a>
     {% else %}  
-      <a href="/page/{{page}}">{{page}}</a>
+      <a href="{{link}}{{page}}">{{page}}</a>
     {% endif %}
   {% endfor %}
 </div>

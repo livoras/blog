@@ -13,6 +13,12 @@ redirect, url_for
 
 post_bp = Blueprint('post', __name__)
 
+@post_bp.route('/')
+def index():
+  posts = post.get_all_posts()
+  return render_pages(posts, 1)
+
+
 @post_bp.route('/new_post')
 def show_create_new_post_page():
   if session.get('is_admin'):
@@ -46,19 +52,8 @@ def show_post(post_id):
 
 @post_bp.route('/page/<int:page_count>')
 def show_post_by_page(page_count):
-  POSTS_PER_PAGE = config.POSTS_PER_PAGE
-  start = (page_count - 1) * POSTS_PER_PAGE
-  end = page_count * POSTS_PER_PAGE
   posts = post.get_all_posts()
-  target_posts = posts[start:end]
-  if len(target_posts) == 0: return abort(404)
-  data = dict(
-    title=config.TITLE,
-    posts=target_posts,
-    pages=range(1, len(posts) / POSTS_PER_PAGE + 1),
-    active_page=page_count
-  )
-  return render_template('index.html', **data)
+  return render_pages(posts, page_count)
 
 
 @post_bp.route('/edit_post/<int:post_id>')
@@ -84,3 +79,34 @@ def update_post():
     error = current_post
     return utils.fail(error, 400)
   return utils.success(current_post.get_dict())
+
+
+@post_bp.route('/search_by_tag/<tag_name>/<int:page_count>')
+def search_by_tag(tag_name, page_count):
+  posts = post.search_by_tag(tag_name)
+  link = u'/search_by_tag/{tag_name}/'.format(tag_name=tag_name)
+  return render_pages(posts, page_count, link)
+
+
+@post_bp.route('/search_by_keyword/<keyword>/<int:page_count>')
+def search_by_content(keyword, page_count):
+  posts = post.search_by_keyword(keyword)
+  link = u'/search_by_keyword/{keyword}/'.format(keyword=keyword)
+  return render_pages(posts, page_count, link)
+
+
+def render_pages(posts, page_count, link='/page/'):
+  POSTS_PER_PAGE = config.POSTS_PER_PAGE
+  start = (page_count - 1) * POSTS_PER_PAGE
+  end = page_count * POSTS_PER_PAGE
+  target_posts = posts[start:end]
+  if len(target_posts) == 0: return abort(404)
+  data = dict(
+    posts=target_posts,
+    pages=post.get_pages_count_by_posts(posts),
+    active_page=page_count,
+    link=link
+  )
+  return render_template('index.html', **data)
+
+  

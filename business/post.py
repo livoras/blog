@@ -3,12 +3,13 @@ import config
 import datetime
 
 from models.post import Post
+from models.tag import Tag
 from common import utils
 from common.db import session
 from flask import session as sess
 from business import admin
 from common import utils
-from models.tag import Tag
+from sqlalchemy import or_
 
 def create_new_post(data):
   current_admin = admin.get_current_admin()
@@ -48,7 +49,7 @@ def get_all_posts():
   query = session.query(Post) 
   if not sess.get('is_admin'):
     query = query.filter_by(status='public')
-  return query.order_by(Post.update_time.desc()).all()
+  return query.order_by(Post.create_time.desc()).all()
 
 
 def update_post(data):
@@ -63,3 +64,20 @@ def update_post(data):
   current_post.update_time = datetime.datetime.now()
   session.commit()
   return current_post
+
+
+def search_by_tag(tag=None):
+  return session.query(Post) \
+                .join(Tag) \
+                .filter_by(tag_name=tag).all()
+
+
+def search_by_keyword(keyword=None):
+  if not keyword: return []
+  pattern = "%" + keyword + "%"
+  return session.query(Post) \
+                .filter(or_(Post.title.like(pattern), Post.content.like(pattern))) \
+                .all()
+
+def get_pages_count_by_posts(posts):
+  return range(1, len(posts) / config.POSTS_PER_PAGE + 2)

@@ -23,6 +23,10 @@ class Post(Base):
                            backref='post', \
                            order_by='Comment.create_time.desc()',
                            cascade='all, delete, delete-orphan')
+  tags = relationship('Tag', \
+                           backref='post', \
+                           order_by='Tag.tag_name',
+                           cascade='all, delete, delete-orphan')
 
   def __init__(self, title=None, content=None, status=None):
     self.update_time = datetime.utcnow()

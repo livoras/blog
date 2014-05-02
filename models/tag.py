@@ -13,8 +13,6 @@ class Tag(Base):
   post_id = sc.Column(sc.Integer, sc.ForeignKey('posts.id'))
   tag_name = sc.Column(sc.String)
 
-  post = relationship('Post', backref=backref('tags'))
-
   def __init__(self, post_id, tag_name):
     self.post_id = post_id
     self.tag_name = tag_name
