@@ -79,8 +79,6 @@ def test_get_post_by_page():
     assert 'new_post_content_' + str(100 - config.POSTS_PER_PAGE) not in rv.data
     assert '<a class="active">1</a>' in rv.data
 
-    rv = c.get('/page/200')
-    assert '404' in rv.data
 
 def test_edit_post():
   with app.test_client() as c:
@@ -144,3 +142,10 @@ def test_search_by_keyword():
   assert len(post.search_by_keyword('nonsense-jerry')) == 1
   assert len(post.search_by_keyword('nicegood')) == 2
   assert len(post.search_by_keyword('nonsense')) == 4
+
+def test_get_tags():
+  tags = post.get_tags()
+  debug(tags)
+  assert tags['search-tag-1'] == 5
+  assert tags['search-tag-2'] == 2
+  assert tags['search-tag-3'] == 1

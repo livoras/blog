@@ -95,17 +95,18 @@ def search_by_content(keyword, page_count):
   return render_pages(posts, page_count, link)
 
 
-def render_pages(posts, page_count, link='/page/'):
+def render_pages(posts, page_count, link='/page/', load_tags=True):
   POSTS_PER_PAGE = config.POSTS_PER_PAGE
   start = (page_count - 1) * POSTS_PER_PAGE
   end = page_count * POSTS_PER_PAGE
   target_posts = posts[start:end]
-  if len(target_posts) == 0: return abort(404)
+  tags = post.get_tags() if load_tags else None
   data = dict(
     posts=target_posts,
     pages=post.get_pages_count_by_posts(posts),
     active_page=page_count,
-    link=link
+    link=link,
+    tags=tags
   )
   return render_template('index.html', **data)
 

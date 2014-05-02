@@ -10,6 +10,7 @@ from flask import session as sess
 from business import admin
 from common import utils
 from sqlalchemy import or_
+from sqlalchemy import func
 
 def create_new_post(data):
   current_admin = admin.get_current_admin()
@@ -60,7 +61,10 @@ def update_post(data):
   to_set = ('content', 'title', 'status')
   for key in to_set:
     data.get(key) and setattr(current_post, key, data.get(key))
-  current_post.tags = parse_tags(post_id, data.get('tags'))  
+  tags = data.get('tags')
+  if tags:
+    session.query(Tag).filter_by(post_id=post_id).delete()
+    current_post.tags = parse_tags(post_id, tags)
   current_post.update_time = datetime.datetime.now()
   session.commit()
   return current_post
@@ -81,3 +85,9 @@ def search_by_keyword(keyword=None):
 
 def get_pages_count_by_posts(posts):
   return range(1, len(posts) / config.POSTS_PER_PAGE + 2)
+
+
+def get_tags():
+  tags = session.query(Tag.tag_name, func.count('*')).group_by(Tag.tag_name).all()
+  tags = dict(tags)
+  return tags

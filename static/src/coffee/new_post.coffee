@@ -1,4 +1,3 @@
-$ = require 'jquery'
 utils = require './utils.coffee'
 markdown = (require 'markdown').markdown
 

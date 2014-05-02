@@ -1,4 +1,3 @@
-$ = require 'jquery'
 hbs = require 'handlebars'
 utils = require './utils.coffee'
 commentTpl = require '../tpl/comment.hbs'

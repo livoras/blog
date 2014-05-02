@@ -2,7 +2,12 @@
 
 {% block content %}
 
+{% include "side_bar.html" %}
+
 <div class="posts">
+  {% if posts|length == 0%}
+  <div>无内容</div>
+  {% endif %}
   {% for post in posts %}
   <div class="post">
     <a href="/post/{{post.id}}">
@@ -22,6 +27,8 @@
   {% endfor %}
 </div>
 
+{% set count = pages|length %}
+{% if count != 1 %}
 <div class="pages-nav">
   {% for page in pages %}
     {% if page == active_page %}
@@ -31,5 +38,6 @@
     {% endif %}
   {% endfor %}
 </div>
+{% endif %}
 
 {% endblock %}

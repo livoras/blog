@@ -1,5 +1,3 @@
-$ = require 'jquery'
-
 utils = {}
 
 # Serialize form into JSON object
