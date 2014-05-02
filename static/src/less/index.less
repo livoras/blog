@@ -1,0 +1,35 @@
+@import "common.less";
+
+div.section {
+  padding: 3em 0px; 
+  border-bottom: 1px solid #E8EBED;
+  div.info {
+    display: inline-block;
+    margin-bottom: 1em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #CCD3D6;
+  }
+  span.name {
+    font-size: 13px;
+    color: #788991;
+  }
+  span.on {
+    color: #CCD3D6;
+    font-family: 'Sentinel SSm A', 'Sentinel SSm B';
+    font-style: italic;
+  }
+  span.create-time {
+    font-size: 13px;
+    font-family: "'Gotham A', @{font-family}";
+    text-transform: uppercase;
+  }
+  h3.post-title {
+    margin-bottom: 1em;
+  }
+}
+
+div.posts {
+  padding-left: 3em;
+  border-left: 1px solid @border-color;
+  min-height: @content-min-height;
+}

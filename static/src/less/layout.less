@@ -1,10 +1,14 @@
+@import "class.less";
+@import "responsive.less";
+
 * {
   padding: 0px;
   margin: 0px;
 }
 
 body {
-  font-family: 'Microsoft YaHei', "微软雅黑", Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', 'Droid Sans Fallback', 'SimSun', 'sans-serif';
+  font-family: @font-family;
+  color: @font-color;
 }
 
 textarea, input, select, button {
@@ -12,14 +16,93 @@ textarea, input, select, button {
   outline: none;
 }
 
-div.content {
-  margin: 0 auto;
-  width: 960px;
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  .radius(0.25em);
+  height: 16px;
+  outline: none;
+  background: #FFF;
+  -webkit-appearance: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3E474C;
+  line-height: 1em;
+  border: 1px solid @border-color;
+  padding: 0.6em 1.1em;
+  font-family: @font-family;
+}
+
+button, .button {
+  .transition();
+  .radius(3px);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1em;
+  text-align: center;
+  border: 0;
+  background: @button-color;
+  color: #FFF;
+  white-space: nowrap;
+  padding: 10px 12px;
+  font-family: @font-family;
+  &:hover {
+    cursor: pointer;
+    background-color: @button-hover-color;
+  }
 }
 
 a {
+  .transition(color; 0.2s; ease;);
+
   text-decoration: none;
-  &:active, &:visited {
-    color: #000;
+  color: @link;
+
+  &:hover {
+    color: @link-hover;
   }
 }
+
+a.no-color {
+  color: @font-color;
+}
+
+div.content {
+  overflow: hidden;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 960px;
+  min-height: @content-min-height;
+}
+
+div.header {
+  @height: 99px;
+  height: @height;
+  line-height: @height;
+  text-align: center;
+  background-color: @header-bg-color;
+  border-bottom: 1px solid #DADFE1;
+  h1 {
+    font-family: 'Gotham Rounded B', 'Gotham Rounded B';
+    font-weight: lighter;
+  }
+}
+
+div.footer {
+  @height: 120px;
+  border-top: 1px solid #DADFE1;
+  text-align: center;
+  height: @height;
+  line-height: @height;
+  background-color: @footer-bg-color;
+}
+
+h3.post-title {
+  font-weight: 500;
+  a {
+    font-size: 24px;
+    font-family: "Gotham Rounded B, @{font-family}";
+  }
+}
+

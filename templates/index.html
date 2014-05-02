@@ -4,26 +4,32 @@
 
 {% include "side_bar.html" %}
 
-<div class="posts">
+<div class="posts pull-right width-66">
   {% if posts|length == 0%}
   <div>无内容</div>
   {% endif %}
   {% for post in posts %}
-  <div class="post">
-    <a href="/post/{{post.id}}">
-      <div>标题：{{post.title}}</div>
-      <div>内容：{{post.content}}</div>
-      <div>最后更新时间：{{post.update_time}}</div>
-      <div>创建时间：{{post.create_time}}</div>
-      <div>标签：
-      {% for tag in post.tags %}
-        <span>{{tag}}</span>
-      {% endfor %}
-      </div>
-      <div>{{post.status}}</div>
-    </a>    
-  </div>
-  <hr>
+  <div class="post section">
+    <div class="info">
+      <span class="name">{{post.author.name}}</span>
+      <span class="on">on</span>
+      <span class="create-time">{{post.create_time}}</span>
+    </div>
+    <h3 class="post-title">
+      <a href="/post/{{post.id}}">{{post.title}}</a>
+    </h3>
+    <div class="content-abs">
+      {{post.content[:200]}}
+    </div>
+<!--     <div>最后更新时间：{{post.update_time}}</div>
+    <div>创建时间：{{post.create_time}}</div>
+    <div>标签：
+    {% for tag in post.tags %}
+      <span>{{tag}}</span>
+    {% endfor %}
+    </div>
+    <div>{{post.status}}</div>
+ -->  </div>
   {% endfor %}
 </div>
 

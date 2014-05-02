@@ -3,21 +3,32 @@
 <head>
   <title>{{config.TITLE}}</title>
   <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width">
   <script src="{{url_for('static', filename='bin/js/global.js')}}"></script>
   <link rel="stylesheet" href="{{url_for('static', filename='bin/css/layout.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='bin/css/index.css')}}">
 </head>
 <body>
+
+  <div class="header">
+    <h1><a class="no-color" href="/">{{config.TITLE}}</a></h1>
+  </div>
+
   <div class="content">
-    <h1><a href="/">{{config.TITLE}}</a></h1>
     <div>
       {% if session['is_admin'] %}
-      <a href="/admin">{{session['name']}} 你简直棒极了！</a>
+      <a href="/admin" class="fixed">{{session['name']}} 你简直棒极了！</a>
       {% endif %}
     </div>
-    <hr>
+
     {% block content %}
     {% endblock %}
   </div>
+
+  <div class="footer">
+    <a href="/about">About Me</a>
+  </div>
+
 </body>
 <script src="//localhost:35729/livereload.js"></script>
 </html>
