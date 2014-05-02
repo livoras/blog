@@ -32,16 +32,23 @@ utils.shake = ($dom)->
   $dom.focus()
   dur = 80
   count = 0
+  if $dom.isRunning then return
+  $dom.isRunning = yes
   shake = ->
     count++
     dist = 5
-    if count is 3 then return
+    if count is 3 
+      $dom.isRunning = no
+      return
     $dom.animate 
       'left': "-=#{dist}px"
     , dur, ->  
       $dom.animate 
-        'left': "+=#{dist}px"
-      , dur, shake
+        'left': "+=#{2 * dist}px"
+      , dur, ->
+        $dom.animate 
+          'left': "-=#{dist}px"
+        , dur, shake  
   shake()    
 
 module.exports = utils

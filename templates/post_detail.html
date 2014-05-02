@@ -48,7 +48,10 @@
       <textarea placeholder="1 ~ 140 letters" name="content"></textarea>
       <button id="submit-new-comment">发布</button>
     </form>
-    <div class="comments-count">Comments({{post.comments|length}})</div>
+    <div class="comments-count">Comments (
+      <span class="count">{{post.comments|length}}</span>
+      )
+    </div>
   </div>
 
   <div class="comments">

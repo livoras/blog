@@ -17,5 +17,6 @@ then
   git add -A
   git commit -am 'deploy'
   git push heroku master -f
+  swap
   git reset --hard HEAD^
 fi
