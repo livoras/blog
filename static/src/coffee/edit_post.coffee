@@ -4,7 +4,7 @@ markdown = (require 'markdown').markdown
 $form = $('form.edit-post-form')
 
 renderForm = (data)->
-  $form.find('textarea[name=content]').val(data.content)
+  $form.find('textarea[name=content]').val(data.content.replace(/\\\>/g, '>'))
   $form.find('input[name=title]').val(data.title)
   $form.find('input[name=tags]').val(data.tags.join(';'))
   $form.find('input[name=status]').each (i, input)->

@@ -23,7 +23,7 @@
 
 
   <div class="post-content">
-    {{post.content}}
+    Loading...
   </div>
 
   <div>
@@ -36,24 +36,29 @@
   <div class="new-comment">
     <form id="new-comment-form">
       <input type="hidden" name="post_id" value="{{post.id}}">
-      <div>Email: <input type="text" name="user_email"></div>
-      <div>Username: <input type="text" name="username"></div>
+      <label><div>Email:</div> <input type="email" name="user_email"></label>
+      <label><div>Username:</div> <input type="text" name="username"></label>
+      <label><div>Comment:</div></label>
       <textarea name="content"></textarea>
-      <button id="submit-new-comment">发布！</button>
+      <button id="submit-new-comment">发布</button>
     </form>
   </div>
 
   <div class="comments">
     {% for comment in post.comments %}
     <div class="comment">
-      <div>{{comment.username}}</div>
-      <div>{{comment.content}}</div>
-      <div>{{comment.create_time}}</div>
+      <div class="post-info">
+        <span class="name">{{comment.username}}</span>
+        <span class="on">on</span>
+        <time class="create-time">{{comment.create_time.strftime('%b %d, %y')}}</time>
+        <span class="on">, said: </span>
+      </div>
+      <p class="comment-content">{{comment.content}}</p>
     </div>
-    <hr>
     {% endfor %}
   </div>
 
 </div>
+<script>var postData = {{post_json|safe}}</script>
 <script src="{{url_for('static', filename='bin/js/post.js')}}"></script>
 {% endblock %}

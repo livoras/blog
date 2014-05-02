@@ -1,11 +1,15 @@
+@import "common.less";
+
 div.post-detail {
   max-width: 670px;
   width: 90%;
   margin: 0 auto;
+  margin-bottom: 50px;
 }
 
 div.post-info-wrapper {
   text-align: center;
+  margin-bottom: 2em;
 }
 
 h2 {
@@ -14,4 +18,62 @@ h2 {
   color: #3e474c;
   text-align: center;
   margin: 1em 0;
+}
+
+div.post-content {
+  min-height: 300px;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #E8EBED;
+  p, ul, code, div, pre, hr, ol {
+    margin-bottom: 1.5em;
+  }
+  p, ul, ol {
+    .content();
+  }
+  p img[alt='block'] {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+  }
+  ul , ol{
+    padding-left: 2em;
+  }
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #E8EBED;
+  }
+}
+
+div.new-comment {
+  label {
+    display: block;
+    margin-top: 15px;
+    div {
+      margin-bottom: 5px;
+    }
+    input {
+      width: 50%;
+    }
+  }
+  textarea {
+    display: block;
+    margin-bottom: 15px;
+    height: 100px;
+    width: 90%;
+  }
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #E8EBED;
+}
+
+div.comment {
+  min-height: 50px;
+  padding: 15px 0px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #E8EBED;
+  p.comment-content {
+    .content();
+  }
 }

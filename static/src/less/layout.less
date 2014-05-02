@@ -18,7 +18,8 @@ textarea, input, select, button {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+textarea {
   .radius(0.25em);
   height: 16px;
   outline: none;
@@ -103,11 +104,6 @@ div.post-info {
   margin-bottom: 1em;
   padding-bottom: 5px;
   border-bottom: 1px solid #CCD3D6;
-  p.content-abs {
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 1.65em;
-  }
   span.name {
     font-size: 13px;
     color: #788991;
@@ -124,4 +120,14 @@ div.post-info {
     font-family: 'Gotham A', 'Gotham B', @font-family;
     text-transform: uppercase;
   }
+}
+
+p.content-abs {
+  .content();
+}
+
+textarea.editor {
+  width: 90%;
+  min-height: 800px;
+  font-family: @font-family;
 }

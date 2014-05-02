@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+
+<button class="update">update</button>
+
 <div class="edit-post">
   {% include "edit_post_area.html" %}
 </div>
-<button class="update">update</button>
 
 <div class="comments">
   <ul>
@@ -19,6 +21,6 @@
   </ul>
 </div>
 
-<script>var post = {{post_json | safe}}</script>
+<script>var post = {{post_json|safe}}</script>
 <script src="{{url_for('static', filename='bin/js/edit_post.js')}}"></script>
 {% endblock %}

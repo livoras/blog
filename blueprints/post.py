@@ -45,8 +45,11 @@ def create_new_post():
 def show_post(post_id):
   the_post = post.get_post_by_id(post_id)
   if not the_post: abort(404)
-
-  data = dict(post=the_post)
+  post_dict = get_dict_from_post(the_post)
+  data = dict(
+    post=the_post, 
+    post_json=json.dumps(post_dict)
+  )
   return render_template('post_detail.html', **data)
 
 
@@ -64,7 +67,7 @@ def show_edit_post(post_id):
   if not current_post: return abort(404)
   data = dict(
     post=current_post, 
-    post_json=json.dumps(current_post.get_dict())
+    post_json=json.dumps(get_dict_from_post(current_post))
   )
   return render_template('edit_post.html', **data)
 
@@ -109,5 +112,11 @@ def render_pages(posts, page_count, link='/page/', load_tags=True):
     tags=tags
   )
   return render_template('index.html', **data)
+
+
+def get_dict_from_post(post):
+  post_dict = post.get_dict()
+  post_dict['content'] = post_dict['content'].replace('>', '\>')
+  return post_dict
 
   

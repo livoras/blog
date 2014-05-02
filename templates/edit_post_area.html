@@ -3,14 +3,18 @@
     title: <input type="text" name="title">
   </div>
   <div>
-    content: <textarea name="content"></textarea>
-  </div>
-  <div>
     status: 
-    > public: <input type='radio' name="status" checked="checked" value="public">
-    > private: <input type='radio' name="status" value="private">
+    <ul>
+      <li>
+        public: <input type='radio' name="status" checked="checked" value="public"><br>
+      </li>
+      <li>
+        private: <input type='radio' name="status" value="private">
+      </li>
+    </ul>
   </div>
+  <div>tags: <input type="text" name="tags"></div>
   <div>
-    tags: <input type="text" name="tags">
+    content: <textarea name="content" class="editor"></textarea>
   </div>
 </form>
