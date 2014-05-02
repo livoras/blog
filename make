@@ -1,7 +1,7 @@
 function swap() {
   cp .gitignore tmp
   cp dev-tools/fixture/.gitignore .gitignore
-  cp tmp dev-tools/fixture .gitignore
+  cp tmp dev-tools/fixture/.gitignore
   rm tmp
 }
 
