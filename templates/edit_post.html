@@ -4,6 +4,21 @@
   {% include "edit_post_area.html" %}
 </div>
 <button class="update">update</button>
+
+<div class="comments">
+  <ul>
+    {% for comment in post.comments %}
+    <li>
+      <div>username: {{comment.username}}</div>
+      <div>user_email: {{comment.user_email}}</div>
+      <div>content: {{comment.content}}</div>
+      <div>create_time: {{comment.create_time}}</div>
+      <button class="delete-comment" data-comment-id="{{comment.id}}">delete</button>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
 <script>var post = {{post_json | safe}}</script>
 <script src="{{url_for('static', filename='bin/js/edit_post.js')}}"></script>
 {% endblock %}

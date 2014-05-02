@@ -32,6 +32,7 @@ def create_new_post(data):
 
 
 def parse_tags(post_id, tags):
+  tags = set(tags)
   return [Tag(post_id, tag) for tag in tags if tag != '']
 
 

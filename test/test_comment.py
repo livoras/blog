@@ -7,6 +7,7 @@ from common.utils import debug
 from common import db
 from models.post import Post
 from models.tag import Tag
+from models.comment import Comment
 
 def add_new_post():
   data = dict(
@@ -53,3 +54,17 @@ def test_create_new_comment():
     post = db.session.query(Post).filter_by(id=2).first()
     assert 'user_email is empty' in rv.data
     assert rv.status_code == 400
+
+def test_delete_comment():
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+      sess['user'] = '{"id": "1"}'
+
+    comment = db.session.query(Comment).filter_by(id=1).first()
+    assert comment is not None
+
+    data = {'id': '1'}
+    rv = send_json('delete', '/delete_comment', data, c)
+    comment = db.session.query(Comment).filter_by(id=1).first()
+    assert comment is None

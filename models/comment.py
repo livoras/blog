@@ -17,8 +17,6 @@ class Comment(Base):
   username = sc.Column(sc.String)
   post_id = sc.Column(sc.Integer, sc.ForeignKey('posts.id'))
 
-  post = relationship('Post', backref=backref('comments', order_by=create_time.desc()))
-
   def __init__(self, **data):
     self.create_time = datetime.now()
     attrs = ('content', 'username', 'user_email', 'post_id')

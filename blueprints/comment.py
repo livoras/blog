@@ -1,7 +1,9 @@
 # coding=utf-8
 import config
 
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, request, \
+                  render_template, session, abort
+
 from business import comment
 from common import utils
 from models.post import Post
@@ -18,3 +20,16 @@ def create_new_comment():
   else:  
     error = new_comment
     return utils.fail(error, 400)
+
+
+@comment_bp.route('/delete_comment', methods=["DELETE"])
+def delete_comment():
+  data = request.json
+  if not session.get('is_admin'):
+    return abort(404)
+  else:  
+    error = comment.delete_comment(data)
+    if error:
+      return utils.error(error)
+    else:
+      return utils.success()

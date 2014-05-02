@@ -3,7 +3,6 @@ utils = require './utils.coffee'
 markdown = (require 'markdown').markdown
 
 $form = $('form.edit-post-form')
-$submit = $('button.update')
 
 renderForm = (data)->
   $form.find('textarea[name=content]').val(data.content)
@@ -16,6 +15,7 @@ renderForm(post)
 
 postId = post.id
 
+$submit = $('button.update')
 $submit.click ->
   data = $form.serializeObject()
   data.tags = utils.parseTagsStr(data.tags)
@@ -32,3 +32,19 @@ $submit.click ->
 
   promise.error (error)->  
     alert '修改失败：' + utils.getError(error)
+
+# delete comment
+$('button.delete-comment').click (event)->
+  $button = $(event.currentTarget)
+  data = {id: $button.data('comment-id')}
+
+  promise = utils.ajax 
+    url: '/delete_comment'
+    type: 'delete'
+    data: data
+
+  promise.success (event)->
+    $button.parent('li').remove()
+
+  promise.error (error)->  
+    alert '删除失败：' + utils.getError(error)

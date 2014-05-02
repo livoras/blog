@@ -19,6 +19,10 @@ class Post(Base):
   create_time = sc.Column(sc.DateTime)
 
   author = relationship('User', backref=backref('posts'))
+  comments = relationship('Comment', \
+                           backref='post', \
+                           order_by='Comment.create_time.desc()',
+                           cascade='all, delete, delete-orphan')
 
   def __init__(self, title=None, content=None, status=None):
     self.update_time = datetime.utcnow()

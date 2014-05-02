@@ -25,3 +25,11 @@ def create_new_comment(data):
   post.comments.append(new_comment)
   session.commit()
   return new_comment
+
+def delete_comment(data):
+  comment = session.query(Comment).filter_by(id=data.get('id')).first()
+  if not comment:
+    return ['comment not found']
+  else:  
+    session.delete(comment)
+    session.commit()
