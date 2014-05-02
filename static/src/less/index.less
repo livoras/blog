@@ -19,3 +19,16 @@ div.posts {
   border-left: 1px solid @border-color;
   min-height: @content-min-height;
 }
+
+div.pages-nav {
+  @height: 80px;
+  height: @height;
+  line-height: @height;
+  a {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  a.active {
+    color: @font-color;
+  }
+}

@@ -22,6 +22,7 @@ h2 {
 
 div.post-content {
   min-height: 300px;
+  padding-bottom: 1em; 
   margin-bottom: 1em;
   border-bottom: 1px solid #E8EBED;
   p, ul, code, div, pre, hr, ol {
@@ -64,16 +65,26 @@ div.new-comment {
     width: 90%;
   }
   margin-bottom: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 5px;
   border-bottom: 1px solid #E8EBED;
+  div.comments-count {
+    margin-top: 30px;
+  }
 }
 
 div.comment {
   min-height: 50px;
-  padding: 15px 0px;
+  padding: 5px 0px 30px 0px;
   margin-bottom: 15px;
   border-bottom: 1px solid #E8EBED;
+  div.post-info {
+    border-bottom: none;
+  }
   p.comment-content {
     .content();
   }
+}
+
+div.tags {
+  margin-bottom: 2em;
 }

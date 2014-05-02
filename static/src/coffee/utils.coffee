@@ -27,4 +27,21 @@ utils.getError = (error)->
 utils.parseTagsStr = (tagsStr)->
   if tagsStr then tagsStr.replace(/[;；]$/, '').split(/[;；]/g) else []
 
+utils.shake = ($dom)->  
+  $dom.css('position', 'relative') if $dom.css('position') is 'static'
+  $dom.focus()
+  dur = 80
+  count = 0
+  shake = ->
+    count++
+    dist = 5
+    if count is 3 then return
+    $dom.animate 
+      'left': "-=#{dist}px"
+    , dur, ->  
+      $dom.animate 
+        'left': "+=#{dist}px"
+      , dur, shake
+  shake()    
+
 module.exports = utils

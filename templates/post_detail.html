@@ -26,7 +26,7 @@
     Loading...
   </div>
 
-  <div>
+  <div class="tags">
     Tags:
     {% for tag in post.tags %}
       <a href="/search_by_tag/{{tag}}/1">{{tag}}</a>
@@ -36,16 +36,23 @@
   <div class="new-comment">
     <form id="new-comment-form">
       <input type="hidden" name="post_id" value="{{post.id}}">
-      <label><div>Email:</div> <input type="email" name="user_email"></label>
-      <label><div>Username:</div> <input type="text" name="username"></label>
+      <label>
+        <div>Email:</div>
+        <input placeholder="example@mail.com" type="email" name="user_email">
+      </label>
+      <label>
+        <div>Username:</div>
+        <input placeholder="4 ~ 16 letters" type="text" name="username">
+      </label>
       <label><div>Comment:</div></label>
-      <textarea name="content"></textarea>
+      <textarea placeholder="1 ~ 140 letters" name="content"></textarea>
       <button id="submit-new-comment">发布</button>
     </form>
+    <div class="comments-count">Comments({{post.comments|length}})</div>
   </div>
 
   <div class="comments">
-    {% for comment in post.comments %}
+    {% for comment in post.comments[:100] %}
     <div class="comment">
       <div class="post-info">
         <span class="name">{{comment.username}}</span>
