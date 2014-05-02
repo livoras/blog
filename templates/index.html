@@ -4,46 +4,39 @@
 
 {% include "side_bar.html" %}
 
-<div class="posts pull-right width-66">
+<link rel="stylesheet" href="{{url_for('static', filename='bin/css/index.css')}}">
+<div class="posts pull-left width-66">
   {% if posts|length == 0%}
   <div>无内容</div>
   {% endif %}
   {% for post in posts %}
   <div class="post section">
-    <div class="info">
+    <div class="post-info">
       <span class="name">{{post.author.name}}</span>
       <span class="on">on</span>
-      <span class="create-time">{{post.create_time}}</span>
+      <time class="create-time">{{post.create_time.strftime('%b %d, %y')}}</time>
     </div>
     <h3 class="post-title">
       <a href="/post/{{post.id}}">{{post.title}}</a>
     </h3>
-    <div class="content-abs">
-      {{post.content[:200]}}
-    </div>
-<!--     <div>最后更新时间：{{post.update_time}}</div>
-    <div>创建时间：{{post.create_time}}</div>
-    <div>标签：
-    {% for tag in post.tags %}
-      <span>{{tag}}</span>
-    {% endfor %}
-    </div>
-    <div>{{post.status}}</div>
- -->  </div>
+    <p class="content-abs">
+      {{post.content[:300]}}...
+    </p>
+  </div>
   {% endfor %}
-</div>
 
-{% set count = pages|length %}
-{% if count != 1 %}
-<div class="pages-nav">
-  {% for page in pages %}
-    {% if page == active_page %}
-      <a class="active">{{page}}</a>
-    {% else %}  
-      <a href="{{link}}{{page}}">{{page}}</a>
-    {% endif %}
-  {% endfor %}
+  {% set count = pages|length %}
+  {% if count != 1 %}
+  <div class="pages-nav clear center">
+    {% for page in pages %}
+      {% if page == active_page %}
+        <a class="active">{{page}}</a>
+      {% else %}  
+        <a href="{{link}}{{page}}">{{page}}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
-{% endif %}
 
 {% endblock %}
