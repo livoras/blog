@@ -1,0 +1,1 @@
+window.$ = $ = require 'jquery'
