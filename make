@@ -16,6 +16,6 @@ then
   cd static && grunt build && cd ../
   git add -A
   git commit -am 'deploy'
-  git push heroku master
+  git push heroku master -f
   git reset --hard HEAD^
 fi
