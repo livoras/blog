@@ -12,7 +12,7 @@ then
 	sniffer &
 elif [ "$1" = "deploy" ]	
 then	
-  swap()
+  swap
   cd static && grunt build && cd ../
   git add -A
   git commit -am 'deploy'
