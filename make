@@ -12,11 +12,12 @@ then
 	sniffer &
 elif [ "$1" = "deploy" ]	
 then	
+	cp blog.db ../
   swap
   cd static && grunt build && cd ../
   git add -A
   git commit -am 'deploy'
   git push heroku master -f
-  swap
   git reset --hard HEAD^
+  mv ../blog.db .
 fi
