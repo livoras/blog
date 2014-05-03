@@ -55,3 +55,20 @@ $updatePassword.click (event)->
   
   promise.error (error)->
     alert '修改失败：' + utils.getError(error)
+
+
+# delete post
+$('.delete-post').click (event)->
+  $button = $(event.target)
+  data = {id: $button.data('post-id')}
+
+  promise = utils.ajax
+    type: 'delete'
+    url: '/delete_post'
+    data: data
+
+  promise.success (data)->
+    $button.parent('li').remove()
+
+  promise.error (error)->  
+    alert '删除失败：' + getError(error)

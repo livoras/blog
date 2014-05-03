@@ -4,8 +4,6 @@ markdown = (require 'markdown').markdown
 $form = $('form.edit-post-form')
 $submit = $('button.create')
 
-console.log(markdown.toHTML('## fuckyou'))
-
 $submit.click (event)->
   event.preventDefault()
   data = $form.serializeObject()

@@ -7,6 +7,7 @@ from common.utils import debug
 from common import db
 from models.post import Post
 from models.tag import Tag
+from models.comment import Comment
 from business import post
 
 posts_count = db.session.query(Post).count()
@@ -23,6 +24,7 @@ def add_new_post(data=None, content="new_post_content_", tags=None, title=None):
   new_post.tags = post.parse_tags(new_post.id, tags or [])
   db.session.add(new_post)
   db.session.commit()
+  return new_post
 
 def test_new_post():
   # If administrator doesn't login, and someon wants to visist
@@ -149,3 +151,49 @@ def test_get_tags():
   assert tags['search-tag-1'] == 5
   assert tags['search-tag-2'] == 2
   assert tags['search-tag-3'] == 1
+
+
+def test_delete_post():
+  post = add_new_post()
+
+  tag = Tag(post.id, 'sometag')
+  post.tags = [tag]
+
+  comment_data = dict(
+    content='jerry',
+    username='fuckyou',
+    user_email='iammfw@163.com',
+    post_id=post.id
+  )
+  comment = Comment(**comment_data)
+  post.comments = [comment]
+  db.session.add(post)
+  db.session.commit()
+
+  tags_count = db.session.query(Tag).count()
+  comments_count = db.session.query(Comment).count()
+
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+    data = {"id": post.id}
+    rv = send_json('delete', '/delete_post', data, c)
+    assert 'success' in rv.data
+    new_comments_count = db.session.query(Comment).count()
+    new_tags_count = db.session.query(Tag).count()
+    assert new_tags_count == tags_count - 1
+    assert new_comments_count == comments_count - 1
+
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = False
+    data = {"id": post.id}
+    rv = send_json('delete', '/delete_post', data, c)
+    assert 'not login' in rv.data
+
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+    data = {"id": "4312434231412"}
+    rv = send_json('delete', '/delete_post', data, c)
+    assert 'not found' in rv.data

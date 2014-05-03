@@ -114,9 +114,20 @@ def render_pages(posts, page_count, link='/page/', load_tags=True):
   return render_template('index.html', **data)
 
 
+@post_bp.route('/delete_post', methods=['delete'])
+def delete_post():
+  if not session.get('is_admin'): 
+    return utils.fail(['user not login'], 401)
+  data = request.json
+  post_id = data.get('id')
+  if not post_id: return abort(404)
+  error = post.delete_post_by_id(post_id)
+  if error: return utils.fail(error, 400)
+  return utils.success()
+
+
 def get_dict_from_post(post):
   post_dict = post.get_dict()
   post_dict['content'] = post_dict['content'].replace('>', '\>')
   return post_dict
 
-  

@@ -91,3 +91,10 @@ def get_tags():
   tags = session.query(Tag.tag_name, func.count('*')).group_by(Tag.tag_name).all()
   tags = dict(tags)
   return tags
+
+
+def delete_post_by_id(post_id):
+  to_delete_post = session.query(Post).filter_by(id=post_id).first()
+  if not to_delete_post:
+    return ['post not found']
+  session.delete(to_delete_post)  
