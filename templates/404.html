@@ -1,11 +1,5 @@
-<!doctype html>
-<html>
-<head>
-  <title>404..</title>
-  <meta charset="utf-8">
-</head>
-<body>
-  <h1>{{notification}}</h1>
-  <h2>404</h2>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<h2>这就是传说中的404</h2>
+{% include "no_content.html" %}
+{% endblock %}

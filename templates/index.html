@@ -7,35 +7,36 @@
 <link rel="stylesheet" href="{{url_for('static', filename='bin/css/index.css')}}">
 <div class="posts pull-left width-66">
   {% if posts|length == 0%}
-  <div>无内容</div>
-  {% endif %}
-  {% for post in posts %}
-  <div class="post section">
-    <div class="post-info">
-      <span class="name">{{post.author.name}}</span>
-      <span class="on">on</span>
-      <time class="create-time">{{post.create_time.strftime('%b %d, %y')}}</time>
+    {% include "no_content.html" %}
+  {% else %}
+    {% for post in posts %}
+    <div class="post section">
+      <div class="post-info">
+        <span class="name">{{post.author.name}}</span>
+        <span class="on">on</span>
+        <time class="create-time">{{post.create_time.strftime('%b %d, %y')}}</time>
+      </div>
+      <h3 class="post-title">
+        <a href="/post/{{post.id}}">{{post.title}}</a>
+      </h3>
+      <p class="content-abs">
+        {{post.content[:300]}}...
+      </p>
     </div>
-    <h3 class="post-title">
-      <a href="/post/{{post.id}}">{{post.title}}</a>
-    </h3>
-    <p class="content-abs">
-      {{post.content[:300]}}...
-    </p>
-  </div>
-  {% endfor %}
-
-  {% set count = pages|length %}
-  {% if count != 1 %}
-  <div class="pages-nav clear center">
-    {% for page in pages %}
-      {% if page == active_page %}
-        <a class="active">{{page}}</a>
-      {% else %}  
-        <a href="{{link}}{{page}}">{{page}}</a>
-      {% endif %}
     {% endfor %}
-  </div>
+
+    {% set count = pages|length %}
+    {% if count != 1 %}
+    <div class="pages-nav clear center">
+      {% for page in pages %}
+        {% if page == active_page %}
+          <a class="active">{{page}}</a>
+        {% else %}  
+          <a href="{{link}}{{page}}">{{page}}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
   {% endif %}
 </div>
 
