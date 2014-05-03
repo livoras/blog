@@ -71,17 +71,20 @@ def update_post(data):
 
 
 def search_by_tag(tag=None):
-  return session.query(Post) \
-                .join(Tag) \
-                .filter_by(tag_name=tag).all()
+  query = session.query(Post)
+  if not sess.get('is_admin'):
+    query = query.filter_by(status='public')
+  return query.join(Tag).filter_by(tag_name=tag).all()
 
 
 def search_by_keyword(keyword=None):
   if not keyword: return []
   pattern = "%" + keyword + "%"
-  return session.query(Post) \
-                .filter(or_(Post.title.like(pattern), Post.content.like(pattern))) \
-                .all()
+  expr = or_(Post.title.like(pattern), Post.content.like(pattern))
+  query = session.query(Post).filter(expr)
+  if not sess.get('is_admin'): query = query.filter_by(status='public')
+  return query.all()  
+
 
 def get_pages_count_by_posts(posts):
   return range(1, len(posts) / config.POSTS_PER_PAGE + 2)

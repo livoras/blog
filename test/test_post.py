@@ -12,13 +12,13 @@ from business import post
 
 posts_count = db.session.query(Post).count()
 
-def add_new_post(data=None, content="new_post_content_", tags=None, title=None):
+def add_new_post(data=None, content="new_post_content_", tags=None, title=None, status=None):
   global posts_count
   posts_count += 1
   data = data or dict(
     title=title or "new_post_title_",
     content=content + str(posts_count),
-    status="public"
+    status=status or "public"
   )
   new_post = Post(**data)
   new_post.tags = post.parse_tags(new_post.id, tags or [])
@@ -125,25 +125,48 @@ def test_update_post():
         assert getattr(post, key) == value
 
 def test_search_by_tag():
-  add_new_post(tags=['search-tag-1'])
+  add_new_post(tags=['search-tag-1'], status='private')
   add_new_post(tags=['search-tag-1'])
   add_new_post(tags=['search-tag-1', 'search-tag-2'])
   add_new_post(tags=['search-tag-1', 'search-tag-2'])
   add_new_post(tags=['search-tag-1', 'search-tag-3'])
-  assert len(post.search_by_tag('search-tag-1')) == 5
-  assert len(post.search_by_tag('search-tag-2')) == 2
-  assert len(post.search_by_tag('search-tag-3')) == 1
+
+  with app.test_client() as c:
+    rv = c.get('/')
+    assert len(post.search_by_tag('search-tag-1')) == 4
+    assert len(post.search_by_tag('search-tag-2')) == 2
+    assert len(post.search_by_tag('search-tag-3')) == 1
+
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+    rv = c.get('/')
+    assert len(post.search_by_tag('search-tag-1')) == 5
+    assert len(post.search_by_tag('search-tag-2')) == 2
+    assert len(post.search_by_tag('search-tag-3')) == 1
 
 def test_search_by_keyword():
   add_new_post(content='nonsense-nicegood', title='nonsense-merry')
   add_new_post(content='nonsense-merry', title='nonsense-nicegood')
   add_new_post(content='nonsense-jerry')
-  add_new_post(title='nonsense-no-title')
+  add_new_post(title='nonsense-no-title', status='private')
 
-  assert len(post.search_by_keyword('no-title')) == 1
-  assert len(post.search_by_keyword('nonsense-jerry')) == 1
-  assert len(post.search_by_keyword('nicegood')) == 2
-  assert len(post.search_by_keyword('nonsense')) == 4
+  with app.test_client() as c:
+    rv = c.get('/')
+    assert len(post.search_by_keyword('no-title')) == 0
+    assert len(post.search_by_keyword('nonsense-jerry')) == 1
+    assert len(post.search_by_keyword('nicegood')) == 2
+    assert len(post.search_by_keyword('nonsense')) == 3
+
+  with app.test_client() as c:
+    with c.session_transaction() as sess:
+      sess['is_admin'] = True
+    rv = c.get('/')
+    assert len(post.search_by_keyword('no-title')) == 1
+    assert len(post.search_by_keyword('nonsense-jerry')) == 1
+    assert len(post.search_by_keyword('nicegood')) == 2
+    assert len(post.search_by_keyword('nonsense')) == 4
+
 
 def test_get_tags():
   tags = post.get_tags()
