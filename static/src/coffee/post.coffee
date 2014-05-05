@@ -1,7 +1,8 @@
 hbs = require 'handlebars'
 utils = require './utils.coffee'
 commentTpl = require '../tpl/comment.hbs'
-markdown = (require 'markdown').markdown
+marked = require 'marked'
+highlight = require 'highlight.js'
 
 $submitComment = $('#submit-new-comment')
 $newCommentForm = $('#new-comment-form')
@@ -79,6 +80,11 @@ clearForm = ->
 
 
 # Render post content
+marked.setOptions
+  highlight: (code)->
+    highlight.highlightAuto(code).value
+
 $postContent = $('div.post-content')
 content = postData.content.replace(/\\\>/g, '>')
-$postContent.html(markdown.toHTML(content))
+$postContent.html(marked(content))
+$('code').addClass('hljs')

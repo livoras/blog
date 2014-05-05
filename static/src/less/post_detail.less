@@ -1,4 +1,5 @@
 @import "common.less";
+@import 'syntaxs/zenburn.less';
 
 div.post-detail {
   max-width: 670px;
@@ -21,7 +22,7 @@ div.post-content {
   padding-bottom: 1em; 
   margin-bottom: 1em;
   border-bottom: 1px solid #E8EBED;
-  p, ul, code, div, pre, hr, ol {
+  p, ul, code, div, pre, hr, ol, h3, h4, h5, pre {
     margin-bottom: 1.5em;
   }
   p, ul, ol {
@@ -36,13 +37,17 @@ div.post-content {
     padding: 1%;
     border-radius: 3px;
   }
-  ul , ol{
+  ul , ol {
     padding-left: 2em;
   }
   hr {
     border: none;
     height: 1px;
     background-color: #E8EBED;
+  }
+  code {
+    margin-top: -1.3em;
+    border-radius: 3px; 
   }
 }
 

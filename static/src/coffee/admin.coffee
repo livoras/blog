@@ -59,6 +59,7 @@ $updatePassword.click (event)->
 
 # delete post
 $('.delete-post').click (event)->
+  if not confirm('Sure for deleting?') then return
   $button = $(event.target)
   data = {id: $button.data('post-id')}
 
