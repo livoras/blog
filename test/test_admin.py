@@ -66,7 +66,7 @@ def test_admin_logout():
 
     rv = send_json('post', '/admin_logout', {}, c)  
     assert session.get('is_admin', False) == False
-    assert rv.status_code == 400
+    assert rv.status_code == 401
 
 
 def test_get_current_admin():

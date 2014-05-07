@@ -49,6 +49,7 @@ def get_current_admin():
   else:  
     return None
 
+
 def update_profile(data):
   admin_dict = json.loads(sess.get('user'))
   admin = session.query(User).filter_by(id=admin_dict['id']).first()
@@ -60,6 +61,7 @@ def update_profile(data):
   set_session(admin)
   session.commit()
   return admin
+
 
 def update_password(data):
   admin_dict = json.loads(sess.get('user'))
@@ -76,6 +78,7 @@ def update_password(data):
     set_session(admin)
     session.commit()
     return admin
+
 
 def set_session(admin):
   sess['is_admin'] = True
