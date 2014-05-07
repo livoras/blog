@@ -14,6 +14,7 @@ elif [ "$1" = "deploy" ]
 then	
 	cp blog.db ../
   swap
+  python dev-tools/deploy.py
   cd static && grunt build && cd ../
   git add -A
   git commit -am 'deploy'
