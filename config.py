@@ -3,7 +3,6 @@ debug = False
 
 SECRET_KEY = '9687d209a9ff0713da8edae47dce398fuckyoublog'
 
-
 DB_FILE = 'blog.db'
 DATABASE_URI = 'sqlite:///' + DB_FILE + '?check_same_thread=False?chartset=utf8'
 
@@ -22,6 +21,7 @@ POSTS_PER_PAGE = 7
 TESTING = True
 
 # email settings
+SITE = 'http://livoras.com'
 SENDER = 'noreplylivoras@163.com'
 RECIEVER = 'me@livoras.com'
 SMTP_SERVER = 'smtp.163.com'

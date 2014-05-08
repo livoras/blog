@@ -29,7 +29,7 @@ def create_new_comment():
 
 
 def send_mail(mail_data, post_id):
-  mail_data['link'] = 'http://livoras.com/post/%s' % post_id
+  mail_data['link'] = '%s/post/%s' % (config.SITE, post_id)
   mail.send(config.MAIL_CONTENT.format(**mail_data))
 
 
