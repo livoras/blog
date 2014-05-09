@@ -4,7 +4,7 @@ debug = False
 SECRET_KEY = '9687d209a9ff0713da8edae47dce398fuckyoublog'
 
 DB_FILE = 'blog.db'
-DATABASE_URI = 'sqlite:///' + DB_FILE + '?check_same_thread=False?chartset=utf8'
+DATABASE_URI =  'postgresql+psycopg2://gdgallhkmzucyp:BmSWLwkVV_Bfcjwz9sZPtSsIIX@ec2-54-243-50-213.compute-1.amazonaws.com:5432/d5sm1n1kpsj2ta'
 
 ECHO = False
 
