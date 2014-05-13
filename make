@@ -1,4 +1,4 @@
-
+#!/bin/bash
 if [ "$1" = "" ]
 then
 	python app.py & 
@@ -6,14 +6,21 @@ then
 	sniffer &
 elif [ "$1" = "deploy" ]	
 then	
-  cp .gitignore tmp
   cp dev-tools/fixture/.gitignore .gitignore
-  cp tmp dev-tools/fixture/.gitignore
-  rm tmp
+  origin="heroku"
+
+	if [ "$2" = "huasheng" ]
+	then
+    cp dev-tools/fixture/config-huasheng.py config.py
+    origin="huasheng"
+	fi
+
+  echo "Pushing to $origin...."
+
   python dev-tools/deploy.py
   cd static && grunt build && cd ../
   git add -A
   git commit -am 'deploy'
-  git push heroku master -f
+  git push $origin master -f
   git reset --hard HEAD^
 fi
