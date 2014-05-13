@@ -13,7 +13,7 @@ LOGGER_NAME = 'BLOG'
 DEFAULT_ADMIN_LOGIN_NAME = 'huasheng'
 DEFAULT_ADMIN_NICK_NAME = 'huasheng'
 DEFAULT_ADMIN_PASSWORD = '123456'
-ADMIN_EMAIL = 'sofei10709@163.com'
+ADMIN_EMAIL = 'sufei10709@163.com'
 
 TITLE = u'画生的博客'
 
@@ -23,7 +23,7 @@ TESTING = True
 # email settings
 SITE = 'http://huasheng.livoras.com'
 SENDER = 'noreplylivoras@163.com'
-RECIEVER = 'sofei10709@163.com'
+RECIEVER = 'sufei10709@163.com'
 SMTP_SERVER = 'smtp.163.com'
 SENDER_PASSWORD = 'crackmeplease.'
 MAIL_CONTENT = u'''
