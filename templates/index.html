@@ -22,6 +22,7 @@
       <p class="content-abs">
         {{post.content[:300]}}...
       </p>
+      <div class="comments-count">共有条 {{post.comments|length}} 评论</div>
     </div>
     {% endfor %}
 
