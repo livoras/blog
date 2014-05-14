@@ -22,7 +22,7 @@ div.post-content {
   padding-bottom: 1em; 
   margin-bottom: 1em;
   border-bottom: 1px solid #E8EBED;
-  p, ul, code, div, pre, hr, ol, h3, h4, h5, pre {
+  p, ul, pre code, div, pre, hr, ol, h3, h4, h5, pre {
     margin-bottom: 1.5em;
   }
   p, ul, ol {
@@ -48,6 +48,13 @@ div.post-content {
   code {
     margin-top: -1.3em;
     border-radius: 3px; 
+    border: none;
+  }
+  code:not(.hljs) {
+    border: 1px solid #E8EBED;
+    border-radius: 3px; 
+    color: #800;
+    padding: 1px;
   }
 }
 

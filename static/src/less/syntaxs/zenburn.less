@@ -1,112 +1,147 @@
 /*
 
-Zenburn style from voldmar.ru (c) Vladimir Epifanov <voldmar@voldmar.ru>
-based on dark.css by Ivan Sagalaev
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
 
 */
 
 .hljs {
-  display: block; padding: 0.5em;
-  background: #3F3F3F;
-  color: #DCDCDC;
+  display: block;
+  padding: 0.5em;
+  background: #f0f0f0;
 }
 
-.hljs-keyword,
-.hljs-tag,
-.css .hljs-class,
-.css .hljs-id,
+.hljs,
+.hljs-subst,
+.hljs-tag .hljs-title,
 .lisp .hljs-title,
-.nginx .hljs-title,
-.hljs-request,
-.hljs-status,
-.clojure .hljs-attribute {
-  color: #E3CEAB;
+.clojure .hljs-built_in,
+.nginx .hljs-title {
+  color: black;
 }
 
-.django .hljs-template_tag,
+.hljs-string,
+.hljs-title,
+.hljs-constant,
+.hljs-parent,
+.hljs-tag .hljs-value,
+.hljs-rules .hljs-value,
+.hljs-preprocessor,
+.hljs-pragma,
+.haml .hljs-symbol,
+.ruby .hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.hljs-template_tag,
 .django .hljs-variable,
-.django .hljs-filter .hljs-argument {
-  color: #DCDCDC;
+.smalltalk .hljs-class,
+.hljs-addition,
+.hljs-flow,
+.hljs-stream,
+.bash .hljs-variable,
+.apache .hljs-tag,
+.apache .hljs-cbracket,
+.tex .hljs-command,
+.tex .hljs-special,
+.erlang_repl .hljs-function_or_atom,
+.asciidoc .hljs-header,
+.markdown .hljs-header,
+.coffeescript .hljs-attribute {
+  color: #800;
+}
+
+.smartquote,
+.hljs-comment,
+.hljs-annotation,
+.hljs-template_comment,
+.diff .hljs-header,
+.hljs-chunk,
+.asciidoc .hljs-blockquote,
+.markdown .hljs-blockquote {
+  color: #888;
 }
 
 .hljs-number,
-.hljs-date {
-  color: #8CD0D3;
-}
-
-.dos .hljs-envvar,
-.dos .hljs-stream,
-.hljs-variable,
-.apache .hljs-sqbracket {
-  color: #EFDCBC;
-}
-
-.dos .hljs-flow,
-.diff .hljs-change,
-.python .exception,
-.python .hljs-built_in,
+.hljs-date,
+.hljs-regexp,
 .hljs-literal,
-.tex .hljs-special {
-  color: #EFEFAF;
+.hljs-hexcolor,
+.smalltalk .hljs-symbol,
+.smalltalk .hljs-char,
+.go .hljs-constant,
+.hljs-change,
+.lasso .hljs-variable,
+.makefile .hljs-variable,
+.asciidoc .hljs-bullet,
+.markdown .hljs-bullet,
+.asciidoc .hljs-link_url,
+.markdown .hljs-link_url {
+  color: #080;
 }
 
-.diff .hljs-chunk,
-.hljs-subst {
-  color: #8F8F8F;
-}
-
-.dos .hljs-keyword,
-.python .hljs-decorator,
-.hljs-title,
-.haskell .hljs-type,
-.diff .hljs-header,
-.ruby .hljs-class .hljs-parent,
-.apache .hljs-tag,
-.nginx .hljs-built_in,
-.tex .hljs-command,
-.hljs-prompt {
-    color: #efef8f;
-}
-
-.dos .hljs-winutils,
-.ruby .hljs-symbol,
-.ruby .hljs-symbol .hljs-string,
-.ruby .hljs-string {
-  color: #DCA3A3;
-}
-
-.diff .hljs-deletion,
-.hljs-string,
-.hljs-tag .hljs-value,
-.hljs-preprocessor,
-.hljs-pragma,
-.hljs-built_in,
-.sql .hljs-aggregate,
+.hljs-label,
 .hljs-javadoc,
-.smalltalk .hljs-class,
-.smalltalk .hljs-localvars,
-.smalltalk .hljs-array,
-.css .hljs-rules .hljs-value,
+.ruby .hljs-string,
+.hljs-decorator,
+.hljs-filter .hljs-argument,
+.hljs-localvars,
+.hljs-array,
 .hljs-attr_selector,
+.hljs-important,
 .hljs-pseudo,
-.apache .hljs-cbracket,
+.hljs-pi,
+.haml .hljs-bullet,
+.hljs-doctype,
+.hljs-deletion,
+.hljs-envvar,
+.hljs-shebang,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in,
 .tex .hljs-formula,
-.coffeescript .hljs-attribute {
-  color: #CC9393;
+.erlang_repl .hljs-reserved,
+.hljs-prompt,
+.asciidoc .hljs-link_label,
+.markdown .hljs-link_label,
+.vhdl .hljs-attribute,
+.clojure .hljs-attribute,
+.asciidoc .hljs-attribute,
+.lasso .hljs-attribute,
+.coffeescript .hljs-property,
+.hljs-phony {
+  color: #88f;
 }
 
-.hljs-shebang,
-.diff .hljs-addition,
-.hljs-comment,
-.java .hljs-annotation,
-.hljs-template_comment,
-.hljs-pi,
-.hljs-doctype {
-  color: #7F9F7F;
+.hljs-keyword,
+.hljs-id,
+.hljs-title,
+.hljs-built_in,
+.css .hljs-tag,
+.hljs-javadoctag,
+.hljs-phpdoc,
+.hljs-yardoctag,
+.smalltalk .hljs-class,
+.hljs-winutils,
+.bash .hljs-variable,
+.apache .hljs-tag,
+.go .hljs-typename,
+.tex .hljs-command,
+.asciidoc .hljs-strong,
+.markdown .hljs-strong,
+.hljs-request,
+.hljs-status {
+  font-weight: bold;
+}
+
+.asciidoc .hljs-emphasis,
+.markdown .hljs-emphasis {
+  font-style: italic;
+}
+
+.nginx .hljs-built_in {
+  font-weight: normal;
 }
 
 .coffeescript .javascript,
 .javascript .xml,
+.lasso .markup,
 .tex .hljs-formula,
 .xml .javascript,
 .xml .vbscript,
@@ -114,4 +149,3 @@ based on dark.css by Ivan Sagalaev
 .xml .hljs-cdata {
   opacity: 0.5;
 }
-

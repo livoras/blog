@@ -87,4 +87,4 @@ marked.setOptions
 $postContent = $('div.post-content')
 content = postData.content.replace(/\\\>/g, '>')
 $postContent.html(marked(content))
-$('code').addClass('hljs')
+$('pre code').addClass('hljs')
