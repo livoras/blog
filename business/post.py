@@ -87,7 +87,7 @@ def search_by_keyword(keyword=None):
 
 
 def get_pages_count_by_posts(posts):
-  return range(1, len(posts) / config.POSTS_PER_PAGE + 2)
+  return range(1, (len(posts) - 1) / config.POSTS_PER_PAGE + 2)
 
 
 def get_tags():
