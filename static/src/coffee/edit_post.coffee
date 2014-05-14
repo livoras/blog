@@ -34,6 +34,7 @@ $submit.click ->
 
 # delete comment
 $('button.delete-comment').click (event)->
+  if not confirm('Confirm to delete this comment ?') then return
   $button = $(event.currentTarget)
   data = {id: $button.data('comment-id')}
 

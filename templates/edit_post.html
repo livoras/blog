@@ -1,20 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<link rel="stylesheet" href="{{url_for('static', filename='bin/css/edit_post.css')}}">
 <div class="edit-post">
   {% include "edit_post_area.html" %}
 </div>
 
-<button class="update btn">update</button>
+<div class="btn-wrapper">
+  <button class="update btn">update</button>
+</div>
 
 <div class="comments">
+  <div class="title">Comments({{post.comments|length}})</div>
   <ul>
     {% for comment in post.comments %}
     <li>
-      <div>username: {{comment.username}}</div>
-      <div>user_email: {{comment.user_email}}</div>
-      <div>content: {{comment.content}}</div>
-      <div>create_time: {{comment.create_time}}</div>
+      <div>Username: {{comment.username}}</div>
+      <div>Email: {{comment.user_email}}</div>
+      <div>Content: {{comment.content}}</div>
+      <div>Create Time: {{comment.create_time.strftime('%Y-%m-%d %H:%M:%S')}}</div>
       <button class="delete-comment" data-comment-id="{{comment.id}}">delete</button>
     </li>
     {% endfor %}
