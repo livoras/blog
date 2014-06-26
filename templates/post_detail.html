@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
+
+{% block title %}
+<title>{{post.title}}</title>
+{% endblock %}
+
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename='bin/css/post_detail.css')}}">
 <div class="post-detail">
