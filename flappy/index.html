@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>flappy</title>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+  <style>
+body {
+  padding: 0px;
+  margin: 0px;
+  background: #000;
+  border: 0px;
+}
+
+.content {
+  margin: 0 auto;
+}
+  </style>
+  <script src="../../src/Game.js"></script>
+</head>
+<body>
+  <div class="content">
+    <canvas id="canvas" width="720" height="1280">
+      <span>Browser does not support the canvas.</span>
+    </canvas>
+  </div>
+  <script src="scripts/flappy.js"></script>
+  <script>
+void function() {
+
+  window.onload = function() {
+    flappy.init(canvas);
+    flappy.start(document.getElementById('canvas'));
+  };
+
+}();
+  </script>
+</body>
+</html>
