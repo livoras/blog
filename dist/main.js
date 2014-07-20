@@ -17,6 +17,7 @@ var LEVEL_START_DURATION = 800
 
 var levelTimer = null
 var LEVEL_UP_DURATON = 10 // s
+var isMobile = false
 
 var status = {
     lifes: 5,
@@ -167,16 +168,25 @@ function listenResize() {
 }
 
 function listenMouseDown() {
-    function mousedown(event) {
-        shootChicks(event)
-    }
-    canvas.addEventListener("touchdown", mousedown)
-    canvas.addEventListener("mousedown", mousedown)
+    canvas.addEventListener("touchstart", function(event) {
+        isMobile = true
+        event.preventDefault()
+        var x = event.touches[0].pageX
+        var y = event.touches[0].pageY
+        shootChicks(x, y)
+    })
+    canvas.addEventListener("touchend", function(event) {
+        event.preventDefault()
+    })
+    canvas.addEventListener("mousedown", function(event) {
+        if (!isMobile) {
+            shootChicks(event.clientX, event.clientY)
+            console.log("is not mobile")
+        }
+    })
 }
 
-function shootChicks(event) {
-    var x = event.clientX
-    var y = event.clientY
+function shootChicks(x, y) {
     if (game.isResume) {
         chickManager.aliveChicks.forEach(function(chick) {
             if (x > chick.x && 
@@ -230,24 +240,7 @@ function stopToCountLevel() {
     clearInterval(levelTimer)
 }
 
-},{"../src/game":2,"../src/chick":3,"../src/dog":4,"../src/chick-manager":5,"../src/pannel":6,"../src/local-record":7}],4:[function(require,module,exports){
-var dogImg = new Image()
-dogImg.src = "img/dog.png"
-
-var dog = {
-    init: function(canvas) {
-        this.x = canvas.width - dogImg.width - 30,
-        this.y = 30
-        this.ctx = canvas.getContext("2d")
-    },
-    move: function() {
-        this.ctx.drawImage(dogImg, this.x, this.y)
-    }
-}
-
-module.exports = dog
-
-},{}],6:[function(require,module,exports){
+},{"../src/game":2,"../src/chick":3,"../src/dog":4,"../src/pannel":5,"../src/local-record":6,"../src/chick-manager":7}],5:[function(require,module,exports){
 var score = $("#stats-score")
 var lifes = $("#stats-lifes")
 var level = $("#stats-level")
@@ -331,7 +324,24 @@ function updateScore() {
 
 hideStats()
 
-},{}],7:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+var dogImg = new Image()
+dogImg.src = "img/dog.png"
+
+var dog = {
+    init: function(canvas) {
+        this.x = canvas.width - dogImg.width - 30,
+        this.y = 30
+        this.ctx = canvas.getContext("2d")
+    },
+    move: function() {
+        this.ctx.drawImage(dogImg, this.x, this.y)
+    }
+}
+
+module.exports = dog
+
+},{}],6:[function(require,module,exports){
 
 exports.read = function() {
     var record = localStorage.getItem("stats")
@@ -344,80 +354,7 @@ exports.write = function(status) {
     localStorage.setItem("stats", JSON.stringify(status))
 }
 
-},{}],2:[function(require,module,exports){
-require("./animation")
-
-var Event = require("./event")
-
-var Game = function() {
-    this.isStart = false
-    this.isStop = true
-    this.isResume = false
-    this.isPause = true
-    this.sprits = [] 
-    this.timer = null
-}
-
-var gameMethods = {
-    init: function() {
-        this.emit("init")
-        this.render()
-    },
-    start: function() {
-        this.isStart = true
-        this.isStop = true
-        this.resume()
-        this.emit("start")
-    },
-    stop: function() {
-        this.isStart = false
-        this.isStop = true
-        this.pause()
-        this.emit("stop")
-    },
-    pause: function() {
-        this.isPause = true
-        this.isResume = false
-        this.emit("pause")
-    },
-    resume: function() {
-        this.isResume = true
-        this.isPause = false
-        this.emit("resume")
-    },
-    render: function() {
-        var that = this
-        function _run() {
-            var sprits = that.sprits
-            that.sprits = []
-            for (var i = 0, len = sprits.length; i < len; i++) {
-                var sprit = sprits[i]
-                if (!sprit.isToRemove) {
-                    var sprit = sprits[i]
-                    that.sprits.push(sprit)
-                    sprit.move()
-                } 
-            }
-            that.timer = requestAnimationFrame(_run)
-        }
-        _run()
-    },
-    add: function(sprit) {
-        if (!(typeof sprit.move === 'function')) {
-            throw "Sprit should have a `move` function."
-        }
-        this.sprits.push(sprit)
-        this.emit("sprit added", sprit)
-    },
-    remove: function(sprit) {
-        sprit.isToRemove = true
-        this.emit("sprit removed", sprit)
-    }
-}
-
-module.exports = Event.extend(Game, gameMethods)
-
-},{"./animation":8,"./event":9}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var Event = require("./event")
 
 var chickImg = new Image()
@@ -524,7 +461,80 @@ var chickPrototype = {
 
 module.exports = Event.extend(Chick, chickPrototype)
 
-},{"./event":9}],5:[function(require,module,exports){
+},{"./event":8}],2:[function(require,module,exports){
+require("./animation")
+
+var Event = require("./event")
+
+var Game = function() {
+    this.isStart = false
+    this.isStop = true
+    this.isResume = false
+    this.isPause = true
+    this.sprits = [] 
+    this.timer = null
+}
+
+var gameMethods = {
+    init: function() {
+        this.emit("init")
+        this.render()
+    },
+    start: function() {
+        this.isStart = true
+        this.isStop = true
+        this.resume()
+        this.emit("start")
+    },
+    stop: function() {
+        this.isStart = false
+        this.isStop = true
+        this.pause()
+        this.emit("stop")
+    },
+    pause: function() {
+        this.isPause = true
+        this.isResume = false
+        this.emit("pause")
+    },
+    resume: function() {
+        this.isResume = true
+        this.isPause = false
+        this.emit("resume")
+    },
+    render: function() {
+        var that = this
+        function _run() {
+            var sprits = that.sprits
+            that.sprits = []
+            for (var i = 0, len = sprits.length; i < len; i++) {
+                var sprit = sprits[i]
+                if (!sprit.isToRemove) {
+                    var sprit = sprits[i]
+                    that.sprits.push(sprit)
+                    sprit.move()
+                } 
+            }
+            that.timer = requestAnimationFrame(_run)
+        }
+        _run()
+    },
+    add: function(sprit) {
+        if (!(typeof sprit.move === 'function')) {
+            throw "Sprit should have a `move` function."
+        }
+        this.sprits.push(sprit)
+        this.emit("sprit added", sprit)
+    },
+    remove: function(sprit) {
+        sprit.isToRemove = true
+        this.emit("sprit removed", sprit)
+    }
+}
+
+module.exports = Event.extend(Game, gameMethods)
+
+},{"./animation":9,"./event":8}],7:[function(require,module,exports){
 var Chick = require("./chick")
 var Event = require("./event")
 
@@ -606,7 +616,7 @@ var chickManagerPrototype = {
 var ChickManager = Event.extend(ChickManager, chickManagerPrototype)
 module.exports = new ChickManager
 
-},{"./chick":3,"./event":9}],8:[function(require,module,exports){
+},{"./chick":3,"./event":8}],9:[function(require,module,exports){
 // From http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 // By @PaulIrish, thx god!
 
@@ -650,7 +660,7 @@ function extend(Constructor, prototype) {
 
 exports.extend = extend
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var util = require("./util")
 var EventEmitter = require("eventemitter2").EventEmitter2
 
