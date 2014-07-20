@@ -181,8 +181,12 @@ function listenMouseDown() {
     canvas.addEventListener("mousedown", function(event) {
         if (!isMobile) {
             shootChicks(event.clientX, event.clientY)
-            console.log("is not mobile")
+            console.log("is not a mobile")
         }
+    })
+    canvas.addEventListener("dblclick", function(event) {
+        event.stopPropagation()
+        event.preventDefault()
     })
 }
 
@@ -240,7 +244,7 @@ function stopToCountLevel() {
     clearInterval(levelTimer)
 }
 
-},{"../src/game":2,"../src/chick":3,"../src/dog":4,"../src/pannel":5,"../src/local-record":6,"../src/chick-manager":7}],5:[function(require,module,exports){
+},{"../src/game":2,"../src/chick":3,"../src/dog":4,"../src/pannel":5,"../src/chick-manager":6,"../src/local-record":7}],5:[function(require,module,exports){
 var score = $("#stats-score")
 var lifes = $("#stats-lifes")
 var level = $("#stats-level")
@@ -341,7 +345,7 @@ var dog = {
 
 module.exports = dog
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
 exports.read = function() {
     var record = localStorage.getItem("stats")
@@ -534,7 +538,7 @@ var gameMethods = {
 
 module.exports = Event.extend(Game, gameMethods)
 
-},{"./animation":9,"./event":8}],7:[function(require,module,exports){
+},{"./animation":9,"./event":8}],6:[function(require,module,exports){
 var Chick = require("./chick")
 var Event = require("./event")
 
