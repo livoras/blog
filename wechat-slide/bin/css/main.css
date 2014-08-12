@@ -3,11 +3,11 @@
   padding: 0;
 }
 div.wall {
-  -webkit-transition: background-image 0.5s ease;
-  -moz-transition: background-image 0.5s ease;
-  -ms-transition: background-image 0.5s ease;
-  -o-transition: background-image 0.5s ease;
-  transition: background-image 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   position: fixed;
   left: 0;
   top: 0;
@@ -23,11 +23,11 @@ div.wall {
   filter: blur(20px);
 }
 div.cover {
-  -webkit-transition: background-image 0.5s ease;
-  -moz-transition: background-image 0.5s ease;
-  -ms-transition: background-image 0.5s ease;
-  -o-transition: background-image 0.5s ease;
-  transition: background-image 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   margin: auto;
   position: absolute;
   left: 0;
