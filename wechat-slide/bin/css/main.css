@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+div.wall {
+  -webkit-transition: background-image 0.5s ease;
+  -moz-transition: background-image 0.5s ease;
+  -ms-transition: background-image 0.5s ease;
+  -o-transition: background-image 0.5s ease;
+  transition: background-image 0.5s ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 101%;
+  height: 101%;
+  background-image: url(/img/bg.png);
+  background-size: cover;
+  background-position: 50% 50%;
+  -webkit-filter: blur(20px);
+  -moz-filter: blur(20px);
+  -o-filter: blur(20px);
+  -ms-filter: blur(20px);
+  filter: blur(20px);
+}
+div.cover {
+  -webkit-transition: background-image 0.5s ease;
+  -moz-transition: background-image 0.5s ease;
+  -ms-transition: background-image 0.5s ease;
+  -o-transition: background-image 0.5s ease;
+  transition: background-image 0.5s ease;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 13%;
+  width: 60%;
+  height: 53%;
+  background-size: cover;
+  background-position: 50% 50%;
+  box-shadow: -12px 17px 57px -5px #000000;
+  /*#464343;*/
+}
+div.cover div.angle {
+  height: 70px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+div.cover div.angle img {
+  height: 60px;
+}
+div.cover div.angle.left {
+  left: -45px;
+}
+div.cover div.angle.right {
+  right: -45px;
+}
+div.wall-cover {
+  position: fixed;
+  width: 100%;
+  /*height: 180px;*/
+  height: 100%;
+  bottom: 0px;
+  background: #000;
+  opacity: 0.2;
+}
+div.dashboard {
+  position: fixed;
+  width: 100%;
+  height: 180px;
+  bottom: 0px;
+  /*background: rgba(0, 0, 0, 0.5);*/
+}
+div.dashboard div.img {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 65px;
+  height: 100px;
+  background-image: url(/img/foo4.jpg);
+  background-size: cover;
+  background-position: 50% 50%;
+  box-shadow: 0 3px 12px -3px #000000;
+  transform-origin: 50% 300px;
+  -webkit-transform-origin: 50% 300px;
+}
+div.dashboard div.img.transition {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+div.dashboard div.img.active:before {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  content: " ";
+  display: block;
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+  background-color: #000;
+}
