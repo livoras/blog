@@ -32,7 +32,7 @@ div.cover {
   position: absolute;
   left: 0;
   right: 0;
-  top: 13%;
+  bottom: 210px;
   width: 60%;
   height: 53%;
   background-size: cover;
