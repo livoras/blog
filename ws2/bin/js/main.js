@@ -608,11 +608,11 @@ canvas = null;
 
 front = new Image;
 
-front.src = "/img/bg.png";
+front.src = "img/bg.png";
 
 back = new Image;
 
-back.src = "/img/foo2.jpg";
+back.src = "img/foo2.jpg";
 
 param = 0;
 
