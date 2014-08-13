@@ -955,15 +955,21 @@ initText = function() {
 };
 
 initEvent = function() {
-  return window.addEventListener("touchstart", function(event) {
-    var px, py, touch;
+  var px, py, touch;
+  px = 0;
+  py = 0;
+  touch = function(event) {
     event.preventDefault();
     if (!imgData) {
       return;
     }
     touch = event.touches[0];
     px = touch.pageX;
-    py = touch.pageY;
+    return py = touch.pageY;
+  };
+  window.addEventListener("touchstart", touch);
+  window.addEventListener("touchmove", touch);
+  return window.addEventListener("touchend", function(event) {
     if (px > x && px < x + width && py > y && py < y + height) {
       return window.location.href = imgData.target;
     }

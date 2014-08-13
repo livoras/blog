@@ -97,14 +97,17 @@ initText = ->
     $textWrapper.style.top = y + height - gradientHeight + 5 + 'px'
 
 initEvent = ->
-    window.addEventListener "touchstart", (event)->
+    px = 0
+    py = 0
+    touch = (event)->
         event.preventDefault()
         if not imgData then return
         touch = event.touches[0];
-
         px = touch.pageX
         py = touch.pageY
-
+    window.addEventListener "touchstart", touch
+    window.addEventListener "touchmove", touch
+    window.addEventListener "touchend", (event)->
         if px > x and px < x + width and py > y and py < y + height
             window.location.href = imgData.target
 
