@@ -681,7 +681,9 @@ background.init = function(cvs, cvsb) {
 };
 
 background.change = function(img, cb) {
+    log("background.change1");
   img.imgData = getRenderData(img);
+    log("background.change2");
   isChange = true;
   back = img;
   return callback = cb;
@@ -693,16 +695,19 @@ background.changeFront = function(img) {
 };
 
 getRenderData = function(img) {
+    log("getRenderData1");
   var h, imgData, newImg, sx, sy, w, _ref;
   w = canvas.width;
   h = canvas.height;
   _ref = clip(img, w, h), sx = _ref.sx, sy = _ref.sy;
   imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
   imgData = imgDataDrawer.getImageData(0, 0, w, h);
+    log("getRenderData2");
   blur(imgData);
   imgDataDrawer.putImageData(imgData, 0, 0);
   newImg = new Image;
   newImg.src = canvasBack.toDataURL();
+    log("getRenderData3");
   return newImg;
 };
 
@@ -991,6 +996,7 @@ initImages = function(callback) {
 initDashboard = function() {
   dashboard.init(canvas, world);
   dashboard.onActive = function(imgData) {
+    log("onActive1")
     return background.change(imgData.data);
   };
   log(2)
