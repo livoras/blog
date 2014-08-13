@@ -1207,10 +1207,10 @@ canvasBack = $("#canvas-back");
 ctx = canvas.getContext("2d");
 
 resizeCanvas = function() {
-  canvas.height = window.outerHeight;
-  canvas.width = window.outerWidth;
-  canvasBack.height = window.outerHeight;
-  return canvasBack.width = window.outerWidth;
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvasBack.height = window.innerHeight;
+  return canvasBack.width = window.innerWidth;
 };
 
 init = function() {
@@ -1288,9 +1288,9 @@ THUMB_HEIGHT = 96;
 
 THUMB_WIDTH = 65;
 
-canvasHeight = window.outerHeight;
+canvasHeight = window.innerHeight;
 
-canvasWidth = window.outerWidth;
+canvasWidth = window.innerWidth;
 
 DASHBOARD_WIDTH = canvasWidth;
 
