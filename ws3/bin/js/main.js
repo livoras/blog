@@ -760,11 +760,11 @@ dashboard.init = function(canvas, w) {
 };
 
 dashboard.next = next = function() {
-  document.body.innerHTML = "n1";
+    log("d1")
   if (isSliding) {
     return;
   }
-  document.body.innerHTML = "n2";
+    log("d2")
   return slideForward();
 };
 
@@ -795,33 +795,24 @@ makeSlideShow = function() {
 };
 
 slideForward = function() {
-   document.body.innerHTML = "s1";  
+    log("s1");
   var activeImageData, imgData, nextImgIndex, thumb;
-   document.body.innerHTML = "s2";  
   isSliding = true;
-   document.body.innerHTML = "s3";  
   deactive(currentActive);
-   document.body.innerHTML = "s4";
   thumb = thumbs.shift();
-   document.body.innerHTML = "s5";
   headIter.next();
-   document.body.innerHTML = "s6";
   imgData = tailIter.next();
-   document.body.innerHTML = "s7";
   thumbs.push(thumb);
-   document.body.innerHTML = "s8";
+    log("s2");
+  var activeImageData, imgData, nextImgIndex, thumb;
   processSlide(thumb, imgData);
-   document.body.innerHTML = "s9";
   currentActive = thumbs[(visibleImgsCount - 1) / 2];
-   document.body.innerHTML = "s10";
   active(currentActive);
-   document.body.innerHTML = "s11";
   nextImgIndex = currentActive.imgIndex;
-   document.body.innerHTML = "s12";
   activeImageData = images[nextImgIndex];
-   document.body.innerHTML = "s13";
   dashboard.activeImageData = activeImageData;
-   document.body.innerHTML = "s14";
+    log("s3");
+  var activeImageData, imgData, nextImgIndex, thumb;
   return dashboard.onActive(activeImageData);
 };
 
@@ -964,12 +955,8 @@ resizeCanvas = function() {
 init = function() {
   resizeCanvas();
   return initImages(function() {
-    document.body.innerHTML = 1;
     initBackground();
-    document.body.innerHTML = 2;
-    document.body.innerHTML = 2.2;
     initDashboard();
-    document.body.innerHTML = 3;
     return world.start();
   });
 };
@@ -1002,15 +989,13 @@ initImages = function(callback) {
 };
 
 initDashboard = function() {
-    document.body.innerHTML = 4;
   dashboard.init(canvas, world);
-    document.body.innerHTML = 5;
   dashboard.onActive = function(imgData) {
     return background.change(imgData.data);
   };
-    document.body.innerHTML = 6;
+  log(2)
   dashboard.next();
-    document.body.innerHTML = 7;
+  log(3)
   return background.changeFront(dashboard.activeImageData.data);
 };
 
