@@ -816,9 +816,10 @@ slideForward = function() {
   nextImgIndex = currentActive.imgIndex;
   activeImageData = images[nextImgIndex];
   dashboard.activeImageData = activeImageData;
-    log("s3");
+    log("s3.0");
   var activeImageData, imgData, nextImgIndex, thumb;
-  return dashboard.onActive(activeImageData);
+   dashboard.onActive(activeImageData);
+   log("s4");
 };
 
 slideBackward = function() {
@@ -999,7 +1000,7 @@ initDashboard = function() {
     log("onActive1")
     return background.change(imgData.data);
   };
-  log(2)
+  log(2.2)
   dashboard.next();
   log(3)
   return background.changeFront(dashboard.activeImageData.data);
