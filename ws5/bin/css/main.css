@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
