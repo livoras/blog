@@ -1,0 +1,136 @@
+@import "./classes.less";
+
+// @slide-duration: 0.5s;
+// @dashboard-height: 180px;
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+}
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+div.text-wrapper {
+    position: absolute;
+    margin: auto;
+    width: 40px;
+    left: 0;
+    right: 0;
+    @padding: 10px;
+    div.title {
+        color: #f3f3f3; 
+        padding: 0 10px;
+        padding-bottom: 5px;
+    }
+    div.text {
+        color: #ccc;
+        font-size: 12px;
+        padding: 0 10px;
+    }
+}
+
+// div.wall {
+//     .transition(all; @slide-duration; ease;);
+//     position: fixed;
+//     left: 0;
+//     top: 0;
+//     @blur: 20px;
+//     width: 101%;
+//     height: 101%;
+//     background-image: url(/img/bg.png);
+//     background-size: cover;
+//     background-position: 50% 50%;
+//     -webkit-filter: blur(@blur);
+//     -moz-filter: blur(@blur);
+//     -o-filter: blur(@blur);
+//     -ms-filter: blur(@blur);
+//     filter: blur(@blur);
+// }
+
+// div.cover {
+//     .transition(all; @slide-duration; ease;);
+//     margin: auto;
+//     position: absolute; 
+//     left: 0;
+//     right: 0;
+//     bottom: @dashboard-height + 30px;
+//     width: 60%;
+//     height: 53%;
+//     background-size: cover;
+//     background-position: 50% 50%;
+//     box-shadow: -12px 17px 57px -5px #000;
+//     /*#464343;*/
+
+//     div.angle {
+//         @angle-height: 70px;
+//         @offset: -45px;
+
+//         height: @angle-height;
+//         margin: auto;
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         img {
+//             height: 60px;
+//         }
+
+//         &.left {
+//             left: @offset;
+//         }
+
+//         &.right {
+//             right: @offset;
+//         }
+//     }
+// }
+
+// div.wall-cover {
+//     position: fixed;
+//     width: 100%;
+//     /*height: 180px;*/
+//     height: 100%;
+//     bottom: 0px;
+//     background: #000;
+//     opacity: 0.2;
+// }
+
+// div.dashboard {
+//     position: fixed;
+//     width: 100%;
+//     height: @dashboard-height;
+//     bottom: 0px;
+//     /*background: rgba(0, 0, 0, 0.5);*/
+//     div.img {
+//         position: absolute;
+//         margin: auto;
+//         left: 0;
+//         right: 0;
+//         width: 65px;
+//         height: 100px;
+//         background-image: url(/img/foo4.jpg);
+//         background-size: cover;
+//         background-position: 50% 50%;
+//         box-shadow: 0 3px 12px -3px #000000;
+//         @origin-y: 300px;
+
+//         transform-origin: 50% @origin-y;
+//         -webkit-transform-origin: 50% @origin-y;
+//         &.transition {
+//             .transition();
+//         }
+
+//         &.active:before {
+//             .transition();
+//             content: " ";
+//             display: block;
+//             height: 100%;
+//             width: 100%;
+//             opacity: 0.6;
+//             background-color: #000;
+//         }
+//     }
+// }

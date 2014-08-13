@@ -1,0 +1,9 @@
+{
+    "images": [
+        {"url": "img/foo4.jpg", "text": "这是一个美女，啊哈哈", "name": "Jimmy", "title": "中北明夷1", "target": "http://baidu.com"},
+        {"url": "img/foo1.png", "text": "这是一个美女，啊哈哈22", "name": "Lucy", "title": "中北明夷2", "target": "http://baidu.com"},
+        {"url": "img/foo2.jpg", "text": "这是一个美女，啊哈哈33", "name": "Tony", "title": "中北明夷3", "target": "http://baidu.com"},
+        {"url": "img/foo3.jpg", "text": "这是一个美女，啊哈哈44", "name": "Honey", "title": "中北明夷4", "target": "http://baidu.com"},
+        {"url": "img/foo5.jpg", "text": "这是一个美女，啊哈哈45，\n长一点，再长一点，再长一点", "name": "Jerry", "title": "中北明夷5", "target": "http://baidu.com"}
+    ]
+}
