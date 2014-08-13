@@ -1110,7 +1110,7 @@ Thumb = (function() {
     ctx.translate(this.originX, this.originY);
     ctx.rotate(this.angle / 180 * Math.PI);
     _ref = clip(this.img.data, this.width, this.height), sx = _ref.sx, sy = _ref.sy, sw = _ref.sw, sh = _ref.sh;
-    ctx.drawImage(this.img.data, sx, sy, sw, sh, -this.width / 2, -(radius + this.height), this.width, this.height);
+    ctx.drawImage(this.img.data, -this.width / 2, -(radius + this.height), this.width, this.height);
     if (this.isActive) {
       ctx.globalAlpha = 0.5;
       ctx.fillStyle = "#000000";
