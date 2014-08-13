@@ -701,11 +701,9 @@ getRenderData = function(img) {
   h = canvas.height;
     log("getRenderData1.1");
   _ref = clip(img, w, h), sx = _ref.sx, sy = _ref.sy;
-    log("getRenderData1.2");
+    log("getRenderData1.2--");
   imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
-    log("getRenderData1.3");
-  imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
-    log("getRenderData1.4");
+    log("getRenderData1.3--");
   imgData = imgDataDrawer.getImageData(0, 0, w, h);
     log("getRenderData2");
   blur(imgData);
