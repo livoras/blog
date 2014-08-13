@@ -985,11 +985,15 @@ initImages = function(callback) {
 };
 
 initDashboard = function() {
+    document.body.innerHTML = 4;
   dashboard.init(canvas, world);
+    document.body.innerHTML = 5;
   dashboard.onActive = function(imgData) {
     return background.change(imgData.data);
   };
+    document.body.innerHTML = 6;
   dashboard.next();
+    document.body.innerHTML = 7;
   return background.changeFront(dashboard.activeImageData.data);
 };
 
