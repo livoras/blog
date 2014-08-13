@@ -952,7 +952,6 @@ init = function() {
     initBackground();
     document.body.innerHTML = 2;
     initDashboard();
-    document.body.innerHTML = 3;
     return world.start();
   });
 };
