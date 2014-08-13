@@ -594,9 +594,11 @@ window.addEventListener("load", function() {
 })
 
 },{}],3:[function(require,module,exports){
-var PACE, a, b, back, background, blur, callback, canvas, canvasBack, changeA, changeB, changeBack, changeFront, ctx, front, imgDataDrawer, isChange, param, renderFront;
+var PACE, back, background, blur, callback, canvas, canvasBack, changeBack, changeFront, clip, ctx, front, getRenderData, imgDataDrawer, isChange, param, renderFront, util;
 
 blur = require("./blur.coffee");
+
+util = require("./util.coffee");
 
 background = {};
 
@@ -606,21 +608,19 @@ ctx = null;
 
 canvas = null;
 
-front = new Image;
+front = null;
 
-front.src = "img/bg.png";
-
-back = new Image;
-
-back.src = "img/foo2.jpg";
+back = null;
 
 param = 0;
 
-PACE = 0.01;
+PACE = 0.07;
 
 isChange = false;
 
 canvasBack = null;
+
+clip = util.clip;
 
 callback = function() {};
 
@@ -634,7 +634,7 @@ background.move = function() {
       isChange = false;
       param = 0;
       front = back;
-      return callback();
+      return typeof callback === "function" ? callback() : void 0;
     }
   } else {
     return renderFront();
@@ -642,13 +642,21 @@ background.move = function() {
 };
 
 renderFront = function() {
+  if (!front) {
+    return;
+  }
   ctx.save();
   ctx.globalAlpha = 1;
-  ctx.drawImage(front, 0, 0);
+  if (front.imgData) {
+    ctx.drawImage(front.imgData, 0, 0);
+  }
   return ctx.restore();
 };
 
 changeFront = function() {
+  if (!front) {
+    return;
+  }
   ctx.save();
   ctx.globalAlpha = 1 - param;
   ctx.drawImage(front.imgData, 0, 0);
@@ -656,6 +664,9 @@ changeFront = function() {
 };
 
 changeBack = function() {
+  if (!back) {
+    return;
+  }
   ctx.save();
   ctx.globalAlpha = param;
   ctx.drawImage(back.imgData, 0, 0);
@@ -670,42 +681,36 @@ background.init = function(cvs, cvsb) {
 };
 
 background.change = function(img, cb) {
-  var imgData, newImg;
-  if (!img.imgData) {
-    imgDataDrawer.drawImage(img, 0, 0);
-    imgData = imgDataDrawer.getImageData(0, 0, canvas.width, canvas.height);
-    blur(imgData);
-    imgDataDrawer.putImageData(imgData, 0, 0);
-    newImg = new Image;
-    newImg.src = canvasBack.toDataURL();
-    img.imgData = newImg;
-  }
+  img.imgData = getRenderData(img);
   isChange = true;
   back = img;
   return callback = cb;
 };
 
-a = front;
-
-b = back;
-
-changeA = function() {
-  return background.change(a, changeB);
+background.changeFront = function(img) {
+  front = img;
+  return img.imgData = getRenderData(img);
 };
 
-changeB = function() {
-  return background.change(b, changeA);
+getRenderData = function(img) {
+  var h, imgData, newImg, sx, sy, w, _ref;
+  w = canvas.width;
+  h = canvas.height;
+  _ref = clip(img, w, h), sx = _ref.sx, sy = _ref.sy;
+  imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
+  imgData = imgDataDrawer.getImageData(0, 0, w, h);
+  blur(imgData);
+  imgDataDrawer.putImageData(imgData, 0, 0);
+  newImg = new Image;
+  newImg.src = canvasBack.toDataURL();
+  return newImg;
 };
-
-setTimeout(function() {
-  return changeA();
-}, 100);
 
 module.exports = background;
 
 
 
-},{"./blur.coffee":4}],4:[function(require,module,exports){
+},{"./blur.coffee":4,"./util.coffee":10}],4:[function(require,module,exports){
 var gBlur;
 
 gBlur = require("../../lib/blur");
@@ -717,6 +722,190 @@ module.exports = function(img) {
 
 
 },{"../../lib/blur":1}],5:[function(require,module,exports){
+var $, Iterator, Thumb, active, addClass, currentActive, dashboard, data, deactive, degs, headIter, images, iniSlideAction, isSliding, makeSlideShow, next, originX, originY, prev, processSlide, removeClass, resetRotate, setBackground, setRotate, slideBackward, slideData, slideForward, tailIter, thumbs, util, visibleImgsCount, world;
+
+data = require("./data.json");
+
+images = data.images;
+
+slideData = require("./slide-data.coffee");
+
+util = require("./util.coffee");
+
+Thumb = require("./thumb.coffee");
+
+thumbs = [];
+
+headIter = null;
+
+tailIter = null;
+
+world = null;
+
+isSliding = false;
+
+currentActive = null;
+
+$ = util.$, Iterator = util.Iterator, addClass = util.addClass, removeClass = util.removeClass, setBackground = util.setBackground, setRotate = util.setRotate;
+
+originX = slideData.originX, originY = slideData.originY, degs = slideData.degs, visibleImgsCount = slideData.visibleImgsCount;
+
+dashboard = {};
+
+dashboard.init = function(canvas, w) {
+  Thumb.init(canvas);
+  world = w;
+  makeSlideShow();
+  return iniSlideAction();
+};
+
+dashboard.next = next = function() {
+  if (isSliding) {
+    return;
+  }
+  return slideForward();
+};
+
+dashboard.prev = prev = function() {
+  if (isSliding) {
+    return;
+  }
+  return slideBackward();
+};
+
+makeSlideShow = function() {
+  var deg, i, img, imgIter, index, thumb, _i, _len;
+  imgIter = new util.Iterator(images, true);
+  headIter = new util.Iterator(images, true);
+  for (i = _i = 0, _len = degs.length; _i < _len; i = ++_i) {
+    deg = degs[i];
+    img = imgIter.current();
+    index = imgIter.index;
+    imgIter.next();
+    thumb = new Thumb(originX, originY, deg, img);
+    thumb.imgIndex = index;
+    thumbs.push(thumb);
+    world.add(thumb);
+  }
+  currentActive = thumbs[(visibleImgsCount - 1) / 2];
+  tailIter = imgIter;
+  return tailIter.prev();
+};
+
+slideForward = function() {
+  var activeImageData, imgData, nextImgIndex, thumb;
+  isSliding = true;
+  deactive(currentActive);
+  thumb = thumbs.shift();
+  headIter.next();
+  imgData = tailIter.next();
+  thumbs.push(thumb);
+  processSlide(thumb, imgData);
+  currentActive = thumbs[(visibleImgsCount - 1) / 2];
+  active(currentActive);
+  nextImgIndex = currentActive.imgIndex;
+  activeImageData = images[nextImgIndex];
+  dashboard.activeImageData = activeImageData;
+  return dashboard.onActive(activeImageData);
+};
+
+slideBackward = function() {
+  var activeImageData, imgData, nextImgIndex, thumb;
+  isSliding = true;
+  deactive(currentActive);
+  thumb = thumbs.pop();
+  tailIter.prev();
+  imgData = headIter.prev();
+  thumbs.unshift(thumb);
+  processSlide(thumb, imgData);
+  currentActive = thumbs[(visibleImgsCount - 1) / 2];
+  active(currentActive);
+  nextImgIndex = currentActive.imgIndex;
+  activeImageData = images[nextImgIndex];
+  dashboard.activeImageData = activeImageData;
+  return dashboard.onActive(activeImageData);
+};
+
+processSlide = function(thumb) {
+  thumb.isAnima = false;
+  return resetRotate(function() {
+    isSliding = false;
+    return thumb.isAnima = true;
+  });
+};
+
+resetRotate = function(callback) {
+  var cb, count, i, thumb, _i, _len, _results;
+  count = 0;
+  cb = function() {
+    count++;
+    if (count === thumbs.length - 1) {
+      return callback();
+    }
+  };
+  _results = [];
+  for (i = _i = 0, _len = thumbs.length; _i < _len; i = ++_i) {
+    thumb = thumbs[i];
+    _results.push(thumb.change(degs[i], cb));
+  }
+  return _results;
+};
+
+deactive = function(thumb) {
+  return thumb.deactive();
+};
+
+active = function(thumb) {
+  return thumb.active();
+};
+
+iniSlideAction = function() {
+  var THRESHOLD, currentPageX, isActive, originPageX;
+  currentPageX = originPageX = 0;
+  THRESHOLD = 50;
+  isActive = false;
+  window.addEventListener("touchstart", function(event) {
+    var touch;
+    event.preventDefault();
+    touch = event.touches[0];
+    if (touch.pageY >= canvas.height - slideData.DASHBOARD_HEIGHT) {
+      isActive = true;
+    } else {
+      isActive = false;
+    }
+    return currentPageX = originPageX = touch.pageX;
+  });
+  window.addEventListener("touchmove", function(event) {
+    var touch;
+    if (!isActive) {
+      return;
+    }
+    event.preventDefault();
+    touch = event.touches[0];
+    return currentPageX = touch.pageX;
+  });
+  return window.addEventListener("touchend", function(event) {
+    if (!isActive) {
+      return;
+    }
+    event.preventDefault();
+    if (currentPageX > originPageX && currentPageX - originPageX > THRESHOLD) {
+      return prev();
+    } else if (originPageX > currentPageX && originPageX - currentPageX > THRESHOLD) {
+      return next();
+    }
+  });
+};
+
+dashboard.onActive = function(img) {
+  return console.log("TOBE IMPLEMENTED.");
+};
+
+module.exports = dashboard;
+
+
+
+},{"./data.json":6,"./slide-data.coffee":8,"./thumb.coffee":9,"./util.coffee":10}],6:[function(require,module,exports){
 module.exports={
     "images": [
         {"url": "img/foo4.jpg", "text": "这是一个美女", "name": "Jimmy"},
@@ -726,8 +915,8 @@ module.exports={
         {"url": "img/foo5.jpg", "text": "这是一个美女", "name": "Jerry"}
     ]
 }
-},{}],6:[function(require,module,exports){
-var $, Iterator, addClass, background, canvas, canvasBack, ctx, data, images, init, initBackground, initImages, removeClass, resizeCanvas, setBackground, setRotate, util, world;
+},{}],7:[function(require,module,exports){
+var $, Iterator, addClass, background, canvas, canvasBack, ctx, dashboard, data, images, init, initBackground, initDashboard, initImages, removeClass, resizeCanvas, setBackground, setRotate, util, world;
 
 data = require("./data.json");
 
@@ -738,6 +927,8 @@ world = require("./world.coffee");
 background = require("./background.coffee");
 
 images = data.images;
+
+dashboard = require("./dashboard.coffee");
 
 $ = util.$, Iterator = util.Iterator, addClass = util.addClass, removeClass = util.removeClass, setBackground = util.setBackground, setRotate = util.setRotate;
 
@@ -758,6 +949,7 @@ init = function() {
   resizeCanvas();
   initImages();
   initBackground();
+  initDashboard();
   return world.start();
 };
 
@@ -767,10 +959,10 @@ initBackground = function() {
 };
 
 initImages = function() {
-  var img, _i, _len, _results;
+  var i, img, _i, _len, _results;
   _results = [];
-  for (_i = 0, _len = images.length; _i < _len; _i++) {
-    img = images[_i];
+  for (i = _i = 0, _len = images.length; _i < _len; i = ++_i) {
+    img = images[i];
     data = new Image;
     data.src = img.url;
     _results.push(img.data = data);
@@ -778,12 +970,171 @@ initImages = function() {
   return _results;
 };
 
+initDashboard = function() {
+  dashboard.init(canvas, world);
+  dashboard.onActive = function(imgData) {
+    return background.change(imgData.data);
+  };
+  dashboard.next();
+  console.log(dashboard.activeImageData);
+  return background.changeFront(dashboard.activeImageData.data);
+};
+
 init();
 
 
 
-},{"./background.coffee":3,"./data.json":5,"./util.coffee":7,"./world.coffee":8}],7:[function(require,module,exports){
-var $, Iterator, addClass, removeClass, setBackground, setRotate,
+},{"./background.coffee":3,"./dashboard.coffee":5,"./data.json":6,"./util.coffee":10,"./world.coffee":11}],8:[function(require,module,exports){
+var DASHBOARD_HEIGHT, DASHBOARD_WIDTH, THUMB_HEIGHT, THUMB_WIDTH, init, piToDeg;
+
+THUMB_HEIGHT = 96;
+
+THUMB_WIDTH = 65;
+
+DASHBOARD_WIDTH = window.outerWidth;
+
+DASHBOARD_HEIGHT = 175;
+
+init = function() {
+  var half, i, imgLoops, l, perDeg, perPI, r, radius, rh, rw, totalDeg, totalPI, visibleImgsCount, w, _i;
+  rh = DASHBOARD_HEIGHT - THUMB_HEIGHT;
+  rw = DASHBOARD_WIDTH / 2;
+  radius = 0.5 * (rw * rw + rh * rh) / rh;
+  l = rw * 2;
+  w = THUMB_WIDTH * 2;
+  r = radius;
+  perPI = Math.atan(0.5 * w / r);
+  perDeg = piToDeg(perPI);
+  totalPI = 2 * Math.asin(0.5 * l / r);
+  totalDeg = piToDeg(totalPI);
+  visibleImgsCount = Math.round(totalPI / perPI);
+  if (visibleImgsCount % 2 === 0) {
+    visibleImgsCount++;
+  }
+  imgLoops = [0];
+  half = (visibleImgsCount - 1) / 2;
+  for (i = _i = 1; 1 <= half ? _i <= half : _i >= half; i = 1 <= half ? ++_i : --_i) {
+    imgLoops.push(i * perDeg);
+    imgLoops.unshift(-i * perDeg);
+  }
+  exports.degs = imgLoops;
+  exports.totalDeg = totalDeg;
+  exports.perDeg = perDeg;
+  exports.visibleImgsCount = visibleImgsCount;
+  exports.originX = DASHBOARD_WIDTH / 2;
+  exports.originY = window.outerHeight + radius - DASHBOARD_HEIGHT + THUMB_HEIGHT;
+  exports.radius = radius;
+  exports.THUMB_WIDTH = THUMB_WIDTH;
+  exports.THUMB_HEIGHT = THUMB_HEIGHT;
+  exports.DASHBOARD_HEIGHT = DASHBOARD_HEIGHT;
+  return exports.DASHBOARD_WIDTH = DASHBOARD_WIDTH;
+};
+
+piToDeg = function(pi) {
+  return pi / Math.PI * 180;
+};
+
+init();
+
+
+
+},{}],9:[function(require,module,exports){
+var Thumb, canvas, clip, ctx, radius, slideData, util;
+
+slideData = require("./slide-data.coffee");
+
+util = require("./util.coffee");
+
+ctx = null;
+
+canvas = null;
+
+radius = slideData.radius;
+
+clip = util.clip;
+
+Thumb = (function() {
+  function Thumb(originX, originY, angle, img) {
+    this.originX = originX;
+    this.originY = originY;
+    this.angle = angle;
+    this.img = img;
+    this.targetAngle = this.angle;
+    this.width = slideData.THUMB_WIDTH;
+    this.height = slideData.THUMB_HEIGHT;
+    this.isAnima = true;
+  }
+
+  Thumb.prototype.move = function() {
+    var sh, sw, sx, sy, _ref;
+    this.updateAngle();
+    ctx.save();
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1;
+    ctx.shadowColor = "#555";
+    ctx.translate(this.originX, this.originY);
+    ctx.rotate(this.angle / 180 * Math.PI);
+    _ref = clip(this.img.data, this.width, this.height), sx = _ref.sx, sy = _ref.sy, sw = _ref.sw, sh = _ref.sh;
+    ctx.drawImage(this.img.data, sx, sy, sw, sh, -this.width / 2, -(radius + this.height), this.width, this.height);
+    if (this.isActive) {
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(-this.width / 2, -(radius + this.height), this.width, this.height);
+    }
+    return ctx.restore();
+  };
+
+  Thumb.prototype.change = function(angle, callback) {
+    if (this.isAnima) {
+      return this.animChange(angle, callback);
+    } else {
+      return this.angle = this.targetAngle = angle;
+    }
+  };
+
+  Thumb.prototype.animChange = function(angle, callback) {
+    this.isAnima = true;
+    this.targetAngle = angle;
+    this.pace = (angle - this.angle) / 20;
+    return this.callback = callback;
+  };
+
+  Thumb.prototype.updateAngle = function() {
+    if (this.angle === this.targetAngle) {
+      return;
+    }
+    if (Math.abs(this.targetAngle - this.angle) < 0.5) {
+      this.angle = this.targetAngle;
+      return typeof this.callback === "function" ? this.callback() : void 0;
+    } else {
+      return this.angle += this.pace;
+    }
+  };
+
+  Thumb.prototype.active = function() {
+    return this.isActive = true;
+  };
+
+  Thumb.prototype.deactive = function() {
+    return this.isActive = false;
+  };
+
+  return Thumb;
+
+})();
+
+Thumb.init = function(cvs) {
+  canvas = cvs;
+  return ctx = canvas.getContext("2d");
+};
+
+module.exports = Thumb;
+
+
+
+},{"./slide-data.coffee":8,"./util.coffee":10}],10:[function(require,module,exports){
+var $, Iterator, addClass, clip, removeClass, setBackground, setRotate,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 $ = function(selector) {
@@ -876,9 +1227,32 @@ Iterator = (function() {
 
 })();
 
+clip = function(img, width, height, percentage) {
+  var ih, iw, sh, sw, sx, sy;
+  percentage = percentage || 0.8;
+  iw = img.width;
+  ih = img.height;
+  if (width / height > iw / ih) {
+    sw = iw * percentage;
+    sh = sw * height / width;
+  } else {
+    sh = ih * percentage;
+    sw = sh * width / height;
+  }
+  sx = (iw - sw) / 2;
+  sy = (ih - sh) / 2;
+  return {
+    sx: sx,
+    sy: sy,
+    sw: sw,
+    sh: sh
+  };
+};
+
 module.exports = {
   $: $,
   Iterator: Iterator,
+  clip: clip,
   addClass: addClass,
   removeClass: removeClass,
   setBackground: setBackground,
@@ -887,7 +1261,7 @@ module.exports = {
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var spirts, timer, world;
 
 require("../../lib/init");
@@ -919,4 +1293,4 @@ module.exports = world;
 
 
 
-},{"../../lib/init":2}]},{},[6]);
+},{"../../lib/init":2}]},{},[7]);
