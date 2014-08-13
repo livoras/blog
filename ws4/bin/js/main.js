@@ -795,7 +795,7 @@ getRenderData = function(img) {
   w = canvas.width;
   h = canvas.height;
   _ref = clip(img, w, h), sx = _ref.sx, sy = _ref.sy;
-  imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
+  imgDataDrawer.drawImage(img, 0, 0, w, h);
   imgData = imgDataDrawer.getImageData(0, 0, w, h);
   blur(imgData);
   imgDataDrawer.putImageData(imgData, 0, 0);
@@ -917,7 +917,7 @@ draw = function(img) {
   var sh, sw, sx, sy, _ref;
   ctx.translate(x, y);
   _ref = clip(img, width, height), sx = _ref.sx, sy = _ref.sy, sw = _ref.sw, sh = _ref.sh;
-  return ctx.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
+  return ctx.drawImage(img, 0, 0, width, height);
 };
 
 drawText = function() {
@@ -1382,7 +1382,7 @@ Thumb = (function() {
     ctx.translate(this.originX, this.originY);
     ctx.rotate(this.angle / 180 * Math.PI);
     _ref = clip(this.img.data, this.width, this.height), sx = _ref.sx, sy = _ref.sy, sw = _ref.sw, sh = _ref.sh;
-    ctx.drawImage(this.img.data, sx, sy, sw, sh, -this.width / 2, -(radius + this.height), this.width, this.height);
+    ctx.drawImage(this.img.data, -this.width / 2, -(radius + this.height), this.width, this.height);
     if (this.isActive) {
       ctx.globalAlpha = 0.5;
       ctx.fillStyle = "#000000";
