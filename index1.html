@@ -1,0 +1,122 @@
+<!doctype html>
+  <html>
+      <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+          <title>史诗级HTML5游戏：打飞鸡！</title>
+          <link rel="author" href="humans.txt">
+      </head>
+      <style>
+      * {
+        margin: 0; 
+        padding: 0;
+        font-family: cursive;
+      }
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      div.mask {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: #FFFCDD;
+        opacity: 0.7;
+      }
+      #show-area {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: 30%;
+        width: 100%;
+        text-align: center;
+      }
+      div.play-btn {
+        margin: 0 auto;
+        line-height: 50px;
+        height: 50px;
+        width: 120px;
+        text-align: center;
+        border: 5px solid #ccc;
+        border-radius: 6px;
+        font-size: 30px;
+        background-color: #fff;
+        margin-bottom: 20px;
+      }
+      div.play-btn:hover, div.play-btn:active {
+        background-color: #f2f2f2;
+      }
+      div.stats {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding-left: 10px;
+        padding-top: 5px;
+        text-align: center;
+        font-size: 13px;
+      }
+      span.stat {
+        display: inline-block;
+        margin-right: 20px;
+      }
+      #stats-score {
+        font-size: 16px;
+        color: green;
+      }
+
+      #stats-level {
+        font-size: 16px;
+        color: blue;
+      }
+      #highest {
+        font-size: 25px;
+        color: green;
+      }
+      #score-show {
+        display: none;
+        margin-bottom: 10px;
+      }
+      #your-score {
+        font-size: 25px;
+        color: red;
+      }
+      #new-record {
+        font-size: 12px;
+      }
+      </style>
+      <body>
+        <canvas id="canvas">
+            <span>Your browser does not support canvas.</span>
+        </canvas>
+        <div class="mask" id="mask">
+          <div id="show-area">
+            <div class="play-btn" id="play">Play</div>
+            <div id="score-show">
+              <div>Your Score:</div>
+              <div>
+                <span id="your-score">0</span>
+                <span id="new-record">(New Record!)</span>
+              </div>
+            </div>  
+            <div>
+              <div>Highest Record:</div>
+              <div id="highest">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="stats" id="stats">
+          <span class="stat">Lifes: <span id="stats-lifes"></span></span>
+          <span class="stat">Score: <span id="stats-score">0</span></span>
+          <span class="stat">Level: <span id="stats-level">1</span></span>
+        </div>
+        <script src="dist/main.min.js"></script>
+      </body>
+  </html>  
