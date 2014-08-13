@@ -760,9 +760,11 @@ dashboard.init = function(canvas, w) {
 };
 
 dashboard.next = next = function() {
+  document.body.innerHTML = "n1";
   if (isSliding) {
     return;
   }
+  document.body.innerHTML = "n2";
   return slideForward();
 };
 
@@ -793,19 +795,33 @@ makeSlideShow = function() {
 };
 
 slideForward = function() {
+   document.body.innerHTML = "s1";  
   var activeImageData, imgData, nextImgIndex, thumb;
+   document.body.innerHTML = "s2";  
   isSliding = true;
+   document.body.innerHTML = "s3";  
   deactive(currentActive);
+   document.body.innerHTML = "s4";
   thumb = thumbs.shift();
+   document.body.innerHTML = "s5";
   headIter.next();
+   document.body.innerHTML = "s6";
   imgData = tailIter.next();
+   document.body.innerHTML = "s7";
   thumbs.push(thumb);
+   document.body.innerHTML = "s8";
   processSlide(thumb, imgData);
+   document.body.innerHTML = "s9";
   currentActive = thumbs[(visibleImgsCount - 1) / 2];
+   document.body.innerHTML = "s10";
   active(currentActive);
+   document.body.innerHTML = "s11";
   nextImgIndex = currentActive.imgIndex;
+   document.body.innerHTML = "s12";
   activeImageData = images[nextImgIndex];
+   document.body.innerHTML = "s13";
   dashboard.activeImageData = activeImageData;
+   document.body.innerHTML = "s14";
   return dashboard.onActive(activeImageData);
 };
 
