@@ -987,7 +987,6 @@ initDashboard = function() {
     return background.change(imgData.data);
   };
   dashboard.next();
-  console.log(dashboard.activeImageData);
   return background.changeFront(dashboard.activeImageData.data);
 };
 
