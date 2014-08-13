@@ -703,8 +703,8 @@ getRenderData = function(img) {
   _ref = clip(img, w, h), sx = _ref.sx, sy = _ref.sy;
     log("getRenderData1.2--");
     try {
-      log(img + ' ' + ' ' + sx + ' ' + sy + ' '+ w + ' ' + h);
-      imgDataDrawer.drawImage(img, sx, sy, w, h, 0, 0, w, h);
+      log(img.src + ' ' + sx + ' ' + sy + ' '+ w + ' ' + h);
+      imgDataDrawer.drawImage(img, 0, 0, w, h);
     } catch(e) {
         log(e);
     }
