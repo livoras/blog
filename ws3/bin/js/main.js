@@ -948,8 +948,11 @@ resizeCanvas = function() {
 init = function() {
   resizeCanvas();
   return initImages(function() {
+    document.body.innerHTML = 1;
     initBackground();
+    document.body.innerHTML = 2;
     initDashboard();
+    document.body.innerHTML = 3;
     return world.start();
   });
 };
