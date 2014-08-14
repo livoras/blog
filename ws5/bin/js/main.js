@@ -42,7 +42,7 @@ module.exports={
     ]
 }
 },{}],3:[function(require,module,exports){
-var $, BUTTON_SIZE, Button, GAP, RADIUS, buttons, canvas, canvasHeight, canvasWidth, ctx, data, images, init, initButtons, initClear, initEvents, moveBack, moveFront, pageX, pageY, resizeCanvas, util, world;
+var $, BUTTON_SIZE, Button, GAP, RADIUS, buttons, canvas, canvasHeight, canvasWidth, ctx, data, images, init, initButtons, initClear, initEvents, moveBack, moveFront, pageX, pageY, resizeCanvas, startTime, util, world;
 
 util = require("./util.coffee");
 
@@ -74,6 +74,8 @@ pageX = 0;
 
 pageY = 0;
 
+startTime = 0;
+
 init = function() {
   resizeCanvas();
   initClear();
@@ -104,6 +106,7 @@ initClear = function() {
 initEvents = function() {
   canvas.addEventListener("touchstart", function(event) {
     var touch;
+    startTime = +(new Date);
     event.preventDefault();
     touch = event.touches[0];
     pageX = touch.pageX;
@@ -231,6 +234,9 @@ Button = (function() {
     return canvas.addEventListener("touchend", (function(_this) {
       return function(event) {
         var originX, originY, piDeg, x, y;
+        if (+(new Date) - startTime > 500) {
+          return;
+        }
         piDeg = _this.deg / 180 * Math.PI;
         originX = (Math.sin(piDeg)) * RADIUS + 0.5 * canvasWidth;
         originY = -(Math.cos(piDeg)) * RADIUS + 0.5 * canvasHeight;
