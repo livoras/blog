@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>中北明夷 - 场景应用</title>
+    <script type="text/javascript" src="TweenMax.min.js"></script>
+    <style type="text/css">
+    body, h1, h2, h3, p {
+        font-family: "微软雅黑", Arial, Helvetica, sans-serif;
+        margin: 0;
+        color: #fff;
+    }
+    body {
+        background: url("black_textured_background.png") no-repeat #000;
+    }
+    h1, h2, p {
+        position: relative;
+        padding: 0 20px;
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    h1 {
+        position: relative;
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: normal;
+    }
+    h2 {
+        position: relative;
+        font-size: 16px;
+        font-weight: normal;
+        color: #cfcfcf;
+    }
+    div.pics {
+        padding: 0 20px;
+        text-align: center;
+    }
+    div.first {
+        margin-top: 30px;
+    }
+    p.description {
+        font-size: 12px;
+        line-height: 20px;
+    }
+    p.first-para {
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    p.second-para {
+        margin-top: 40px;
+    }
+   </style>
+</head>
+<body>
+    <h1>中北明夷 - 场景应用</h1>
+    <h2>强大、便捷、定制、引领行业的移动Web解决方案</h2>
+    <div class="pics first">
+        <img src="pic1.png">
+        <img src="pic2.png">
+        <img src="pic3.png">
+    </div>
+    <p class="description first-para">
+        深圳市中北明夷科技有限公司主营移动互联网应用、软件设计开发、传统企业020辅导业务、智能硬件研发应用。
+    </p>
+    <div class="pics second">
+        <img src="pic4.png">
+        <img src="pic5.png" class="main">
+    </div>
+    <p class="description second-para">
+        公司目前拥有20余名员工，来自北京大学、清华大学、中山大学、武汉大学、中央美院以及深圳大学。公司自成立以来，凭借强大的团队力量先后承接多个项目，涵盖多个领域。 
+    </p>
+</body>
+<script type="text/javascript">
+var tl = new TimelineLite();
+tl.from("h1", 0.6, {left:200, autoAlpha:0})
+  .staggerFrom("img", 0.3, {scale:0, rotation:-270, autoAlpha:0}, 0.2, "stagger")
+  .from("p.first-para", 0.5, {left: 500, autoAlpha: 0}, "para")
+  .from("p.second-para", 0.5, {right: 500, autoAlpha: 0}, "para")
+  .from("h2", 1, {top: 500, autoAlpha:0, ease: Elastic.easeOut})
+  .to("img.main", 0.1, {scale: 1.5})
+  .to("img.main", 0.1, {rotationZ: 10})
+  .to("img.main", 0.1, {rotationZ: -10})
+  .to("img.main", 0.1, {rotationZ: 0})
+  .to("img.main", 0.1, {scale: 1})
+</script>
+</html>  
