@@ -1,0 +1,10 @@
+{
+    "images": [
+        {"url": "img/button1.png", "target": "http://baidu.com/1"},
+        {"url": "img/button2.png", "target": "http://baidu.com/2"},
+        {"url": "img/button3.png", "target": "http://baidu.com/3"},
+        {"url": "img/button4.png", "target": "http://baidu.com/4"},
+        {"url": "img/button5.png", "target": "http://baidu.com/5"},
+        {"url": "img/button6.png", "target": "http://baidu.com/6"}
+    ]
+}
