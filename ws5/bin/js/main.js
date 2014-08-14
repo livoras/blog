@@ -231,10 +231,25 @@ Button = (function() {
   };
 
   Button.prototype.initEvents = function() {
+    canvas.addEventListener("touchstart", (function(_this) {
+      return function(event) {
+        var originX, originY, piDeg, x, y;
+        piDeg = _this.deg / 180 * Math.PI;
+        originX = (Math.sin(piDeg)) * RADIUS + 0.5 * canvasWidth;
+        originY = -(Math.cos(piDeg)) * RADIUS + 0.5 * canvasHeight;
+        x = originX - 0.5 * BUTTON_SIZE;
+        y = originY - 0.5 * BUTTON_SIZE;
+        if ((x < pageX && pageX < x + BUTTON_SIZE) && (y < pageY && pageY < y + BUTTON_SIZE)) {
+          return _this.startIn = true;
+        } else {
+          return _this.startIn = false;
+        }
+      };
+    })(this));
     return canvas.addEventListener("touchend", (function(_this) {
       return function(event) {
         var originX, originY, piDeg, x, y;
-        if (+(new Date) - startTime > 500) {
+        if (+(new Date) - startTime > 200) {
           return;
         }
         piDeg = _this.deg / 180 * Math.PI;
@@ -243,7 +258,9 @@ Button = (function() {
         x = originX - 0.5 * BUTTON_SIZE;
         y = originY - 0.5 * BUTTON_SIZE;
         if ((x < pageX && pageX < x + BUTTON_SIZE) && (y < pageY && pageY < y + BUTTON_SIZE)) {
-          return window.location.href = _this.target;
+          if (_this.startIn) {
+            return window.location.href = _this.target;
+          }
         }
       };
     })(this));
