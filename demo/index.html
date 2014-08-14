@@ -85,7 +85,7 @@ window.addEventListener("load", function() {
     var tl = new TimelineLite();
     tl.from("h1", 0.6, {left:200, autoAlpha:0})
       .staggerFrom("img", 0.3, {scale:0, rotation:-270, autoAlpha:0}, 0.2, "stagger")
-      .from("p.first-para", 0.5, {left: 500, autoAlpha: 0}, "para")
+      .from("p.first-para", 1, {left: 500, skewX: "-120deg",autoAlpha: 0, ease: Back.easeInOut}, "para")
       .from("p.second-para", 0.5, {right: 500, autoAlpha: 0}, "para")
       .from("h2", 1, {top: 500, autoAlpha:0, ease: Elastic.easeOut})
       .to("img.main", 0.1, {scale: 1.5})
