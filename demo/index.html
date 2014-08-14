@@ -14,6 +14,12 @@
     body {
         background: url("black_textured_background.png") no-repeat #000;
     }
+    div.wrapper {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
     h1, h2, p {
         position: relative;
         padding: 0 20px;
@@ -54,23 +60,25 @@
    </style>
 </head>
 <body>
-    <h1>中北明夷 - 场景应用</h1>
-    <h2>强大、便捷、定制、引领行业的移动Web解决方案</h2>
-    <div class="pics first">
-        <img src="pic1.png">
-        <img src="pic2.png">
-        <img src="pic3.png">
+    <div class="wrapper">
+        <h1>中北明夷 - 场景应用</h1>
+        <h2>强大、便捷、定制、引领行业的移动Web解决方案</h2>
+        <div class="pics first">
+            <img src="pic1.png">
+            <img src="pic2.png">
+            <img src="pic3.png">
+        </div>
+        <p class="description first-para">
+            深圳市中北明夷科技有限公司主营移动互联网应用、软件设计开发、传统企业020辅导业务、智能硬件研发应用。
+        </p>
+        <div class="pics second">
+            <img src="pic4.png">
+            <img src="pic5.png" class="main">
+        </div>
+        <p class="description second-para">
+            公司目前拥有20余名员工，来自北京大学、清华大学、中山大学、武汉大学、中央美院以及深圳大学。公司自成立以来，凭借强大的团队力量先后承接多个项目，涵盖多个领域。 
+        </p>
     </div>
-    <p class="description first-para">
-        深圳市中北明夷科技有限公司主营移动互联网应用、软件设计开发、传统企业020辅导业务、智能硬件研发应用。
-    </p>
-    <div class="pics second">
-        <img src="pic4.png">
-        <img src="pic5.png" class="main">
-    </div>
-    <p class="description second-para">
-        公司目前拥有20余名员工，来自北京大学、清华大学、中山大学、武汉大学、中央美院以及深圳大学。公司自成立以来，凭借强大的团队力量先后承接多个项目，涵盖多个领域。 
-    </p>
 </body>
 <script type="text/javascript">
 window.addEventListener("load", function() {
