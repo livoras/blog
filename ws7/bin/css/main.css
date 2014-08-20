@@ -33,3 +33,6 @@ canvas {
   width: 100%;
   padding-top: 25%;
 }
+#scroller .button .link a {
+  text-decoration: none;
+}
