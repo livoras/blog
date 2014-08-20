@@ -38,8 +38,8 @@ resizeButtons = function() {
   return Array.prototype.forEach.call($buttons, function($button, i) {
     $button.style.height = "" + sh + "px";
     $button.style.width = "" + sw + "px";
-    $button.style.transformOrigin = "50% " + radius + "px 0";
-    return $button.style.transform = "rotateZ(" + (rotationSnap * i) + "deg)";
+    $button.style.webkitTransformOrigin = "50% " + radius + "px 0";
+    return $button.style.webkitTransform = "rotateZ(" + (rotationSnap * i) + "deg)";
   });
 };
 
@@ -49,7 +49,7 @@ resizeScroller = function() {
   $scroller.style.bottom = "-" + c / 2 * 1.2 + "px";
   $scroller.style.width = c + "px";
   $scroller.style.height = c + "px";
-  $scroller.style.borderRadius = c + "px";
+  $scroller.style.webkitBorderRadius = c + "px";
   return $scroller.style.left = -PADDING + "px";
 };
 
