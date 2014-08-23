@@ -776,7 +776,7 @@ endY = 0;
 
 dist = 0;
 
-DURATION = 0.4;
+DURATION = 0.5;
 
 currentIndex = 0;
 
