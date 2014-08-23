@@ -649,7 +649,9 @@ PageController = (function(_super) {
   };
 
   PageController.prototype.setPos = function(top) {
-    return this.dom.style.top = "" + top + "px";
+    return TweenLite.set(this.dom, {
+      "y": "" + top + "px"
+    });
   };
 
   return PageController;
@@ -752,12 +754,12 @@ swipeUp = function(event) {
   if (Math.abs(currPoint - startPoint) > CONTENT_HEIGHT * 0.4) {
     isMoving = true;
     return TweenLite.to(nextPage.dom, DURATION, {
-      "top": "0px",
+      "y": "0px",
       onComplete: next
     });
   } else {
     return TweenLite.to(nextPage.dom, DURATION, {
-      "top": nextPage.originTop
+      "y": "" + nextPage.originTop + "px"
     });
   }
 };
@@ -772,12 +774,12 @@ swipeDown = function() {
   if (Math.abs(currPoint - startPoint) > CONTENT_HEIGHT * 0.4) {
     isMoving = true;
     return TweenLite.to(currPage.dom, DURATION, {
-      "top": "" + READY_TOP + "px",
+      "y": "" + READY_TOP + "px",
       onComplete: prev
     });
   } else {
     return TweenLite.to(currPage.dom, DURATION, {
-      "top": currPage.originTop
+      "y": "" + currPage.originTop + "px"
     });
   }
 };
