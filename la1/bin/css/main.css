@@ -9,13 +9,12 @@
   height: 100%;
   top: 0;
   left: 0;
-  /*box-shadow: 0 -5px 20px #333;*/
 }
 .loading {
   z-index: 10000;
-  background-color: #fff;
 }
 .cover {
+  z-index: 9999;
   display: none;
 }
 .page1 {

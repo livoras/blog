@@ -574,291 +574,146 @@
 }();
 
 },{}],2:[function(require,module,exports){
-var $, init, log, remove, _ref;
-
-_ref = require("./util.coffee"), $ = _ref.$, log = _ref.log;
-
-init = function() {
-  return log("Init Loading..");
-};
-
-remove = function() {
-  var $loading;
-  $loading = $(".loading");
-  $loading.style.display = "none";
-  return log("Loading done, remove loading page.");
-};
-
-module.exports = {
-  init: init,
-  remove: remove
-};
-
-
-
-},{"./util.coffee":6}],3:[function(require,module,exports){
-var $, loading, log, slideEffect, util;
-
-util = require("./util.coffee");
-
-$ = util.$, log = util.log;
-
-loading = require("./loading.coffee");
-
-slideEffect = require("./slide-effect.coffee");
-
-loading.init();
-
-window.addEventListener("load", function(event) {
-  slideEffect.init();
-  return loading.remove();
-});
-
-
-
-},{"./loading.coffee":2,"./slide-effect.coffee":5,"./util.coffee":6}],4:[function(require,module,exports){
-var EventEmitter2, PageController, log,
+var $, Core, EventEmitter2, log, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+_ref = require("./util.coffee"), $ = _ref.$, log = _ref.log;
+
 EventEmitter2 = (require("eventemitter2")).EventEmitter2;
 
-log = require("./util.coffee").log;
+Core = (function(_super) {
+  __extends(Core, _super);
 
-PageController = (function(_super) {
-  __extends(PageController, _super);
-
-  function PageController(dom) {
-    this.dom = dom;
-    this.render();
+  function Core() {
+    this.cid = 0;
+    this.slide = null;
+    this.loading = null;
+    this.cover = null;
+    this.pages = [];
+    this._dismissLoadingAfterLoaded();
   }
 
-  PageController.prototype.render = function() {
-    this.dom.innerHTML += " rendered.";
-    return this.emit("render");
+  Core.prototype.setLoading = function(loading) {
+    var $loading;
+    this.loading = loading;
+    $loading = $("section.loading");
+    $loading.html(loading.$dom);
+    return $loading.show();
   };
 
-  PageController.prototype.start = function() {
-    log("start");
-    return this.emit("start");
+  Core.prototype.setCover = function(cover) {
+    var $cover;
+    this.cover = cover;
+    $cover = $("section.cover");
+    $cover.html(cover.$dom);
+    $cover.show();
+    return this.cover.on("done", (function(_this) {
+      return function() {
+        $cover.hide();
+        if (_this.slide) {
+          return _this.slide.enable();
+        }
+      };
+    })(this));
   };
 
-  PageController.prototype.stop = function() {
-    log("stop");
-    return this.emit("stop");
+  Core.prototype.setSlide = function(slide) {
+    this.slide = slide;
+    slide.on("active", (function(_this) {
+      return function(page) {
+        page.start();
+        return _this.emit("active page", page);
+      };
+    })(this));
+    slide.on("deactive", (function(_this) {
+      return function(page) {
+        page.stop();
+        return _this.emit("deactive page", page);
+      };
+    })(this));
+    return slide.init(this.pages);
   };
 
-  PageController.prototype.setPos = function(top) {
-    return TweenLite.set(this.dom, {
-      "y": "" + top + "px"
-    });
+  Core.prototype.addPage = function(page, pos) {
+    var cid;
+    cid = page.id = this._getCid();
+    if (pos) {
+      this.pages.splice(pos, 0, page);
+      page.$container = this._addPageDom(page.$dom, cid, pos);
+    } else {
+      this.pages.push(page);
+      page.$container = this._addPageDom(page.$dom, cid);
+    }
+    return cid;
   };
 
-  return PageController;
+  Core.prototype.removePage = function(cid) {
+    var i, page, _i, _len, _ref1;
+    _ref1 = this.pages;
+    for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
+      page = _ref1[i];
+      if (page.id === cid) {
+        this.pages.splice(i, 1);
+        break;
+      }
+    }
+    return $("#content-" + cid).remove();
+  };
+
+  Core.prototype._addPageDom = function($dom, cid, pos) {
+    var $container, $newPage, $pages;
+    $newPage = $("<section class='page content'></section>");
+    $newPage.html($dom);
+    $container = $("div.pages");
+    $pages = $("section.content");
+    $newPage.attr("id", "content-" + cid);
+    $container[0].insertBefore($newPage[0], $pages[pos]);
+    return $newPage;
+  };
+
+  Core.prototype._dismissLoadingAfterLoaded = function() {
+    return $(window).on("load", (function(_this) {
+      return function() {
+        if (!_this.loading) {
+          if (_this.cover) {
+            _this.cover.start();
+          }
+          return;
+        }
+        return _this.loading.dismiss(function() {
+          $("section.loading").hide();
+          if (_this.cover) {
+            return _this.cover.start();
+          }
+        });
+      };
+    })(this));
+  };
+
+  Core.prototype._getCid = function() {
+    return this.cid++;
+  };
+
+  return Core;
 
 })(EventEmitter2);
 
-module.exports = PageController;
+module.exports = new Core;
 
 
 
-},{"./util.coffee":6,"eventemitter2":1}],5:[function(require,module,exports){
-var $, CONTENT_HEIGHT, CONTENT_WIDTH, DURATION, MAX_Z_INDEX, PageController, READY_TOP, currPage, currPoint, each, init, initPages, isMoving, isReachedEnd, listenEvent, log, next, nextPage, pages, prev, prevPage, setCurrentPage, setNextPage, setPrevPage, startPoint, swipeDown, swipeUp, swiping, updateZindex, _ref;
+},{"./util.coffee":4,"eventemitter2":1}],3:[function(require,module,exports){
+var test;
 
-_ref = require("./util.coffee"), $ = _ref.$, log = _ref.log, each = _ref.each;
+test = require("../../test/test.coffee");
 
-PageController = require("./page-controller.coffee");
-
-CONTENT_HEIGHT = window.innerHeight;
-
-CONTENT_WIDTH = window.innerWidth;
-
-prevPage = null;
-
-nextPage = null;
-
-currPage = null;
-
-startPoint = null;
-
-currPoint = null;
-
-MAX_Z_INDEX = 1000;
-
-pages = [];
-
-isMoving = false;
-
-isReachedEnd = false;
-
-DURATION = 0.5;
-
-READY_TOP = CONTENT_HEIGHT + 20;
-
-init = function() {
-  initPages();
-  return listenEvent();
-};
-
-initPages = function() {
-  var $contents;
-  $contents = $(".content");
-  $contents.forEach(function($content, i) {
-    var page;
-    page = new PageController($content);
-    page.index = i;
-    page.dom.style.zIndex = MAX_Z_INDEX - i;
-    return pages.push(page);
-  });
-  setCurrentPage(pages[0]);
-  setNextPage(pages[1]);
-  return updateZindex();
-};
-
-listenEvent = function() {
-  var $body;
-  $body = $$(document.body);
-  $body.swiping(swiping);
-  $body.swipeUp(swipeUp);
-  $body.swipeDown(swipeDown);
-  return $body.on("touchstart", function(event) {
-    return startPoint = event.touches[0].clientY;
-  });
-};
-
-swiping = function(event) {
-  var GAP, dist;
-  if (isMoving) {
-    return;
-  }
-  currPoint = event.currentTouch.y;
-  GAP = 30;
-  dist = currPoint - startPoint;
-  if (Math.abs(dist) < GAP) {
-    return;
-  }
-  if (dist < 0) {
-    return nextPage.setPos(nextPage.originTop + dist);
-  } else if (prevPage) {
-    if (currPage.index === 0 && !isReachedEnd) {
-      return;
-    }
-    return currPage.setPos(currPage.originTop + dist);
-  }
-};
-
-swipeUp = function(event) {
-  if (isMoving) {
-    return;
-  }
-  if (Math.abs(currPoint - startPoint) > CONTENT_HEIGHT * 0.4) {
-    isMoving = true;
-    return TweenLite.to(nextPage.dom, DURATION, {
-      "y": "0px",
-      onComplete: next
-    });
-  } else {
-    return TweenLite.to(nextPage.dom, DURATION, {
-      "y": "" + nextPage.originTop + "px"
-    });
-  }
-};
-
-swipeDown = function() {
-  if (isMoving || !prevPage) {
-    return;
-  }
-  if (currPage.index === 0 && !isReachedEnd) {
-    return;
-  }
-  if (Math.abs(currPoint - startPoint) > CONTENT_HEIGHT * 0.4) {
-    isMoving = true;
-    return TweenLite.to(currPage.dom, DURATION, {
-      "y": "" + READY_TOP + "px",
-      onComplete: prev
-    });
-  } else {
-    return TweenLite.to(currPage.dom, DURATION, {
-      "y": "" + currPage.originTop + "px"
-    });
-  }
-};
-
-next = function() {
-  var index;
-  setPrevPage(currPage);
-  setCurrentPage(nextPage);
-  index = currPage.index + 1 === pages.length ? 0 : currPage.index + 1;
-  setNextPage(pages[index]);
-  isMoving = false;
-  return updateZindex();
-};
-
-prev = function() {
-  var index;
-  setNextPage(currPage);
-  setCurrentPage(prevPage);
-  index = currPage.index - 1 === -1 ? pages.length - 1 : currPage.index - 1;
-  setPrevPage(pages[index]);
-  isMoving = false;
-  return updateZindex();
-};
-
-updateZindex = function() {
-  MAX_Z_INDEX += 4;
-  if (nextPage) {
-    nextPage.dom.style.zIndex = MAX_Z_INDEX;
-  }
-  if (currPage) {
-    currPage.dom.style.zIndex = MAX_Z_INDEX - 1;
-  }
-  if (prevPage) {
-    return prevPage.dom.style.zIndex = MAX_Z_INDEX - 2;
-  }
-};
-
-setPrevPage = function(page) {
-  prevPage = page;
-  page.originTop = 0;
-  return page.setPos(0);
-};
-
-setCurrentPage = function(page) {
-  currPage = page;
-  page.originTop = 0;
-  page.setPos(0);
-  if (page.index === pages.length - 1) {
-    return isReachedEnd = true;
-  }
-};
-
-setNextPage = function(page) {
-  nextPage = page;
-  page.originTop = READY_TOP;
-  return page.setPos(page.originTop);
-};
-
-module.exports = {
-  init: init
-};
+test.run();
 
 
 
-},{"./page-controller.coffee":4,"./util.coffee":6}],6:[function(require,module,exports){
+},{"../../test/test.coffee":7}],4:[function(require,module,exports){
 var $, each, log;
-
-$ = function(selector) {
-  var dom, doms;
-  doms = document.querySelectorAll(selector);
-  if (doms.length === 1) {
-    dom = doms[0];
-    dom.on = function() {
-      return dom.addEventListener.apply(dom, arguments);
-    };
-    return doms[0];
-  }
-  return [].slice.call(doms, 0);
-};
 
 log = function() {
   return console.log.apply(console, arguments);
@@ -868,6 +723,8 @@ each = function(list, callback) {
   return [].forEach.call(list, callback);
 };
 
+$ = window.$ = $$;
+
 module.exports = {
   $: $,
   log: log,
@@ -876,4 +733,421 @@ module.exports = {
 
 
 
-},{}]},{},[3]);
+},{}],5:[function(require,module,exports){
+var assert;
+
+assert = function(msg, statement) {
+  if (arguments.length === 1) {
+    msg = ">>> Anonymous Test";
+    statement = msg;
+  }
+  msg = "TEST: " + msg;
+  if (statement) {
+    return console.log("%c" + msg + " passed", "color: green;");
+  } else {
+    return console.log("%c" + msg + " failed", "color: red;");
+  }
+};
+
+module.exports = assert;
+
+
+
+},{}],6:[function(require,module,exports){
+var $, $window, CONTENT_HEIGHT, CONTENT_WIDTH, DURATION, EventEmitter2, MAX_Z_INDEX, Slide, currentIndex, dist, endY, log, nextIndex, prevIndex, startY, _ref,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+EventEmitter2 = (require("eventemitter2")).EventEmitter2;
+
+_ref = require("../src/js/util.coffee"), $ = _ref.$, log = _ref.log;
+
+MAX_Z_INDEX = 1000;
+
+CONTENT_HEIGHT = window.innerHeight;
+
+CONTENT_WIDTH = window.innerWidth;
+
+$window = $(window);
+
+startY = 0;
+
+endY = 0;
+
+dist = 0;
+
+DURATION = 0.4;
+
+currentIndex = 0;
+
+prevIndex = 0;
+
+nextIndex = 0;
+
+Slide = (function(_super) {
+  __extends(Slide, _super);
+
+  function Slide() {
+    this.curr = null;
+    this.prev = null;
+    this.next = null;
+    this.able = false;
+    this.isSwitching = false;
+    this.isReachEnd = false;
+  }
+
+  Slide.prototype.init = function(pages) {
+    this.pages = pages;
+    pages.forEach(function(page, i) {
+      return page.$container.css("zIndex", MAX_Z_INDEX - i);
+    });
+    currentIndex = 0;
+    nextIndex = 1;
+    prevIndex = -1;
+    this._update();
+    return this._initEvents();
+  };
+
+  Slide.prototype.enable = function() {
+    return this.able = true;
+  };
+
+  Slide.prototype.disable = function() {
+    return this.able = false;
+  };
+
+  Slide.prototype._initEvents = function() {
+    $window.on("touchstart", (function(_this) {
+      return function(event) {
+        return startY = event.touches[0].clientY;
+      };
+    })(this));
+    $window.on("touchmove", (function(_this) {
+      return function(event) {
+        endY = event.touches[0].clientY;
+        dist = endY - startY;
+        if (currentIndex === 0 && !_this.isReachEnd) {
+          return;
+        }
+        if (_this.able && !_this.isSwitching) {
+          return _this._slide();
+        }
+      };
+    })(this));
+    return $window.on("touchend", (function(_this) {
+      return function() {
+        if (_this.able) {
+          if (_this._isReadyToSwitch()) {
+            if (dist < 0) {
+              return _this._switchUp();
+            } else {
+              if (currentIndex === 0 && !_this.isReachEnd) {
+                return;
+              }
+              return _this._switchDown();
+            }
+          } else {
+            return _this._back();
+          }
+        }
+      };
+    })(this));
+  };
+
+  Slide.prototype._slide = function() {
+    if (dist < 0) {
+      TweenMax.set(this.currPage.$container, {
+        "y": dist
+      });
+      TweenMax.set(this.nextPage.$container, {
+        "y": CONTENT_HEIGHT + dist
+      });
+    }
+    if (dist > 0) {
+      if (!this.prevPage) {
+        return;
+      }
+      TweenMax.set(this.currPage.$container, {
+        "y": dist
+      });
+      return TweenMax.set(this.prevPage.$container, {
+        "y": -CONTENT_HEIGHT + dist
+      });
+    }
+  };
+
+  Slide.prototype._switchUp = function() {
+    var check, count;
+    this.isSwitching = true;
+    this.emit("deactive", this.currPage);
+    count = 0;
+    check = (function(_this) {
+      return function() {
+        if (++count === 2) {
+          _this._next();
+          return _this.isSwitching = false;
+        }
+      };
+    })(this);
+    TweenMax.to(this.currPage.$container, DURATION, {
+      "y": -CONTENT_HEIGHT,
+      onComplete: check
+    });
+    return TweenMax.to(this.nextPage.$container, DURATION, {
+      "y": 0,
+      onComplete: check
+    });
+  };
+
+  Slide.prototype._switchDown = function() {
+    var check, count;
+    this.isSwitching = true;
+    this.emit("deactive", this.currPage);
+    count = 0;
+    check = (function(_this) {
+      return function() {
+        if (++count === 2) {
+          _this._prev();
+          return _this.isSwitching = false;
+        }
+      };
+    })(this);
+    TweenMax.to(this.currPage.$container, DURATION, {
+      "y": CONTENT_HEIGHT,
+      onComplete: check
+    });
+    return TweenMax.to(this.prevPage.$container, DURATION, {
+      "y": 0,
+      onComplete: check
+    });
+  };
+
+  Slide.prototype._setNext = function(page) {
+    if (!page) {
+      return;
+    }
+    this.nextPage = page;
+    return TweenMax.set(page.$container, {
+      "y": CONTENT_HEIGHT
+    });
+  };
+
+  Slide.prototype._setCurr = function(page) {
+    if (!page) {
+      return;
+    }
+    this.currPage = page;
+    TweenMax.set(page.$container, {
+      "y": 0
+    });
+    return this.emit("active", page);
+  };
+
+  Slide.prototype._setPrev = function(page) {
+    if (!page) {
+      return;
+    }
+    this.prevPage = page;
+    return TweenMax.set(page.$container, {
+      "y": -CONTENT_HEIGHT
+    });
+  };
+
+  Slide.prototype._isReadyToSwitch = function() {
+    return Math.abs(dist) > 50;
+  };
+
+  Slide.prototype._back = function() {
+    var time;
+    time = 0.3;
+    if (this.currPage) {
+      TweenMax.to(this.currPage.$container, time, {
+        "y": 0
+      });
+    }
+    if (this.prevPage) {
+      TweenMax.to(this.prevPage.$container, time, {
+        "y": -CONTENT_HEIGHT
+      });
+    }
+    if (this.nextPage) {
+      return TweenMax.to(this.nextPage.$container, time, {
+        "y": CONTENT_HEIGHT
+      });
+    }
+  };
+
+  Slide.prototype._next = function() {
+    prevIndex = currentIndex;
+    currentIndex = nextIndex;
+    nextIndex = currentIndex + 1 === this.pages.length ? 0 : currentIndex + 1;
+    return this._update();
+  };
+
+  Slide.prototype._prev = function() {
+    nextIndex = currentIndex;
+    currentIndex = prevIndex;
+    prevIndex = currentIndex - 1 === -1 ? this.pages.length - 1 : currentIndex - 1;
+    return this._update();
+  };
+
+  Slide.prototype._update = function() {
+    MAX_Z_INDEX += 4;
+    this._setCurr(this.pages[currentIndex]);
+    this._setPrev(this.pages[prevIndex]);
+    this._setNext(this.pages[nextIndex]);
+    if (currentIndex === this.pages.length - 1) {
+      this.isReachEnd = true;
+    }
+    if (this.prevPage) {
+      this.prevPage.$container.css("zIndex", MAX_Z_INDEX - 2);
+    }
+    if (this.currPage) {
+      this.currPage.$container.css("zIndex", MAX_Z_INDEX - 1);
+    }
+    if (this.nextPage) {
+      return this.nextPage.$container.css("zIndex", MAX_Z_INDEX);
+    }
+  };
+
+  return Slide;
+
+})(EventEmitter2);
+
+module.exports = Slide;
+
+
+
+},{"../src/js/util.coffee":4,"eventemitter2":1}],7:[function(require,module,exports){
+var $, Cover, EventEmitter2, Loading, Page, Slide, assert, colors, core, log, previous, processDom, run, util,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+EventEmitter2 = (require("eventemitter2")).EventEmitter2;
+
+core = require("../src/js/core.coffee");
+
+util = require("../src/js/util.coffee");
+
+assert = require("./assert.coffee");
+
+Slide = require("./slide-effect.coffee");
+
+$ = util.$, log = util.log;
+
+Page = (function(_super) {
+  __extends(Page, _super);
+
+  function Page(id) {
+    this.$dom = $("<div><div>FUCK" + id + "</div></div>");
+    processDom(this.$dom);
+  }
+
+  Page.prototype.start = function() {
+    return log("start");
+  };
+
+  Page.prototype.stop = function() {
+    return log("stop");
+  };
+
+  return Page;
+
+})(EventEmitter2);
+
+Loading = (function(_super) {
+  __extends(Loading, _super);
+
+  function Loading() {
+    this.$dom = $("<div><div>My Loading...</div></div>");
+    processDom(this.$dom);
+  }
+
+  Loading.prototype.dismiss = function(callback) {
+    return setTimeout((function(_this) {
+      return function() {
+        return TweenLite.to(_this.$dom, 0.5, {
+          "opacity": 0,
+          onComplete: callback
+        });
+      };
+    })(this), 1000);
+  };
+
+  return Loading;
+
+})(EventEmitter2);
+
+Cover = (function(_super) {
+  __extends(Cover, _super);
+
+  function Cover() {
+    this.$dom = $("<div><div>Fucking Cover..</div></div>");
+    processDom(this.$dom);
+  }
+
+  Cover.prototype.start = function() {
+    var tl;
+    tl = new TimelineMax;
+    tl.to(this.$dom.find('div'), 1, {
+      "y": 200
+    });
+    tl.to(this.$dom.find('div'), 0.5, {
+      "x": 50
+    });
+    return this.$dom.on("tap", (function(_this) {
+      return function() {
+        return TweenLite.to(_this.$dom, 1, {
+          "opacity": 0,
+          onComplete: function() {
+            return _this.emit("done");
+          }
+        });
+      };
+    })(this));
+  };
+
+  return Cover;
+
+})(EventEmitter2);
+
+colors = ["#319574", "#b54322", "#484d79", "#c59820"];
+
+previous = 0;
+
+processDom = function($dom) {
+  var now;
+  now = Math.floor(Math.random() * colors.length);
+  while (now === previous) {
+    now = Math.floor(Math.random() * colors.length);
+  }
+  previous = now;
+  $dom.css("width", "100%");
+  $dom.css("height", "100%");
+  $dom.css("backgroundColor", colors[now]);
+  $dom.css("color", "#ccc");
+  return $dom.find("div").css("padding", "10px");
+};
+
+run = function() {
+  var cover, fakePage, i, loading, slide, _i;
+  cover = new Cover;
+  core.setCover(cover);
+  loading = new Loading;
+  core.setLoading(loading);
+  for (i = _i = 1; _i <= 4; i = ++_i) {
+    fakePage = new Page(i);
+    core.addPage(fakePage);
+  }
+  fakePage = new Page('page 1');
+  core.addPage(fakePage, 2);
+  core.removePage(fakePage.id);
+  slide = new Slide;
+  return core.setSlide(slide);
+};
+
+exports.run = run;
+
+
+
+},{"../src/js/core.coffee":2,"../src/js/util.coffee":4,"./assert.coffee":5,"./slide-effect.coffee":6,"eventemitter2":1}]},{},[3]);
