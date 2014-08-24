@@ -1,0 +1,51 @@
+div.inner-cover.inner-content {
+  background-color: #b54322;
+}
+div.inner-cover.inner-content div.padding {
+  font-size: 20px;
+}
+
+div.inner-content {
+  width: 100%;
+  height: 100%;
+}
+div.padding {
+  padding: 10px;
+  color: #ccc;
+  text-align: center;
+}
+div.padding.vertical {
+  height: 30px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 33%;
+}
+
+div.loading.inner-content {
+  background-color: #484d79;
+}
+div.loading.inner-content div.padding {
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  margin: auto;
+  position: absolute;
+  top: 33%;
+}
+
+div.end.inner-content {
+  background: url("../../example/assets/img/end.jpg");
+  background-size: cover;
+}
+
+div.introduce.inner-content {
+  background: url("../../example/assets/img/bg.jpg");
+  background-size: cover;
+}
+
+div.text.inner-content {
+  background: url("../../example/assets/img/appBg2.jpg");
+  background-size: cover;
+}
