@@ -22,6 +22,32 @@ div.padding.vertical {
   top: 33%;
 }
 
+#slide-progress {
+  position: fixed;
+  z-index: 102;
+  width: 10px;
+  top: 34%;
+  right: 5px;
+}
+#slide-progress li {
+  list-style: none;
+  padding: 0;
+  background-color: #f9f9f9;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  opacity: 0.3;
+  margin: 0 auto;
+  margin-bottom: 6px;
+}
+#slide-progress li.active {
+  opacity: 0.7;
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+
 div.loading.inner-content {
   background-color: #484d79;
 }
