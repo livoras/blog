@@ -17,6 +17,7 @@ FancySlide = (function(_super) {
   __extends(FancySlide, _super);
 
   function FancySlide() {
+    var ease;
     this.$progress = $("<ul id='slide-progress'></ul>");
     $("div.wrapper").append(this.$progress);
     this.curr = null;
@@ -29,17 +30,18 @@ FancySlide = (function(_super) {
     this.isReachEnd = false;
     this.isFirstSetCurr = true;
     this.isProgressShow = true;
+    ease = Power2.easeInOut;
     this.prevState = {
       y: -HEIGHT,
-      ease: Linear.easeNone
+      ease: ease
     };
     this.currState = {
       y: 0,
-      ease: Linear.easeNone
+      ease: ease
     };
     this.nextState = {
       y: HEIGHT,
-      ease: Linear.easeNone
+      ease: ease
     };
     this.duration = 0.6;
   }
