@@ -30,17 +30,14 @@ FancySlide = (function(_super) {
     this.isFirstSetCurr = true;
     this.isProgressShow = true;
     this.prevState = {
-      autoAlpha: 0,
       y: -HEIGHT,
       ease: Linear.easeNone
     };
     this.currState = {
-      autoAlpha: 1,
       y: 0,
       ease: Linear.easeNone
     };
     this.nextState = {
-      autoAlpha: 0,
       y: HEIGHT,
       ease: Linear.easeNone
     };
@@ -219,7 +216,7 @@ FancySlide = (function(_super) {
         if (!_this.next || !_this.nextTimeline) {
           return;
         }
-        if (_this.nextTimeline.isActive()) {
+        if (_this._isTimelineActive()) {
           return;
         }
         _this.nextTimeline.pause();
@@ -231,7 +228,7 @@ FancySlide = (function(_super) {
         if (!_this.next || !_this.nextTimeline) {
           return;
         }
-        if (_this.nextTimeline.isActive()) {
+        if (_this._isTimelineActive()) {
           return;
         }
         _this.nextTimeline.resume();
@@ -247,7 +244,7 @@ FancySlide = (function(_super) {
         if (!_this.prev || !_this.prevTimeline) {
           return;
         }
-        if (_this.prevTimeline.isActive()) {
+        if (_this._isTimelineActive()) {
           return;
         }
         _this.prevTimeline.pause();
@@ -259,7 +256,7 @@ FancySlide = (function(_super) {
         if (!_this.prev || !_this.prevTimeline) {
           return;
         }
-        if (_this.prevTimeline.isActive()) {
+        if (_this._isTimelineActive()) {
           return;
         }
         _this.prevTimeline.resume();
@@ -275,6 +272,15 @@ FancySlide = (function(_super) {
   FancySlide.prototype._activeProgressByIndex = function(index) {
     $("#slide-progress li.active").removeClass("active");
     return $("#progress-" + index).addClass("active");
+  };
+
+  FancySlide.prototype._isTimelineActive = function() {
+    if (this.nextTimeline && this.nextTimeline.isActive()) {
+      return true;
+    }
+    if (this.prevTimeline && this.prevTimeline.isActive()) {
+      return true;
+    }
   };
 
   return FancySlide;
