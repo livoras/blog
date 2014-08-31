@@ -139,21 +139,19 @@ FancySlide = (function(_super) {
     this.isProgressShow = true;
     this.ease = Linear.easeNone;
     this.prevState = {
-      autoAlpha: 0,
       y: -HEIGHT,
       ease: this.ease
     };
     this.currState = {
-      autoAlpha: 1,
       y: 0,
       ease: this.ease
     };
     this.nextState = {
-      autoAlpha: 0,
       y: HEIGHT,
       ease: this.ease
     };
     this.duration = 0.5;
+    this.isAnimating = false;
   }
 
   FancySlide.prototype.initStates = function(prevState, currState, nextState) {
@@ -326,7 +324,7 @@ FancySlide = (function(_super) {
   FancySlide.prototype._initEvents = function() {
     gestureEvent.on("swiping up", (function(_this) {
       return function(dist) {
-        if (!_this.able) {
+        if (!_this.able || _this.isAnimating) {
           return;
         }
         if (!_this.next || !_this.nextTimeline) {
@@ -342,7 +340,7 @@ FancySlide = (function(_super) {
     gestureEvent.on("swipe up", (function(_this) {
       return function(dist, v) {
         var isRun;
-        if (!_this.able) {
+        if (!_this.able || _this.isAnimating) {
           return;
         }
         if (!_this.next || !_this.nextTimeline) {
@@ -427,6 +425,7 @@ FancySlide = (function(_super) {
   };
 
   FancySlide.prototype._enableAnimation = function() {
+    this.isAnimating = true;
     if (this.curr) {
       this.curr.$container.addClass("transition");
     }
@@ -439,6 +438,7 @@ FancySlide = (function(_super) {
   };
 
   FancySlide.prototype._disableAnimation = function() {
+    this.isAnimating = false;
     if (this.curr) {
       this.curr.$container.removeClass("transition");
     }
