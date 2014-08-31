@@ -30,11 +30,6 @@ div.padding.vertical {
   right: 5px;
 }
 #slide-progress li {
-  -webkit-transition: all 0.8s ease;
-  -moz-transition: all 0.8s ease;
-  -ms-transition: all 0.8s ease;
-  -o-transition: all 0.8s ease;
-  transition: all 0.8s ease;
   list-style: none;
   padding: 0;
   background-color: #f9f9f9;
