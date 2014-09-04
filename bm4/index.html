@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.min.css">
+</head>
+<body>
+
+<!-- loading -->
+<style>
+#loading-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  /*margin-top: -150px;*/
+  left: 0;
+  /*margin-left: -150px;*/
+  z-index: 1000000;
+  background: transparent;
+  -webkit-transition: all 1s ease-in-out;
+}
+.preload-juggle {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  margin-left: -150px;
+  margin-top: -150px;
+  top: 30%;
+  left: 50%;
+  -webkit-transform: scale(.5, .5);
+  -webkit-transform-origin: 50% 50%;
+}
+.preload-juggle div {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  border-radius: 10.5px;
+  background: #1BBC9B;
+  margin-top: 150px;
+  margin-left: 150px;
+  -webkit-animation: juggle 2.1s linear infinite;
+}
+.preload-juggle div:nth-child(1) {
+  -webkit-animation-delay: -0.7s;
+}
+.preload-juggle div:nth-child(2) {
+  -webkit-animation-delay: -1.4s;
+}
+
+@-webkit-keyframes juggle {
+  0% {
+    -webkit-transform: translateX(0px) translateY(0px);
+  }
+  12.5% {
+    -webkit-transform: translateX(27.5px) translateY(-57px) scale(1.1);
+    background: #36D7B7;
+  }
+  25% {
+    -webkit-transform: translateX(55px) translateY(0px);
+    -webkit-animation-timing-function: ease-out;
+  }
+  37.5% {
+    -webkit-transform: translateX(27.5px) translateY(57px);
+  }
+  50% {
+    -webkit-transform: translateX(0px) translateY(0px);
+  }
+  62.5% {
+    -webkit-transform: translateX(-27.5px) translateY(-57px) scale(1.1);
+    -webkit-animation-timing-function: ease-in;
+  }
+  75% {
+    -webkit-transform: translateX(-55px) translateY(0px);
+    -webkit-animation-timing-function: ease-out;
+  }
+  87.5% {
+    -webkit-transform: translateX(-27.5px) translateY(57px);
+  }
+  100% {
+    -webkit-transform: translateX(0px) translateY(0px);
+  }
+}
+</style>
+<div id="loading-wrapper">
+  <div class='preload-juggle' id='loading'>
+    <div class='ball'></div>
+    <div class='ball'></div>
+    <div class='ball'></div>
+  </div>
+</div>
+<script>
+window.onload = function () {
+  var $loadingWrapper = $('#loading-wrapper');
+  
+  $loadingWrapper.css('opacity', '0');
+
+  setTimeout(function () {
+    $loadingWrapper.css('display', 'none');
+    startPage();
+  }, 1000);
+
+  function startPage () {
+    LA.core.start()
+  }
+};
+</script>
+<!-- /loading -->
+
+    <script src="js/main.min.js" id="main-script"></script>
+</body>
+</html>  
