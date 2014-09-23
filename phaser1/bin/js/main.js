@@ -231,12 +231,7 @@ direct = null;
 
 isJump = false;
 
-listenTouch = function() {
-  return game.input.onUp.add(function(event) {
-    direct = null;
-    return isJump = false;
-  });
-};
+listenTouch = function() {};
 
 runLeft = function() {
   man.body.velocity.x = -velocity;
@@ -257,27 +252,30 @@ jump = function() {
 makeButtons = function() {
   var jumpBtn, left, right;
   left = game.add.button(16, HEIGHT - 50, "diamond");
-  right = game.add.button(60, HEIGHT - 50, "diamond");
-  jumpBtn = game.add.button(WIDTH - 16 - 32, HEIGHT - 50, "diamond");
+  right = game.add.button(90, HEIGHT - 50, "diamond");
+  jumpBtn = game.add.button(WIDTH - 70, HEIGHT - 50, "diamond");
+  left.scale.setTo(2, 2);
+  right.scale.setTo(2, 2);
+  jumpBtn.scale.setTo(2, 2);
   left.onInputDown.add(function(event) {
     return direct = 'left';
   });
-  left.onInputOut.add(function(event) {
+  left.onInputUp.add(function(event) {
     return direct = null;
   });
   right.onInputDown.add(function() {
     return direct = 'right';
   });
-  right.onInputOut.add(function(event) {
+  right.onInputUp.add(function(event) {
     return direct = null;
   });
   jumpBtn.onInputDown.add(function() {
     return isJump = true;
   });
-  jumpBtn.onInputOut.add(function(event) {
+  jumpBtn.onInputUp.add(function(event) {
     return isJump = false;
   });
-  right.onInputOut.add(function(event) {});
+  right.onInputUp.add(function(event) {});
   return window.left = left;
 };
 
