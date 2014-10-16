@@ -1,0 +1,14 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+#canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+#debug {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
