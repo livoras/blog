@@ -752,7 +752,7 @@ WIDTH = document.documentElement.clientWidth;
 
 eCanvas.height = HEIGHT;
 
-eCanvas.width = WIDHT;
+eCanvas.width = WIDTH;
 
 loadImageAndDraw = function() {
   bird = new Image;
@@ -764,7 +764,7 @@ loadImageAndDraw = function() {
 
 draw = {
   move: function() {
-    return ctx.drawImage(bird, WIDHT / 2, HEIGHT / 2, bird.width, bird.height);
+    return ctx.drawImage(bird, WIDTH / 2, HEIGHT / 2, bird.width, bird.height);
   }
 };
 
@@ -775,7 +775,7 @@ test = {
     fps = util.fps();
     if (++this.count === 10) {
       this.count = 0;
-      return eDebug.innerHTML = "<p>width: " + WIDHT + ", height: " + HEIGHT + ", FPS: " + fps + "</p>\n<hr>\n<p>" + userAgent + "</p>";
+      return eDebug.innerHTML = "<p>width: " + WIDTH + ", height: " + HEIGHT + ", FPS: " + fps + "</p>\n<hr>\n<p>" + userAgent + "</p>";
     }
   }
 };
