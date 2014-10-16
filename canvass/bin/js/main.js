@@ -726,13 +726,45 @@ module.exports = {
 }();
 
 },{}],6:[function(require,module,exports){
-var Game, game, test, util;
+var $, Game, HEIGHT, WIDHT, bird, ctx, draw, eCanvas, eDebug, game, loadImageAndDraw, test, util;
 
 Game = require("../../lib/game");
 
 util = require("../../lib/util");
 
+$ = util.$;
+
 game = new Game;
+
+eCanvas = $("#canvas");
+
+eDebug = $("#debug");
+
+ctx = canvas.getContext("2d");
+
+bird = null;
+
+HEIGHT = window.innerHeight;
+
+WIDHT = window.innerWidth;
+
+eCanvas.height = HEIGHT;
+
+eCanvas.width = WIDHT;
+
+loadImageAndDraw = function() {
+  bird = new Image;
+  bird.addEventListener("load", function() {
+    return game.add(draw);
+  });
+  return bird.src = "assets/bird.png";
+};
+
+draw = {
+  move: function() {
+    return ctx.drawImage(bird, WIDHT / 2, HEIGHT / 2, bird.width, bird.height);
+  }
+};
 
 test = {
   count: 0,
@@ -741,13 +773,14 @@ test = {
     fps = util.fps();
     if (++this.count === 10) {
       this.count = 0;
-      return document.body.innerHTML = "<h1>" + fps + "</h1>";
+      return eDebug.innerHTML = "<h1>" + fps + "</h1>";
     }
   }
 };
 
 game.on("init", function() {
-  return game.add(test);
+  game.add(test);
+  return loadImageAndDraw();
 });
 
 game.init();
