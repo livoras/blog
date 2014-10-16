@@ -726,7 +726,7 @@ module.exports = {
 }();
 
 },{}],6:[function(require,module,exports){
-var $, Game, HEIGHT, WIDHT, bird, ctx, draw, eCanvas, eDebug, game, loadImageAndDraw, test, util;
+var $, Game, HEIGHT, WIDHT, bird, ctx, draw, eCanvas, eDebug, game, loadImageAndDraw, test, userAgent, util;
 
 Game = require("../../lib/game");
 
@@ -743,6 +743,8 @@ eDebug = $("#debug");
 ctx = canvas.getContext("2d");
 
 bird = null;
+
+userAgent = window.navigator.userAgent;
 
 HEIGHT = window.innerHeight;
 
@@ -773,7 +775,7 @@ test = {
     fps = util.fps();
     if (++this.count === 10) {
       this.count = 0;
-      return eDebug.innerHTML = "<h1>" + fps + "</h1>";
+      return eDebug.innerHTML = "<p>" + fps + "</p>\n<p>" + userAgent + "</p>";
     }
   }
 };
