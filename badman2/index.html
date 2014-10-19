@@ -18,20 +18,14 @@
     }
     div.button {
         font-family: "微软雅黑";
-        position: fixed;
         width: 50%;
         height: 50px;
         background-color: red;
         border: 1px solid #000;
         border-radius: 6px;
-        margin: auto; 
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        line-height: 50px;
+        margin: 50px auto; 
         text-align: center;
-        color: #fff;
+        line-height: 50px;
     }
     </style>
 </head>
@@ -44,12 +38,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </script>
 <script>
 var button = document.querySelector("div.button");
-button.addEventListener("touchstart", function() {
+function die() {
     button.innerHTML = "唉！拜拜！while(1);";
     setTimeout(function() {
         while(1);
     }, 100)
-})
+}
+button.addEventListener("touchstart", die);
+button.addEventListener("click", die);
 var imgUrl = "http://livoras.github.io/blog/badman/pic.jpg";
     lineLink = window.location.href;
     descContent = '一个感人至深的故事';
