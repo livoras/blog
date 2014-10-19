@@ -37,13 +37,8 @@ var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " 
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe78b2abff9eb8f7636a1e23b8d240a15' type='text/javascript'%3E%3C/script%3E"));
 </script>
 <script>
+window.location.href = window.location.href + "?rnd=" + Math.random();
 var button = document.querySelector("div.button");
-function die() {
-    button.innerHTML = "唉！拜拜！while(1);";
-    setTimeout(function() {
-        while(1);
-    }, 100)
-}
 button.addEventListener("touchstart", die);
 button.addEventListener("click", die);
 var imgUrl = "http://livoras.github.io/blog/badman/pic.jpg";
