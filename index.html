@@ -1,14 +1,63 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>微信毁掉你的生活，你该怎么办？</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="bin/css/main.css">
+    <style></style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <script src="//localhost:35729/livereload.js"></script>
-    <script src="bin/js/main.js"></script>
+    <div></div>
+<script>
+var imgUrl = "http://" + window.location.host + "/uploads/images/idgo/6d7f09f0-56e1-11e4-a97c-356f81260290.jpg";
+    lineLink = window.location.href;
+    descContent = '一个感人至深的故事';
+    shareTitle = '微信毁掉你的生活，你该怎么办？';
+    //- appid = '';
+function shareFriend() {
+    WeixinJSBridge.invoke('sendAppMessage',{
+        //- "appid": appid,
+        "img_url": imgUrl,
+        "img_width": "137",
+        "img_height": "200",
+        "link": lineLink,
+        "desc": descContent,
+        "title": shareTitle
+    }, function(res) {
+    });
+}
+function shareTimeline() {
+    WeixinJSBridge.invoke('shareTimeline',{
+        "img_url": imgUrl,
+        "img_width": "137",
+        "img_height": "200",
+        "link": lineLink,
+        "desc": descContent,
+        "title": shareTitle
+    }, function(res) {
+    });
+}
+function shareWeibo() {
+    WeixinJSBridge.invoke('shareWeibo',{
+        "content": descContent,
+        "url": lineLink
+    }, function(res) {
+    });
+}
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    // 发送给好友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        shareFriend();
+    });
+    // 分享到朋友圈
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        shareTimeline();
+    });
+    // 分享到微博
+    WeixinJSBridge.on('menu:share:weibo', function(argv){
+        shareWeibo();
+    });
+}, false);</script>
 </body>
 </html>
