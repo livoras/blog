@@ -737,7 +737,7 @@ _ref = require("./common.coffee"), HEIGHT = _ref.HEIGHT, WIDTH = _ref.WIDTH, RAT
 
 VX = 3;
 
-VY = 4;
+VY = 6;
 
 Bird = (function(_super) {
   __extends(Bird, _super);
@@ -813,7 +813,7 @@ Bird = (function(_super) {
       this.vx = 0;
       this.isDie = true;
     } else {
-      this.vy += 0.2;
+      this.vy += 0.3;
     }
     return this.y += this.vy;
   };
