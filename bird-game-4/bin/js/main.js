@@ -1245,12 +1245,14 @@ initBricks = function() {
 initStates = function() {
   states.on("start", function() {
     score = 0;
+    $score.style.display = "none";
     updateScore();
     bricks.hideLeft();
     bricks.hideRight();
     return bird.reset();
   });
   states.on("game", function() {
+    $score.style.display = "block";
     return bird.revive();
   });
   return bird.on("die", function() {
