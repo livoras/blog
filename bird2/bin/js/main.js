@@ -737,7 +737,7 @@ _ref = require("./common.coffee"), HEIGHT = _ref.HEIGHT, WIDTH = _ref.WIDTH, RAT
 
 VX = 3;
 
-VY = 6;
+VY = 5;
 
 Bird = (function(_super) {
   __extends(Bird, _super);
@@ -755,9 +755,9 @@ Bird = (function(_super) {
 
   Bird.prototype.init = function(bird) {
     this.bird = bird;
-    this.bird.width = 30;
-    this.bird.height = 30;
-    this.bird.style.border = "1px solid #ccc";
+    this.bird.width = 36;
+    this.bird.height = 36;
+    this.bird.style.border = "3px solid #ddd";
     this.reset();
     return this.draw();
   };
@@ -813,7 +813,7 @@ Bird = (function(_super) {
       this.vx = 0;
       this.isDie = true;
     } else {
-      this.vy += 0.3;
+      this.vy += 0.2;
     }
     return this.y += this.vy;
   };
