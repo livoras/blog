@@ -115,7 +115,7 @@ body {
 }
 #share img.share-logo {
   position: absolute;
-  right: 0px;
+  right: 10px;
 }
 #share div.share-text {
   position: absolute;
