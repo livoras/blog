@@ -808,7 +808,12 @@ Bird = (function(_super) {
     this.bird.width = this.width;
     this.bird.height = this.height;
     this.reset();
-    return this.draw();
+    this.draw();
+    return this.show();
+  };
+
+  Bird.prototype.show = function() {
+    return this.bird.style.display = "block";
   };
 
   Bird.prototype.reset = function() {
@@ -1287,7 +1292,7 @@ module.exports = debug;
 
 
 },{"../../lib/util":5,"./common.coffee":10}],12:[function(require,module,exports){
-var $, $area, $score, Game, HEIGHT, WIDTH, bird, boundBricks, bricks, candy, collideCandyAndBird, common, debug, flipWhenTouchDown, game, initArea, initBird, initBricks, initCandy, initStates, isBirdFacingLeft, r, score, states, updateBricksCount, updateScore, util;
+var $, $area, $gameName, $highestScore, $highestText, $instruction, $score, Game, HEIGHT, LS_NAME, WIDTH, bird, boundBricks, bricks, candy, collideCandyAndBird, common, debug, flipWhenTouchDown, game, hideAllText, highestScore, initArea, initBird, initBricks, initCandy, initStates, isBirdFacingLeft, r, retrieveHighestScore, score, showAllText, states, updateBricksCount, updateHighestScore, updateScore, util;
 
 Game = require("../../lib/game");
 
@@ -1317,7 +1322,19 @@ $area = $(".area");
 
 $score = $("#score");
 
+$gameName = $("h1.name");
+
+$instruction = $("div.instruction");
+
+$highestText = $("h2.highest-score");
+
+$highestScore = $("#highest-score");
+
 score = 0;
+
+highestScore = 0;
+
+LS_NAME = "highest-score";
 
 game.on("init", function() {
   initArea();
@@ -1325,6 +1342,7 @@ game.on("init", function() {
   initStates();
   initBird();
   initCandy();
+  retrieveHighestScore();
   collideCandyAndBird();
   return states.change("start");
 });
@@ -1422,15 +1440,29 @@ initStates = function() {
     bricks.hideLeft();
     bricks.hideRight();
     bird.reset();
-    return candy.hide();
+    candy.hide();
+    return showAllText();
   });
   states.on("game", function() {
     $score.style.display = "block";
-    return bird.revive();
+    bird.revive();
+    return hideAllText();
   });
   return bird.on("die end", function() {
     return states.change("over");
   });
+};
+
+hideAllText = function() {
+  $gameName.style.display = "none";
+  $highestText.style.display = "none";
+  return $instruction.style.display = "none";
+};
+
+showAllText = function() {
+  $gameName.style.display = "block";
+  $highestText.style.display = "block";
+  return $instruction.style.display = "block";
 };
 
 flipWhenTouchDown = function() {
@@ -1444,7 +1476,16 @@ flipWhenTouchDown = function() {
 updateScore = function() {
   common.score = score;
   updateBricksCount(score);
-  return $score.innerHTML = score;
+  $score.innerHTML = score;
+  if (score > highestScore) {
+    return updateHighestScore();
+  }
+};
+
+updateHighestScore = function() {
+  highestScore = score;
+  localStorage.setItem(LS_NAME, highestScore);
+  return $highestScore.innerHTML = highestScore;
 };
 
 updateBricksCount = function(score) {
@@ -1454,6 +1495,12 @@ updateBricksCount = function(score) {
     count = 10;
   }
   return bricks.bricksCount = count;
+};
+
+retrieveHighestScore = function() {
+  highestScore = localStorage.getItem(LS_NAME);
+  highestScore = highestScore || 0;
+  return $highestScore.innerHTML = "" + highestScore;
 };
 
 game.init();
