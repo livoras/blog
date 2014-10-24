@@ -119,7 +119,7 @@ body {
 }
 #share div.share-text {
   position: absolute;
-  right: 20px;
+  right: 40px;
   top: 130px;
   -webkit-transform: rotateZ(8deg);
   font-size: 14px;

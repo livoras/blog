@@ -1614,7 +1614,7 @@ State = (function(_super) {
   State.prototype.showShare = function(count) {
     this.$count.innerHTML = common.turnCount;
     this.$share.style.display = "block";
-    window.descContent = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
+    document.title = window.descContent = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
     return window.shareTitle = "别碰钉子！";
   };
 
