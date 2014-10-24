@@ -1332,6 +1332,8 @@ $highestScore = $("#highest-score");
 
 score = 0;
 
+common.turnCount = 0;
+
 highestScore = 0;
 
 LS_NAME = "highest-score";
@@ -1400,6 +1402,7 @@ collideCandyAndBird = function() {
 boundBricks = function() {
   bird.on("turn around", function() {
     score++;
+    common.turnCount++;
     updateScore();
     if (isBirdFacingLeft()) {
       bricks.hideRight();
@@ -1435,6 +1438,7 @@ initBricks = function() {
 initStates = function() {
   states.on("start", function() {
     score = 0;
+    common.turnCount = 0;
     $score.style.display = "none";
     updateScore();
     bricks.hideLeft();
@@ -1449,7 +1453,7 @@ initStates = function() {
     return hideAllText();
   });
   return bird.on("die end", function() {
-    return states.change("over");
+    return states.change("over", score);
   });
 };
 
@@ -1508,7 +1512,7 @@ game.init();
 
 
 },{"../../lib/game":2,"../../lib/r":4,"../../lib/util":5,"./bird.coffee":7,"./bricks.coffee":8,"./candy.coffee":9,"./common.coffee":10,"./debug.coffee":11,"./states.coffee":13}],13:[function(require,module,exports){
-var $, EventEmitter, State, common, states, util,
+var $, EventEmitter, State, common, getBullShitByScore, getRankByScore, percentBullShit, randBullShit, states, util,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
@@ -1523,6 +1527,14 @@ states = ["start", "game", "over", "share"];
 
 $ = util.$;
 
+window.imgUrl = window.location.href.replace(/\w+\.html$/, '') + "assets/bird.png";
+
+window.lineLink = window.location.href;
+
+window.descContent = '';
+
+window.shareTitle = '';
+
 State = (function(_super) {
   __extends(State, _super);
 
@@ -1531,6 +1543,9 @@ State = (function(_super) {
     this.$over = $("#over");
     this.$share = $("#share");
     this.$score = $("#over .score");
+    this.$rank = $("#over .rank");
+    this.$bullShit = $("#over .bull-shit");
+    this.$count = $("#share .count");
     this.state = "start";
     this.init();
   }
@@ -1570,34 +1585,125 @@ State = (function(_super) {
     })(this));
   };
 
-  State.prototype.change = function(state) {
+  State.prototype.change = function(state, score) {
     if (__indexOf.call(states, state) < 0) {
       throw "" + state + " is not in states";
     }
     this.state = state;
-    this.toggleOverState(state);
+    this.toggleOverState(state, score);
     if (state === "share") {
       this.showShare();
     }
     return this.emit(state);
   };
 
-  State.prototype.toggleOverState = function(state) {
-    if (state === "over" || state === "share") {
+  State.prototype.toggleOverState = function(state, score) {
+    if (state === "share") {
+      return;
+    }
+    if (state === "over") {
       this.$score.innerHTML = common.score;
+      this.$rank.innerHTML = getRankByScore(score);
+      this.$bullShit.innerHTML = getBullShitByScore(score);
       return this.$over.style.display = "block";
     } else {
       return this.$over.style.display = "none";
     }
   };
 
-  State.prototype.showShare = function() {
-    return this.$share.style.display = "block";
+  State.prototype.showShare = function(count) {
+    this.$count.innerHTML = common.turnCount;
+    this.$share.style.display = "block";
+    window.descContent = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
+    return window.shareTitle = "别碰钉子！";
   };
 
   return State;
 
 })(EventEmitter);
+
+getRankByScore = function(score) {
+  if ((0 <= score && score <= 3)) {
+    return percentBullShit(6);
+  }
+  if ((4 <= score && score <= 6)) {
+    return percentBullShit(8);
+  }
+  if ((7 <= score && score <= 10)) {
+    return percentBullShit(10);
+  }
+  if ((11 <= score && score <= 13)) {
+    return percentBullShit(21);
+  }
+  if ((14 <= score && score <= 16)) {
+    return percentBullShit(32);
+  }
+  if ((17 <= score && score <= 20)) {
+    return percentBullShit(43);
+  }
+  if ((21 <= score && score <= 23)) {
+    return percentBullShit(50);
+  }
+  if ((24 <= score && score <= 26)) {
+    return percentBullShit(62);
+  }
+  if ((27 <= score && score <= 30)) {
+    return percentBullShit(69);
+  }
+  if ((31 <= score && score <= 33)) {
+    return percentBullShit(73);
+  }
+  if ((34 <= score && score <= 36)) {
+    return percentBullShit(79);
+  }
+  if ((37 <= score && score <= 40)) {
+    return percentBullShit(85);
+  }
+  if ((41 <= score && score <= 45)) {
+    return randBullShit(5000, 9999);
+  }
+  if ((46 <= score && score <= 50)) {
+    return randBullShit(2000, 4999);
+  }
+  if ((51 <= score && score <= 55)) {
+    return randBullShit(1000, 2999);
+  }
+  if ((56 <= score && score <= 60)) {
+    return randBullShit(700, 999);
+  }
+  if ((61 <= score && score <= 65)) {
+    return randBullShit(500, 699);
+  }
+  if ((65 <= score && score <= 70)) {
+    return randBullShit(100, 499);
+  }
+  if (score > 70) {
+    return randBullShit(10, 99);
+  }
+};
+
+percentBullShit = function(percent) {
+  return "打爆了全国" + percent + "%的人";
+};
+
+randBullShit = function(from, to) {
+  return "排在全国" + (from + Math.floor((to - from + 1) * Math.random())) + "名";
+};
+
+getBullShitByScore = function(score) {
+  if (score <= 10) {
+    return "矮油，你也太温柔了吧？！";
+  }
+  if ((11 <= score && score <= 30)) {
+    return "你做得还不错嘛！";
+  }
+  if ((31 <= score && score <= 50)) {
+    return "靠！牛逼爆了你！";
+  }
+  if (score > 50) {
+    return "OMG！你这么高分还能不能做朋友啊？";
+  }
+};
 
 module.exports = new State;
 
