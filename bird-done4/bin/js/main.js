@@ -1527,13 +1527,13 @@ states = ["start", "game", "over", "share"];
 
 $ = util.$;
 
-window.imgUrl = window.location.href.replace(/\w+\.html$/, '') + "assets/bird.png";
+window.imgUrl = window.location.href.replace(/\w+\.html$/, '') + "assets/dead-bird.png";
 
 window.lineLink = window.location.href;
 
-window.descContent = '';
+window.descContent = "千万不要碰到钉子！！";
 
-window.shareTitle = '';
+window.shareTitle = "别碰钉子！";
 
 State = (function(_super) {
   __extends(State, _super);
@@ -1614,8 +1614,8 @@ State = (function(_super) {
   State.prototype.showShare = function(count) {
     this.$count.innerHTML = common.turnCount;
     this.$share.style.display = "block";
-    document.title = window.descContent = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
-    return window.shareTitle = "别碰钉子！";
+    window.descContent = "千万别碰钉子！";
+    return window.shareTitle = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
   };
 
   return State;
