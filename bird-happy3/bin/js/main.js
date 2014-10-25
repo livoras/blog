@@ -829,7 +829,7 @@ Bird = (function(_super) {
     this.isDie = true;
     this.isRunning = false;
     this.x = this.CENTER_X = (WIDTH - this.bird.width) / 2;
-    this.y = this.CENTER_Y = HEIGHT / 2 - this.bird.height + 5;
+    this.y = this.CENTER_Y = HEIGHT / 2 - this.bird.height + 10;
     this.vx = 0;
     this.vy = 0;
     this.rotateZ = 0;
@@ -955,7 +955,7 @@ Bird = (function(_super) {
     } else if (this.y <= this.CENTER_Y - GAP) {
       this.FLIPP_DIRCT = 1;
     }
-    return this.y += this.FLIPP_DIRCT * 0.4;
+    return this.y += this.FLIPP_DIRCT * 0.6;
   };
 
   Bird.prototype.updateY = function() {
