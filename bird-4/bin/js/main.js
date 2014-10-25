@@ -1606,19 +1606,19 @@ State = (function(_super) {
       return;
     }
     if (state === "over") {
-      this.$score.innerHTML = common.score;
+      this.$score.innerHTML = score;
       this.$rank.innerHTML = getRankByScore(score);
       this.$bullShit.innerHTML = getBullShitByScore(score);
       this.$over.style.display = "block";
       window.descContent = "千万别碰钉子！";
-      return window.shareTitle = "我成功地避开了" + common.turnCount + "次虐心的钉子啊！！你的小鸟准备好了吗？";
+      return window.shareTitle = "我的虐心小鸟得了" + score + "分！果断来挑战我的鸟啊！！";
     } else {
       return this.$over.style.display = "none";
     }
   };
 
   State.prototype.showShare = function(count) {
-    this.$count.innerHTML = common.turnCount;
+    this.$count.innerHTML = common.score;
     return this.$share.style.display = "block";
   };
 
