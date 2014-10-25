@@ -48,7 +48,7 @@ body {
   left: 0;
 }
 #over {
-  z-index: 2;
+  z-index: 5;
   background-color: rgba(0, 0, 0, 0.7);
   display: none;
 }
@@ -98,7 +98,7 @@ body {
 }
 #share {
   display: none;
-  z-index: 3;
+  z-index: 6;
   background-color: rgba(0, 0, 0, 0.9);
   color: #666;
 }
