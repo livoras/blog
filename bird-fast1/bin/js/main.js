@@ -776,7 +776,7 @@ EventEmitter = require("eventemitter2").EventEmitter2;
 
 _ref = require("./common.coffee"), HEIGHT = _ref.HEIGHT, WIDTH = _ref.WIDTH, RATE = _ref.RATE;
 
-VX = 3.7;
+VX = 4;
 
 VY = 5.5;
 
