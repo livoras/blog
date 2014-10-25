@@ -1,0 +1,247 @@
+body {
+  overflow: hidden;
+  background-color: #000;
+  font-family: "微软雅黑";
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+.area {
+  overflow: hidden;
+  background-color: #3d6280;
+  z-index: 2;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.bird {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 5px;
+  -webkit-transform: translate3d(0, 0, 0);
+  z-index: 4;
+}
+.hide {
+  display: none;
+}
+#canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+#debug {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+#over {
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+#over div.over-ground {
+  text-align: center;
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+}
+#over div.over-ground .score {
+  margin: 10px;
+}
+#over div.over-ground div.title {
+  margin-top: 70px;
+  margin-bottom: 40px;
+}
+#over div.over-ground p.bull-shit {
+  margin-top: 20px;
+  font-size: 13px;
+}
+#over div.over-ground div.buttons {
+  overflow: hidden;
+  width: 180px;
+  margin: 0 auto;
+}
+#over div.over-ground div.again,
+#over div.over-ground div.show-off {
+  background-color: #fff;
+  width: 70px;
+  font-size: 14px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#over div.over-ground div.again {
+  float: left;
+  margin-right: 10px;
+}
+#over div.over-ground div.show-off {
+  float: right;
+}
+#share {
+  display: none;
+  z-index: 6;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #666;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+#share div.back {
+  border: 2px solid #666;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  width: 60px;
+  position: absolute;
+  bottom: 30%;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+#share img.share-logo {
+  position: absolute;
+  right: 20px;
+}
+#share div.share-text {
+  position: absolute;
+  right: 40px;
+  top: 130px;
+  -webkit-transform: rotateZ(8deg);
+  font-size: 14px;
+}
+.ground {
+  position: absolute;
+  width: 100%;
+  background-color: #76B1D8;
+  left: 0;
+}
+.ground.up-ground {
+  top: 0;
+}
+.ground.down-ground {
+  bottom: 0;
+}
+.angle {
+  position: absolute;
+  left: 0;
+  height: 0;
+  width: 0;
+}
+.wall {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 100%;
+}
+.wall.left-wall {
+  left: 0;
+}
+.wall.right-wall {
+  right: 0;
+}
+img.candy {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.dead-animation {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.circle {
+  z-index: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  text-align: center;
+  position: absolute;
+  margin: auto;
+  width: 150px;
+  height: 150px;
+  background-color: #f7f7f7;
+  border-radius: 150px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-transform: translate3d(0, -20px, 0);
+  -moz-transform: translate3d(0, -20px, 0);
+  -ms-transform: translate3d(0, -20px, 0);
+  -o-transform: translate3d(0, -20px, 0);
+  transform: translate3d(0, -20px, 0);
+}
+.circle .instruction {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #dd2424;
+}
+.circle .score {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 50px;
+  height: 75px;
+  color: #3d6280;
+  font-weight: bold;
+  text-align: center;
+  line-height: 75px;
+}
+.circle h1.name {
+  position: absolute;
+  margin-left: -20px;
+  top: -70px;
+  text-align: center;
+  white-space: pre;
+  color: #ededed;
+}
+.circle h2.highest-score {
+  position: absolute;
+  margin-left: -10px;
+  bottom: -70px;
+  text-align: center;
+  white-space: pre;
+  color: #c2c2c2;
+}
