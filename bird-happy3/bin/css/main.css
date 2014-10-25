@@ -227,6 +227,7 @@ img.candy {
   color: #3d6280;
   font-weight: bold;
   text-align: center;
+  line-height: 75px;
 }
 .circle h1.name {
   position: absolute;
