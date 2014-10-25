@@ -84,6 +84,7 @@ body {
 }
 #over div.over-ground div.again,
 #over div.over-ground div.show-off {
+  background-color: #fff;
   width: 70px;
   font-size: 14px;
   padding: 5px;

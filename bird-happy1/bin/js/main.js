@@ -782,11 +782,11 @@ VY = 5.5;
 
 ACC_Y = 0.2;
 
-DIE_WAIT = 1000;
+DIE_WAIT = 2000;
 
 LOSS = 0.6;
 
-F_LOSS = 0.8;
+F_LOSS = 0.9;
 
 Bird = (function(_super) {
   __extends(Bird, _super);
@@ -924,23 +924,25 @@ Bird = (function(_super) {
     this.vy += 0.5;
     this.y += this.vy;
     this.x += this.vx;
-    if ((this.x < this.bounds.left) || (this.x > this.bounds.right - this.bird.width)) {
+    this.rotateZ += this.vRotateZ;
+    if ((this.x < 0) || (this.x > WIDTH - this.bird.width)) {
       this.vx = -this.vx * LOSS;
-      if (this.x < this.bounds.left) {
-        this.x = this.bounds.left;
+      if (this.x < 0) {
+        this.x = 0;
       } else {
-        this.x = this.bounds.right - this.bird.width;
+        this.x = WIDTH - this.bird.width;
       }
     }
     if ((this.y <= this.bounds.up) || (this.y >= this.bounds.down - this.bird.height)) {
       this.vy = -this.vy * LOSS;
       this.vx = this.vx * F_LOSS;
       if (this.y <= this.bounds.up) {
-        return this.y = this.bounds.up;
+        this.y = this.bounds.up;
       } else {
-        return this.y = this.bounds.down - this.bird.height;
+        this.y = this.bounds.down - this.bird.height;
       }
     }
+    return this.vRotateZ = 15 * (this.vx / VX);
   };
 
   Bird.prototype.updateY = function() {
@@ -973,7 +975,9 @@ Bird = (function(_super) {
 
   Bird.prototype.die = function() {
     var isDie;
-    this.vx = -this.vx * 2;
+    this.vx = -this.vx / this.vx * 5;
+    this.vy = -VY;
+    this.vRotateZ = 15;
     this.isDie = true;
     this.emit("die");
     this.changeBirdStatus(isDie = true);
