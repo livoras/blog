@@ -768,7 +768,7 @@ module.exports = {
 }();
 
 },{}],7:[function(require,module,exports){
-var ACC_Y, Bird, DIE_WAIT, EventEmitter, HEIGHT, RATE, VX, VY, WIDTH, _ref,
+var ACC_Y, Bird, DIE_WAIT, EventEmitter, F_LOSS, HEIGHT, LOSS, RATE, VX, VY, WIDTH, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -782,7 +782,11 @@ VY = 5.5;
 
 ACC_Y = 0.2;
 
-DIE_WAIT = 500;
+DIE_WAIT = 1000;
+
+LOSS = 0.6;
+
+F_LOSS = 0.8;
 
 Bird = (function(_super) {
   __extends(Bird, _super);
@@ -802,6 +806,7 @@ Bird = (function(_super) {
     this.rotateZ = 0;
     this.width = 50;
     this.height = 32;
+    this.isRunning = false;
   }
 
   Bird.prototype.init = function(bird, bounds) {
@@ -821,6 +826,7 @@ Bird = (function(_super) {
   Bird.prototype.reset = function() {
     var isDie;
     this.isDie = true;
+    this.isRunning = false;
     this.x = (WIDTH - this.bird.width) / 2;
     this.y = HEIGHT / 2 - this.bird.height;
     this.vx = 0;
@@ -835,6 +841,7 @@ Bird = (function(_super) {
 
   Bird.prototype.revive = function() {
     this.isDie = false;
+    this.isRunning = true;
     this.vx = VX;
     return this.vy = -VY;
   };
@@ -857,6 +864,12 @@ Bird = (function(_super) {
   };
 
   Bird.prototype.update = function() {
+    if (!this.isRunning) {
+      return;
+    }
+    if (this.isDie) {
+      return this.bounce();
+    }
     this.updateX();
     return this.updateY();
   };
@@ -882,9 +895,6 @@ Bird = (function(_super) {
 
   Bird.prototype.checkTouchSideBricks = function() {
     var bricksPos, from, pos, to, _i, _len, _ref1;
-    if (this.isDie) {
-      return;
-    }
     if (this.x < this.bounds.left) {
       if (this.vx < 0) {
         bricksPos = this.leftBricksPos;
@@ -906,6 +916,29 @@ Bird = (function(_super) {
       to = from + this.bounds.brickWidth;
       if ((from < (_ref1 = this.y) && _ref1 < to)) {
         return this.die();
+      }
+    }
+  };
+
+  Bird.prototype.bounce = function() {
+    this.vy += 0.5;
+    this.y += this.vy;
+    this.x += this.vx;
+    if ((this.x < this.bounds.left) || (this.x > this.bounds.right - this.bird.width)) {
+      this.vx = -this.vx * LOSS;
+      if (this.x < this.bounds.left) {
+        this.x = this.bounds.left;
+      } else {
+        this.x = this.bounds.right - this.bird.width;
+      }
+    }
+    if ((this.y <= this.bounds.up) || (this.y >= this.bounds.down - this.bird.height)) {
+      this.vy = -this.vy * LOSS;
+      this.vx = this.vx * F_LOSS;
+      if (this.y <= this.bounds.up) {
+        return this.y = this.bounds.up;
+      } else {
+        return this.y = this.bounds.down - this.bird.height;
       }
     }
   };
@@ -935,32 +968,21 @@ Bird = (function(_super) {
   };
 
   Bird.prototype.flip = function() {
-    this.vy = -VY;
-    if (this.isDie) {
-      return this.reset();
-    }
+    return this.vy = -VY;
   };
 
   Bird.prototype.die = function() {
     var isDie;
-    this.vy = 0;
-    this.vx = 0;
+    this.vx = -this.vx * 2;
     this.isDie = true;
     this.emit("die");
     this.changeBirdStatus(isDie = true);
-    if (this.isOnTheGround()) {
-      return setTimeout((function(_this) {
-        return function() {
-          return _this.emit("die end");
-        };
-      })(this), DIE_WAIT);
-    } else {
-      return this.moveToGround((function(_this) {
-        return function() {
-          return _this.emit("die end");
-        };
-      })(this));
-    }
+    this.bounce();
+    return setTimeout((function(_this) {
+      return function() {
+        return _this.emit("die end");
+      };
+    })(this), DIE_WAIT);
   };
 
   Bird.prototype.changeBirdStatus = function(isDie) {
