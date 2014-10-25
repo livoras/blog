@@ -1507,6 +1507,10 @@ retrieveHighestScore = function() {
   return $highestScore.innerHTML = "" + highestScore;
 };
 
+document.ontouchstart = function(e) {
+  return e.preventDefault();
+};
+
 game.init();
 
 
