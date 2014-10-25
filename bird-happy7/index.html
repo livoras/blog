@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <title>别碰钉子！</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="bin/css/main.css">
+</head>
+<body>
+    <div class="area">
+        <div id="over" class="state">
+            <div class="over-ground">
+                <div class="title">
+                    <p>你这次成绩</p>
+                    <h1 class="score">12</h1>
+                    <p class="rank">排在全国1341名</p>
+                    <p class="bull-shit">靠！你真是牛逼爆了！</p>
+                </div>
+                <div class="buttons">
+                    <div class="again">再来一次</div>
+                    <div class="show-off">炫耀一下</div>
+                </div>
+            </div>
+        </div>
+        <div id="share" class="state">
+            <img src="assets/share.png" alt="分享" class="share-logo">
+            <div class="share-text">
+                <p>我的虐心小鸟得了<span class="count">0</span>分！!</p>
+                <p>果断来挑战我的鸟啊！</p>
+            </div>
+            <div class="back">返回</div>
+        </div>
+
+        <div class="up-ground ground"></div>
+        <div class="down-ground ground"></div>
+
+        <div class="left-wall wall">
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+            <div class="angle angle-on-left"></div>
+        </div>
+        <div class="right-wall wall"></div>
+        <div class="circle">
+            <h1 class="name">不要碰到钉子</h1>
+            <div class="instruction">
+                <div>轻触</div>
+                <div>让小鸟跳跃</div>
+            </div>
+            <h2 class="highest-score">最高成绩：<span id="highest-score"></span></h2>
+            <div id="score" class="score"></div>
+        </div>
+        <div id="debug"></div>
+        <img class="candy" src="assets/candy.png">
+        <img class="bird" src="assets/bird.png">
+        <img class="dead-bird hide" src="assets/dead-bird.png">
+        <img class="bird-right hide" src="assets/bird-left.png">
+    </div>
+    <script src="bin/js/main.js"></script>
+    <script>
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage',{
+            //- "appid": appid,
+            "img_url": imgUrl,
+            "img_width": "137",
+            "img_height": "200",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+        });
+    }
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url": imgUrl,
+            "img_width": "137",
+            "img_height": "200",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+        });
+    }
+    function shareWeibo() {
+        WeixinJSBridge.invoke('shareWeibo',{
+            "content": descContent,
+            "url": lineLink
+        }, function(res) {
+        });
+    }
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+        });
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            shareWeibo();
+        });
+    }, false);
+    </script>
+</body>
+</html>
