@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>别碰钉子！</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="bin/css/main.css">
@@ -9,14 +9,25 @@
 <body>
     <div class="area">
         <div id="over" class="state">
-            <div class="button-group">
-                <div class="title">你这次成绩：<span class="score"></score></div>
-                <div class="again">再来一次</div>
-                <div class="show-off">炫耀一下</div>
+            <div class="over-ground">
+                <div class="title">
+                    <p>你这次成绩</p>
+                    <h1 class="score">12</h1>
+                    <p class="rank">排在全国1341名</p>
+                    <p class="bull-shit">靠！你真是牛逼爆了！</p>
+                </div>
+                <div class="buttons">
+                    <div class="again">再来一次</div>
+                    <div class="show-off">炫耀一下</div>
+                </div>
             </div>
         </div>
         <div id="share" class="state">
-            分享给朋友
+            <img src="assets/share.png" alt="分享" class="share-logo">
+            <div class="share-text">
+                <p>我成功地避开了<span class="count">0</span>次虐心的钉子啊！！</p>
+                <p>你的小鸟准备好了吗？</p>
+            </div>
             <div class="back">返回</div>
         </div>
 
@@ -49,5 +60,52 @@
         <img class="dead-bird" src="assets/dead-bird.png">
     </div>
     <script src="bin/js/main.js"></script>
+    <script>
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage',{
+            //- "appid": appid,
+            "img_url": imgUrl,
+            "img_width": "137",
+            "img_height": "200",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+        });
+    }
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url": imgUrl,
+            "img_width": "137",
+            "img_height": "200",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+        });
+    }
+    function shareWeibo() {
+        WeixinJSBridge.invoke('shareWeibo',{
+            "content": descContent,
+            "url": lineLink
+        }, function(res) {
+        });
+    }
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+        });
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            shareWeibo();
+        });
+    }, false);
+    </script>
 </body>
 </html>
