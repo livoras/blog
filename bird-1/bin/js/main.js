@@ -924,7 +924,9 @@ Bird = (function(_super) {
     return this.rotateY = 0;
   };
 
-  Bird.prototype.turnLeft = function() {};
+  Bird.prototype.turnLeft = function() {
+    return this.rotateY = 180;
+  };
 
   Bird.prototype.draw = function() {
     return this.bird.style.webkitTransform = "translate3d(" + this.x + "px, " + this.y + "px, 0) rotateY(" + this.rotateY + "deg) rotateZ(" + this.rotateZ + "deg)";
