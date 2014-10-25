@@ -768,7 +768,7 @@ module.exports = {
 }();
 
 },{}],7:[function(require,module,exports){
-var Bird, DIE_WAIT, EventEmitter, HEIGHT, RATE, VX, VY, WIDTH, _ref,
+var ACC_Y, Bird, DIE_WAIT, EventEmitter, HEIGHT, RATE, VX, VY, WIDTH, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -776,9 +776,11 @@ EventEmitter = require("eventemitter2").EventEmitter2;
 
 _ref = require("./common.coffee"), HEIGHT = _ref.HEIGHT, WIDTH = _ref.WIDTH, RATE = _ref.RATE;
 
-VX = 3;
+VX = 3.7;
 
-VY = 5;
+VY = 5.5;
+
+ACC_Y = 0.2;
 
 DIE_WAIT = 500;
 
@@ -915,7 +917,7 @@ Bird = (function(_super) {
     if ((this.y <= this.bounds.up) || (this.y >= this.bounds.down - this.bird.height)) {
       this.die();
     } else {
-      this.vy += 0.2;
+      this.vy += ACC_Y;
     }
     return this.y += this.vy;
   };
