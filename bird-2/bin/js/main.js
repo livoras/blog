@@ -921,11 +921,11 @@ Bird = (function(_super) {
   };
 
   Bird.prototype.turnRight = function() {
-    return this.rotateY = 0;
+    return this.bird.src = "assets/bird.png";
   };
 
   Bird.prototype.turnLeft = function() {
-    return this.rotateY = 180;
+    return this.bird.src = "assets/bird-left.png";
   };
 
   Bird.prototype.draw = function() {
