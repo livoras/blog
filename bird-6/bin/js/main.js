@@ -1611,7 +1611,7 @@ State = (function(_super) {
       this.$bullShit.innerHTML = getBullShitByScore(score);
       this.$over.style.display = "block";
       window.descContent = "千万别碰钉子！";
-      return window.shareTitle = "我的虐心小鸟得了" + score + "分！果断来挑战我的鸟啊！！";
+      return window.shareTitle = "我的虐心小鸟得了" + score + "分！！果断来挑战我的鸟啊！";
     } else {
       return this.$over.style.display = "none";
     }
