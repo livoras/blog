@@ -807,6 +807,7 @@ Bird = (function(_super) {
     this.width = 50;
     this.height = 32;
     this.isRunning = false;
+    this.FLIPP_DIRCT = -1;
   }
 
   Bird.prototype.init = function(bird, bounds) {
@@ -827,11 +828,12 @@ Bird = (function(_super) {
     var isDie;
     this.isDie = true;
     this.isRunning = false;
-    this.x = (WIDTH - this.bird.width) / 2;
-    this.y = HEIGHT / 2 - this.bird.height;
+    this.x = this.CENTER_X = (WIDTH - this.bird.width) / 2;
+    this.y = this.CENTER_Y = HEIGHT / 2 - this.bird.height + 5;
     this.vx = 0;
     this.vy = 0;
     this.rotateZ = 0;
+    this.FLIPP_DIRCT = -1;
     this.leftBricksPos = [];
     this.rightBricksPos = [];
     this.turnRight();
@@ -865,7 +867,7 @@ Bird = (function(_super) {
 
   Bird.prototype.update = function() {
     if (!this.isRunning) {
-      return;
+      return this.flipping();
     }
     if (this.isDie) {
       return this.bounce();
@@ -943,6 +945,17 @@ Bird = (function(_super) {
       }
     }
     return this.vRotateZ = 15 * (this.vx / VX);
+  };
+
+  Bird.prototype.flipping = function() {
+    var GAP;
+    GAP = 10;
+    if (this.y >= this.CENTER_Y + GAP) {
+      this.FLIPP_DIRCT = -1;
+    } else if (this.y <= this.CENTER_Y - GAP) {
+      this.FLIPP_DIRCT = 1;
+    }
+    return this.y += this.FLIPP_DIRCT * 0.4;
   };
 
   Bird.prototype.updateY = function() {
