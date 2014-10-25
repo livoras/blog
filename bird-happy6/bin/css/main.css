@@ -222,12 +222,13 @@ img.candy {
   top: 0;
   bottom: 0;
   margin: auto;
-  font-size: 50px;
-  height: 75px;
+  font-size: 80px;
+  height: 80px;
   color: #3d6280;
   font-weight: bold;
   text-align: center;
-  line-height: 75px;
+  line-height: 80px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .circle h1.name {
   position: absolute;
