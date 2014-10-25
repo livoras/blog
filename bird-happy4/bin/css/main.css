@@ -8,6 +8,7 @@ body {
   margin: 0;
 }
 .area {
+  overflow: hidden;
   background-color: #3d6280;
   z-index: 2;
   position: fixed;
