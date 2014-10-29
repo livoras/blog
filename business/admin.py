@@ -81,6 +81,7 @@ def update_password(data):
 
 
 def set_session(admin):
+  sess.permanent = True
   sess['is_admin'] = True
   sess['user'] = str(admin)
   sess.update(admin.get_dict())
