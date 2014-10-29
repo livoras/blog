@@ -34,3 +34,5 @@ MAIL_CONTENT = u'''
 <div>TA的Email：{user_email}</div>
 <div>TA说：{content}</div>
 '''
+
+TESTING = False

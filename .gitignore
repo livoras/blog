@@ -1,8 +1,6 @@
 venv
 *.pyc
-*.db
 *.db-journal
+*.db
 **/node_modules
-**/bin
 node_modeuls
-bin
