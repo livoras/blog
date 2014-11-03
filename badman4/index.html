@@ -27,10 +27,14 @@
         text-align: center;
         line-height: 50px;
     }
+    img.center {
+        display: block;
+        margin: 0 auto;
+    }
     </style>
 </head>
 <body>
-    <h1>你应该反击！</h1>
+    <h1>你应该让神烦犬帮助你反击！</h1>
     <div class="button">马上反击！</div>
 <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
@@ -38,10 +42,16 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </script>
 <script>
 var button = document.querySelector("div.button");
+var img = document.createElement("img");
+img.src = "fuck.jpg"
+img.className = "center"
 function die() {
     button.innerHTML = "拜拜！";
     setTimeout(function() {
-        window.location.href = "http://livoras.github.io/blog/badman3/"
+        setInterval(function() {
+            var newImg = img.cloneNode(true);
+            document.body.appendChild(newImg);
+        }, 1)
     }, 100)
 }
 button.addEventListener("touchstart", die);
