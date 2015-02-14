@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <title>fuck pixel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+    #content {
+      position: fixed;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: red;
+    }
+    </style>
+</head>
+<body>
+  <div id="content"></div>
+  <script>
+  var content = document.getElementById("content");
+  var color = 'red';
+  setInterval(function() {
+    if (color == 'red') {
+      content.style.backgroundColor = "blue";
+      color = 'blue';
+    } else if (color == 'blue') {
+      content.style.backgroundColor = "green";
+      color = 'green';
+    } else if (color == 'green') {
+      content.style.backgroundColor = "red";
+      color = 'red';
+    }
+  }, 100)
+  </script>
+</body>
+</html>
