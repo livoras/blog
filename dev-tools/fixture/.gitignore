@@ -1,6 +1,0 @@
-venv
-*.pyc
-*.db-journal
-*.db
-**/node_modules
-node_modeuls
