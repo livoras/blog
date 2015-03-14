@@ -6,3 +6,4 @@ venv
 **/bin
 node_modeuls
 bin
+log
