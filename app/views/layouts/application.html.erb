@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BlogMine</title>
+  <title><%= APP_CONFIG['blog_name'] %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div id="header">
+    <h1>
+      <%= link_to APP_CONFIG['blog_name'], root_path %>
+    </h1>
+  </div>
+
+  <div id="main"> <%= yield %> </div>
 
 </body>
 </html>

@@ -1,0 +1,11 @@
+defaults: &defaults
+  blog_name: "Livoras's Blog"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
