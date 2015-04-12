@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org/'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -24,6 +24,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'will_paginate', '>= 3.0.pre'
+
+gem 'redcarpet'
+
+gem 'coderay'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

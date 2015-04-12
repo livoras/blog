@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :tags %><br>
-    <%= f.text_field :tags, :value => @post.all_tags.join(';') + ';' %>
+    <%= f.text_field :tags, :value => @post.all_tags.join(';') %>
   </div>
 
   <div class="actions">

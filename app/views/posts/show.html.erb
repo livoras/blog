@@ -1,8 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <div> <%= @post.title %> </div>
-<div> <%= @post.content %> </div>
-<div> <%= @post.all_tags.join(';') + ';' %> </div>
+<div> <%= markdown @post.content %> </div>
+
+<div>
+  <%= form_tag("/comments", method: :post, remote: true) do %>
+    <%= hidden_field_tag(:post_id, @post.id) %>
+    <div>email: <%= text_field_tag(:email) %></div>
+    <div>name: <%= text_field_tag(:name) %></div>
+    <div>content: <%= text_area_tag(:content) %></div>
+    <%= submit_tag("Submit") %>
+  <% end %>
+</div>
+
+<% @post.comments.each do |comment| %>
+  <div><%= comment.name %> - <%= comment.created_at %> </div>
+  <div><%= comment.content %></div>
+  <hr>
+<% end %>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>

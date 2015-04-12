@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  has_many :comment
+  has_many :comments
   has_many :tags
 
   def all_tags

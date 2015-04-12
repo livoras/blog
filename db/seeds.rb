@@ -16,3 +16,10 @@ Tag.create([
   {name: "tag1", post_id:1},
   {name: "tag2", post_id:1}
 ])
+
+Comment.create([
+  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1}
+])
