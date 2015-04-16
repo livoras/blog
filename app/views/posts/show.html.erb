@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_post_path(@post) %>
 
 <div> <%= @post.title %> </div>
 <div> <%= markdown @post.content %> </div>
+
+<% if @post.status == 'private' %>
+  此文章为私密文章
+<% end %>
 
 <div>
   <%= form_tag("/comments", method: :post, remote: true) do %>

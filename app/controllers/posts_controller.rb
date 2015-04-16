@@ -1,12 +1,15 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :set_tags
+  before_action :set_status_filter
   skip_before_action :authentication, only: [:index, :show, :search_by_tag, :search_by_keyword]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.paginate(:page => params[:page], :per_page => 7).order("created_at DESC")
+    @posts = Post.where(status: @status)
+                 .paginate(:page => params[:page], :per_page => 7)
+                 .order("created_at DESC")
   end
 
   # GET /posts/1
@@ -74,8 +77,9 @@ class PostsController < ApplicationController
     pattern = "'%#{params[:keyword]}%'"
 
     @posts = Post.where("content LIKE #{pattern} OR title LIKE #{pattern}")
-                .paginate(:page => params[:page], :per_page => 7)
-                .order("posts.created_at DESC")
+                 .where(status: @status)
+                 .paginate(:page => params[:page], :per_page => 7)
+                 .order("posts.created_at DESC")
     respond_to do |format|
       format.html {render :index}
     end
@@ -89,7 +93,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      post_args = params[:post].permit(:content, :title, :tags)
+      post_args = params[:post].permit(:content, :title, :tags, :status)
       convert_tags_to_list post_args
     end
 
@@ -108,11 +112,18 @@ class PostsController < ApplicationController
       @tags = Tag.group(:name).count
     end
 
+    def set_status_filter
+      if @user
+        @status = ['private', 'public']
+      else
+        @status = ['public']
+      end
+    end
+
     def find_post_by_tag_name(tag_name)
       Post.includes(:tags)
-          .where(tags: {name: tag_name})
+          .where(tags: {name: tag_name}, status: @status)
           .paginate(:page => params[:page], :per_page => 7)
           .order("posts.created_at DESC")
-      # Post.joins(:tags).where('tags.name' => tag_name).paginate(:page => params[:page], :per_page => 7).order("created_at DESC")
     end
 end

@@ -23,7 +23,13 @@
     <%= f.label :tags %><br>
     <%= f.text_field :tags, :value => @post.all_tags.join(';') %>
   </div>
+  <div class="field">
+    <%= f.radio_button :status, 'public' %>
+    <%= f.label :status_public %>公开<br>
 
+    <%= f.radio_button :status, 'private' %>
+    <%= f.label :status_private %>私密<br>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
