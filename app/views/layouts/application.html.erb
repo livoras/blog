@@ -14,7 +14,12 @@
     </h1>
   </div>
 
-  <div id="main"> <%= yield %> </div>
+  <div id="main">
+    <% if session[:user_id] %>
+      <%= render 'layouts/admin_bar' %>
+    <% end %>
+    <%= yield %> 
+  </div>
 
 </body>
 </html>

@@ -1,0 +1,18 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: name %>
+<% end %>
+
+<%= form_tag(login_url, :method => :post) do %>
+  <div>
+    <%= label_tag(:email, 'Email: ') %>
+    <%= text_field_tag(:email) %>
+  </div>
+
+  <div>
+    <%= label_tag(:password, 'Password: ') %>
+    <%= password_field_tag(:password) %>
+  </div>
+
+  <%= submit_tag('Submit')%>
+
+<% end %>

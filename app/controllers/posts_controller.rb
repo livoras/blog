@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :set_tags
+  skip_before_action :authentication, only: [:index, :show, :search_by_tag, :search_by_keyword]
 
   # GET /posts
   # GET /posts.json

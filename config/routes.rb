@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :users
+
   resources :comments
 
   resources :posts do
@@ -8,6 +10,11 @@ Rails.application.routes.draw do
   end
 
   root "posts#index", :action => "post"
+  controller :session do
+    get "/login", :action => :new
+    post "/login", :action => :create
+    delete "/logout", :action => :destroy
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

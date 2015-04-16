@@ -23,3 +23,5 @@ Comment.create([
   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1}
 ])
+
+User.create({email: "me@livoras.com", name: "Livoras", plain_password: "123456", plain_password_confirmation: "123456"})
