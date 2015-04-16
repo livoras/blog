@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_tags
 
   # GET /posts
   # GET /posts.json
@@ -25,7 +26,6 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -40,6 +40,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    @post.tags.each { |tag| tag.destroy }
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -61,6 +62,24 @@ class PostsController < ApplicationController
     end
   end
 
+  def search_by_tag
+    @posts = find_post_by_tag_name params[:name]
+    respond_to do |format|
+      format.html {render :index}
+    end
+  end
+
+  def search_by_keyword
+    pattern = "'%#{params[:keyword]}%'"
+
+    @posts = Post.where("content LIKE #{pattern} OR title LIKE #{pattern}")
+                .paginate(:page => params[:page], :per_page => 7)
+                .order("posts.created_at DESC")
+    respond_to do |format|
+      format.html {render :index}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -69,6 +88,30 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params[:post].permit(:content, :title)
+      post_args = params[:post].permit(:content, :title, :tags)
+      convert_tags_to_list post_args
+    end
+
+    def convert_tags_to_list(post_args)
+      post_args[:tags] = post_args[:tags].split(';').map do |tagName|
+        tag = Tag.find_by(:name => tagName, :post_id => params[:id])
+        if tag.nil?
+          tag = Tag.create name: tagName
+        end
+        tag
+      end
+      post_args
+    end
+
+    def set_tags
+      @tags = Tag.group(:name).count
+    end
+
+    def find_post_by_tag_name(tag_name)
+      Post.includes(:tags)
+          .where(tags: {name: tag_name})
+          .paginate(:page => params[:page], :per_page => 7)
+          .order("posts.created_at DESC")
+      # Post.joins(:tags).where('tags.name' => tag_name).paginate(:page => params[:page], :per_page => 7).order("created_at DESC")
     end
 end

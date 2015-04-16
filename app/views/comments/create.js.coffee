@@ -1,1 +1,1 @@
-console.log('good.')
+$("#comments").prepend '<%= render @comment %>'

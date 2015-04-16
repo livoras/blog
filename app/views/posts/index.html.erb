@@ -1,5 +1,22 @@
 <p id="notice"><%= notice %></p>
 
+<div class="tags">
+  <% @tags.each do |tag| %>
+  <div class="tag">
+    <%= link_to "#{tag[0]}(#{tag[1]})", search_by_tag_posts_path(tag[0])%>
+  </div>
+  <% end %>
+  <hr>
+</div>
+
+<div class="search">
+  <%= form_tag('/posts/search', method: 'get') do %>
+    <%= label_tag(:keyword, "Search") %>
+    <%= text_field_tag(:keyword) %>
+    <%= submit_tag('Search') %>
+  <% end %>
+</div>
+
 <div>
   <% @posts.each do |post| %>
     <div>
@@ -15,7 +32,7 @@
   <% end %>
 </div>
 
-<%= will_paginate @orders %>
+<%= will_paginate @posts %>
 
 <br>
 

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+
   resources :comments
 
-  resources :posts
+  resources :posts do
+    get '/tags/:name', :action => :search_by_tag, :on => :collection, :as => 'search_by_tag'
+    get '/search/', :action => :search_by_keyword, :on => :collection, :as => 'search_by_keyword'
+  end
 
-  root "posts#index", :to => "post"
+  root "posts#index", :action => "post"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

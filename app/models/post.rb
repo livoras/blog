@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
-  has_many :comments
-  has_many :tags
+  has_many :comments, :dependent => :destroy
+  has_many :tags, :dependent => :destroy
 
   def all_tags
     tags.map { |tag| tag.name }

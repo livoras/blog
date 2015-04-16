@@ -2,6 +2,8 @@
 
 one:
   post_id: 1
+  name: one
 
 two:
   post_id: 1
+  name: two
