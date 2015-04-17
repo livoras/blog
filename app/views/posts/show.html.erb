@@ -1,7 +1,13 @@
 <p id="notice"><%= notice %></p>
+
+<% if session[:user_id] %>
 <%= link_to 'Edit', edit_post_path(@post) %>
+<% end %>
 
 <div> <%= @post.title %> </div>
+<div><%= @post.user.name %></div>
+
+<hr>
 <div> <%= markdown @post.content %> </div>
 
 <% if @post.status == 'private' %>

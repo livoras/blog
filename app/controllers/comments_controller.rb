@@ -35,6 +35,7 @@ class CommentsController < ApplicationController
       else
         format.html { redirect_to @comment.post, notice: "Cannot save comment." }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

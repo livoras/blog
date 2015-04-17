@@ -6,8 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.create({email: "me@livoras.com", name: "Livoras", plain_password: "123456", plain_password_confirmation: "123456"})
+
 posts = 100.times.map do |i|
-  {title: "title - #{i}", content: "Fuck you every day for everyday.#{i}"}
+  {title: "title - #{i}", content: "Fuck you every day for everyday.#{i}", user_id: 1}
 end
 
 Post.create(posts)
@@ -24,4 +26,3 @@ Comment.create([
   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1}
 ])
 
-User.create({email: "me@livoras.com", name: "Livoras", plain_password: "123456", plain_password_confirmation: "123456"})

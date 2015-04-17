@@ -94,6 +94,7 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       post_args = params[:post].permit(:content, :title, :tags, :status)
+      post_args[:user_id] = session[:user_id]
       convert_tags_to_list post_args
     end
 
