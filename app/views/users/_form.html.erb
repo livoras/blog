@@ -20,8 +20,12 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
+    <%= f.label :plain_password %><br>
+    <%= f.text_field :plain_password %>
+  </div>
+  <div class="field">
+    <%= f.label :plain_password_confirmation %><br>
+    <%= f.text_field :plain_password_confirmation %>
   </div>
   <div class="actions">
     <%= f.submit %>

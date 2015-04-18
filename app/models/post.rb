@@ -6,4 +6,8 @@ class Post < ActiveRecord::Base
   def all_tags
     tags.map { |tag| tag.name }
   end
+
+  def author
+    self.user
+  end
 end
