@@ -1,35 +1,32 @@
+<%= render "sider_bar" %>
+
+<%= stylesheet_link_tag 'index'%>
 <p id="notice"><%= notice %></p>
 
-<div class="tags">
-  <% @tags.each do |tag| %>
-  <div class="tag">
-    <%= link_to "#{tag[0]}(#{tag[1]})", search_by_tag_posts_path(tag[0])%>
-  </div>
-  <% end %>
-  <hr>
-</div>
-
-<div class="search">
-  <%= form_tag('/posts/search', method: 'get') do %>
-    <%= label_tag(:keyword, "Search") %>
-    <%= text_field_tag(:keyword) %>
-    <%= submit_tag('Search') %>
-  <% end %>
-</div>
-
-<div>
-  <% @posts.each do |post| %>
-    <div>
-      <span><%= post.id %></span>
-      <div><%= truncate post.content, :length => 300 %></div>
-      <div>
-        <%= link_to 'Show', post %>
-        <%= link_to 'Edit', edit_post_path(post) %>
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="posts pull-left width-66">
+  <% if @posts.size.zero? %>
+    <%= render 'no_content' %>
+  <% else %>
+    <% @posts.each do |post| %>
+    <div class="post section">
+      <div class="post-info">
+        <span class="name"><%= post.author.name %></span>
+        <span class="on">on</span>
+        <time class="create-time"><%= post.created_at %></time>
       </div>
+      <h3 class="post-title">
+        <%= link_to post.title, post%>
+      </h3>
+      <p class="content-abs">
+        <%= truncate post.content, :length => 300 %>
+      </p>
+      <div class="comments-count">共有条 <%= post.comments.size %> 评论</div>
     </div>
-    <hr>
+    <% end %>
+
+    <div class="pages-nav clear center">
+      <%= will_paginate @posts %>
+    </div>
   <% end %>
 </div>
 
-<%= will_paginate @posts %>
