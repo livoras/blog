@@ -24,8 +24,9 @@ class SessionControllerTest < ActionController::TestCase
   end
 
   test "should get destroy" do
+    session[:user_id] = @user.id
     delete :destroy
-    assert_response :success
+    assert_redirected_to root_url
   end
 
 end

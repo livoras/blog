@@ -6,6 +6,9 @@ class PostsControllerTest < ActionController::TestCase
     @post.tags.build :name => "fuck"
     @post.tags.build :name => "you"
     @post.save
+    @post.user_id = users(:one).id
+    @post.save
+    session[:user_id] = users(:one).id
   end
 
   test "should get index" do

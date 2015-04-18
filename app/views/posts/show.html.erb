@@ -10,8 +10,6 @@
 <hr>
 <div> <%= markdown @post.content %> </div>
 
-<%= post_url @post %>
-
 <% if @post.status == 'private' %>
   此文章为私密文章
 <% end %>

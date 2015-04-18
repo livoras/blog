@@ -3,6 +3,10 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   setup do
     @comment = comments(:one)
+    post = posts(:one)
+    post.user_id = users(:one).id
+    post.save
+    session[:user_id] = users(:one).id
   end
 
   test "should get index" do
@@ -17,11 +21,13 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "should create comment" do
-    # assert_difference('Comment.count') do
-    #   post :create, comment: { content: @comment.content, email: @comment.email, name: @comment.name }
-    # end
-
-    # assert_redirected_to comment_path(assigns(:comment))
+    @comment.email = "livoras@163.com"
+    @comment.name = "Lucy"
+    @comment.content = "Lucy@you"
+    assert_difference('Comment.count') do
+      post :create, content: @comment.content, email: @comment.email, name: @comment.name, post_id: posts(:one)
+    end
+    assert_equal assigns(:lucy), "good"
   end
 
   test "should show comment" do
@@ -36,7 +42,7 @@ class CommentsControllerTest < ActionController::TestCase
 
   test "should update comment" do
     patch :update, id: @comment, comment: { content: @comment.content, email: @comment.email, name: @comment.name }
-    assert_redirected_to comment_path(assigns(:comment))
+    assert_response :success
   end
 
   test "should destroy comment" do

@@ -28,10 +28,12 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
-        CommentNotifier.notify_author(@comment, @comment.post.author).deliver_later
         format.html { redirect_to @comment.post, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
         format.js
+
+        CommentNotifier.notify_author(@comment, @comment.post.author).deliver_later
+        notify_mentioned_commentor
       else
         format.html { redirect_to @comment.post, notice: "Cannot save comment." }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -73,5 +75,17 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.permit(:email, :content, :name, :post_id)
+    end
+
+    def notify_mentioned_commentor
+      metioned_commmentors_names = @comment.content.scan(/(?<=@)[_\w\d]{2,31}(?=\s|\z)/i).uniq
+      if metioned_commmentors_names.size.zero?
+        return
+      end
+
+      comments = Comment.group(:email).where(:name => metioned_commmentors_names)
+      comments.each do |comment|
+        CommentNotifier.notify_commentor(comment, comment.post.author, @comment).deliver_later
+      end
     end
 end

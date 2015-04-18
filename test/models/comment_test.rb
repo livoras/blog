@@ -21,12 +21,18 @@ class CommentTest < ActiveSupport::TestCase
 
   test 'content cannot be blank' do
     @comment.email = "fuck@163.com"
-    @comment.content = ""
+    @comment.name = "&43*3"
     @comment.valid?
-    assert_equal @comment.errors[:content], ["can't be blank"]
+    assert_equal @comment.errors[:name].size, 1
   end
 
-  test 'name cannot be in range' do
+  test 'name cannot be with unvalid char ' do
+    @comment.name = "h"
+    @comment.valid?
+    assert_equal @comment.errors[:name].size, 1
+  end
+
+  test 'name cannot be out of range' do
     @comment.name = "h"
     @comment.valid?
     assert_equal @comment.errors[:name].size, 1
@@ -35,7 +41,7 @@ class CommentTest < ActiveSupport::TestCase
     @comment.valid?
     assert_equal @comment.errors[:name], []
 
-    @comment.name = "newnamnnewnamenewnameewnamenewnamenewnamenewnamenewnamee"
+    @comment.name = "____amnnewnamenewnameewnamenewnamenewnamenewnamenewnamee"
     @comment.valid?
     assert_equal @comment.errors[:name].size, 1
   end
