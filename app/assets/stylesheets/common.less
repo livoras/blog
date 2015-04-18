@@ -1,0 +1,41 @@
+@link: #4EAACC;
+@link-hover: #28718C;
+@font-color: #333;
+@header-bg-color: #F6F8F8;
+@border-color: #DADFE1;
+@button-color: #B0BABF;
+@button-hover-color: #94A1A8;
+@footer-bg-color: #36535A;
+@font-family: 'Gotham Rounded B', 'Microsoft YaHei', "微软雅黑", Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', 'Droid Sans Fallback', 'SimSun', 'sans-serif';
+@content-min-height: 800px;
+
+.transition (@property: all; @duration: 0.2s; @type: ease) {
+  -webkit-transition: @property @duration @type;
+  -moz-transition: @property @duration @type;
+  -ms-transition: @property @duration @type;
+  -o-transition: @property @duration @type;
+  transition: @property @duration @type;
+}
+
+.radius(@radius: 6px;) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.content() {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.5em;
+  letter-spacing: 1px;
+}
+
+.h2-style {
+  font-weight: 500;
+  font-size: 30px;
+  color: #3e474c;
+  text-align: center;
+  margin: 1em 0;
+}

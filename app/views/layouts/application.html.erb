@@ -2,24 +2,35 @@
 <html>
 <head>
   <title><%= APP_CONFIG['blog_name'] %></title>
-  <%= stylesheet_link_tag    'application', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'layout', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-  <div id="header">
-    <h1>
-      <%= link_to APP_CONFIG['blog_name'], root_path %>
-    </h1>
+  <div id="main">
   </div>
 
-  <div id="main">
+  <div class="header">
+    <h1><a class="no-color" href="/"><%= link_to APP_CONFIG['blog_name'], root_path %></a></h1>
+  </div>
+
+  <div class="content">
     <% if session[:user_id] %>
-      <%= render 'layouts/admin_bar' %>
+      <div>
+        <%= render 'layouts/admin_bar' %>
+      </div>
     <% end %>
     <%= yield %> 
   </div>
+
+  <div class="footer">
+    <a href="/about">About Me</a>
+  </div>
+
+  <script type="text/javascript">
+  var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+  document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F999e9bb30c286cc1f7eba9baf7d516a8' type='text/javascript'%3E%3C/script%3E"));
+  </script>
 
 </body>
 </html>
