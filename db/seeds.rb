@@ -8,21 +8,21 @@
 
 User.create({email: "me@livoras.com", name: "Livoras", plain_password: "123456", plain_password_confirmation: "123456"})
 
-posts = 100.times.map do |i|
-  {title: "title - #{i}", content: "Fuck you every day for everyday.#{i}", user_id: 1}
-end
+# posts = 100.times.map do |i|
+#   {title: "title - #{i}", content: "Fuck you every day for everyday.#{i}", user_id: 1}
+# end
 
-Post.create(posts)
+# Post.create(posts)
 
-Tag.create([
-  {name: "tag1", post_id:1},
-  {name: "tag2", post_id:1}
-])
+# Tag.create([
+#   {name: "tag1", post_id:1},
+#   {name: "tag2", post_id:1}
+# ])
 
-Comment.create([
-  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
-  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
-  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
-  {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1}
-])
+# Comment.create([
+#   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+#   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+#   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1},
+#   {email: "fuck@you.com", name: "Livoras", content: "I love this post", post_id: 1}
+# ])
 
