@@ -17,9 +17,9 @@
     <div class="post-info">
       <span class="name"><%= @post.author.name %></span>
       <span class="on">created on</span>
-      <time class="create-time"><%= @post.created_at %></time>
+      <time class="create-time"><%= @post.created_at.strftime('%b %d, %y') %></time>
       <span class="on">last updated on</span>
-      <time class="create-time"><%= @post.updated_at %></time>
+      <time class="create-time"><%= @post.updated_at.strftime('%b %d, %y') %></time>
     </div>
   </div>
 
@@ -46,7 +46,7 @@
 
       <label>
         <div>Username:</div>
-        <%= text_field_tag(:name, '', :placeholder => "4 ~ 16 letters", :type => "text") %>
+        <%= text_field_tag(:name, '', :placeholder => "2 ~ 30 letters", :type => "text") %>
       </label>
 
       <label><div>Comment:</div></label>

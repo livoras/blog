@@ -12,7 +12,7 @@
       <div class="post-info">
         <span class="name"><%= post.author.name %></span>
         <span class="on">on</span>
-        <time class="create-time"><%= post.created_at %></time>
+        <time class="create-time"><%= post.created_at.strftime('%b %d, %y') %></time>
       </div>
       <h3 class="post-title">
         <%= link_to post.title, post%>
