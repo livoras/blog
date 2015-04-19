@@ -55,6 +55,10 @@ group :development, :test do
   gem 'spring'
 end
 
+group :development do
+  gem "mysql2"
+end
+
 group :assets do
   gem 'therubyracer'
 end

@@ -22,7 +22,16 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: blog #<%= ENV['RAILS_DB_NAME'] %>
+  pool: 5
+  username: blog #<%= ENV['RAILS_DB_USER'] %>
+  password: 111111 #<%= ENV['RAILS_DB_PASSWORD'] %>
+  host: localhost
+  # encoding: utf8mb4
+  # collation: utf8mb4_unicode_ci
 
 # gdgallhkmzucyp:BmSWLwkVV_Bfcjwz9sZPtSsIIX@ec2-54-243-50-213.compute-1.amazonaws.com:5432/d5sm1n1kpsj2ta
 # [user[:password]@][netloc][:port][/dbname][?param1=value1&...]
