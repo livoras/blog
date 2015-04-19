@@ -30,6 +30,9 @@ gem 'redcarpet'
 gem 'coderay'
 
 gem 'less-rails', '~> 2.7.0'
+
+gem "browserify-rails", "~> 0.7"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

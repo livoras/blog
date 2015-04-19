@@ -28,16 +28,18 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
+        ####
+        # 这里需要注意参数formats，layout，locals
+        ###
+        @html = render_to_string '_comment', formats: [:html], layout: false, locals: { comment: @comment }
         format.html { redirect_to @comment.post, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
-        format.js
 
         CommentNotifier.notify_author(@comment, @comment.post.author).deliver_later
         notify_mentioned_commentor
       else
         format.html { redirect_to @comment.post, notice: "Cannot save comment." }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
-        format.js
       end
     end
   end

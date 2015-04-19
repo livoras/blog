@@ -1,3 +1,9 @@
-<div><%= comment.name %> - <%= comment.created_at %> </div>
-<div><%= comment.content %></div>
-<hr>
+<div class="comment">
+  <div class="post-info">
+    <span class="name"><%= comment.name %></span>
+    <span class="on">on</span>
+    <time class="create-time"><%= comment.created_at %></time>
+    <span class="on">, said: </span>
+  </div>
+  <p class="comment-content"><%= comment.content %></p>
+</div>

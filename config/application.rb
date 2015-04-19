@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module BlogMine
   class Application < Rails::Application
+    config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -20,9 +21,10 @@ module BlogMine
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('app', 'assets', 'images')
+
+    # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
