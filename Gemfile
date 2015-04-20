@@ -60,6 +60,6 @@ group :development do
 end
 
 group :assets do
-  gem 'therubyracer'
+  gem 'therubyracer', '0.11.3'
 end
 
