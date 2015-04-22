@@ -1,0 +1,14 @@
+defaults: &defaults
+  blog_name: "Livoras's Blog"
+
+development:
+  <<: *defaults
+  host: "localhost:3000"
+
+test:
+  <<: *defaults
+  host: "localhost:3000"
+
+production:
+  <<: *defaults
+  host: "blog.livoras.com"

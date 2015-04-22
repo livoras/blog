@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= APP_CONFIG['blog_name'] %></title>
+  <%= stylesheet_link_tag    'layout', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div id="main">
+  </div>
+
+  <div class="header">
+    <h1><a class="no-color" href="/"><%= link_to APP_CONFIG['blog_name'], root_path %></a></h1>
+  </div>
+
+  <div class="content">
+    <% if session[:user_id] %>
+      <div>
+        <%= render 'layouts/admin_bar' %>
+      </div>
+    <% end %>
+    <%= yield %> 
+  </div>
+
+  <div class="footer">
+    <a href="/about">About Me</a>
+  </div>
+
+</body>
+</html>

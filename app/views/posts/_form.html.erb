@@ -1,0 +1,36 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </div>
+  <div class="field">
+    <%= f.label :tags %><br>
+    <%= f.text_field :tags, :value => @post.all_tags.join(';') %>
+  </div>
+  <div class="field">
+    <%= f.radio_button :status, 'public' %>
+    <%= f.label :status_public %>公开<br>
+
+    <%= f.radio_button :status, 'private' %>
+    <%= f.label :status_private %>私密<br>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

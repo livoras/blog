@@ -1,0 +1,12 @@
+{
+  "name": "livras",
+  "dependencies" : {
+    "browserify": "~> 6.3",
+    "browserify-incremental": "^1.4.0",
+    "coffeeify": "~> 0.6"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

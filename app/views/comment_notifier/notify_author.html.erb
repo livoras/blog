@@ -1,0 +1,5 @@
+<h2><%= @author.name %>！ <i><%= @comment.name %></i> 评论了你！！ </h2>
+
+<% post = post_url(host: APP_CONFIG['host'], id: @comment.post.id) %>
+<div>博客地址： <%= link_to @comment.post.title, post %>
+<div>TA说：<%= @comment.content %></div>

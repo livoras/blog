@@ -1,0 +1,9 @@
+<div class="comment">
+  <div class="post-info">
+    <span class="name"><%= comment.name %></span>
+    <span class="on">on</span>
+    <time class="create-time"><%= comment.created_at.strftime('%b %d, %y') %></time>
+    <span class="on">, said: </span>
+  </div>
+  <p class="comment-content"><%= comment.content %></p>
+</div>
