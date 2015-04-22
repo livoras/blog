@@ -1,3 +1,5 @@
+require "thread"
+
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   skip_before_action :authentication, only: [:create]
@@ -35,8 +37,10 @@ class CommentsController < ApplicationController
         format.html { redirect_to @comment.post, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
 
-        CommentNotifier.notify_author(@comment, @comment.post.author).deliver_later
-        notify_mentioned_commentor
+        Thread.new do
+          CommentNotifier.notify_author(@comment, @comment.post.author).deliver_later
+          notify_mentioned_commentor
+        end
       else
         format.html { redirect_to @comment.post, notice: "Cannot save comment." }
         format.json { render json: @comment.errors, status: :unprocessable_entity }

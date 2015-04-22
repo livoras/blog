@@ -27,7 +27,6 @@ class CommentsControllerTest < ActionController::TestCase
     assert_difference('Comment.count') do
       post :create, content: @comment.content, email: @comment.email, name: @comment.name, post_id: posts(:one)
     end
-    assert_equal assigns(:lucy), "good"
   end
 
   test "should show comment" do
