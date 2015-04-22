@@ -86,7 +86,7 @@ class PostsController < ApplicationController
   end
 
   def feed
-    @posts = Post.limit(15).order("created_at DESC")
+    @posts = Post.where(:status => "public").limit(15).order("created_at DESC")
     respond_to do |format|
       format.xml { render :layout => false }
     end
