@@ -10,6 +10,7 @@
     <div class="fixed">
       <div><%= @post.status %></div>
       <%= link_to "编辑", edit_post_path(@post)%>
+      <%= link_to "删除", post_path(@post), :method => :delete, :data => {confirm: "你确定要删除这篇博客？"}%>
     </div>
   <% end %>
 
@@ -63,4 +64,4 @@
 
 </div>
 
-<%= javascript_include_tag "post_detail", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "post_detail" %>
