@@ -6,3 +6,5 @@ venv
 node_modeuls
 bin
 log
+db
+tmp
