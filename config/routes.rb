@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   resources :comments
 
+
+  get '/feed', :to => 'posts#feed', :as => 'feed', :defaults => {format: 'xml'}
+
   resources :posts do
     get '/tags/:name', :action => :search_by_tag, :on => :collection, :as => 'search_by_tag'
     get '/search/', :action => :search_by_keyword, :on => :collection, :as => 'search_by_keyword'

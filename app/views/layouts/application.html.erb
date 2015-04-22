@@ -5,14 +5,15 @@
   <%= stylesheet_link_tag    'layout', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <%= auto_discovery_link_tag(:rss, root_url) %>
 </head>
 <body>
 
-  <div id="main">
-  </div>
-
   <div class="header">
-    <h1><a class="no-color" href="/"><%= link_to APP_CONFIG['blog_name'], root_path %></a></h1>
+    <h1>
+      <a class="no-color" href="/"><%= link_to APP_CONFIG['blog_name'], root_path %></a>
+    <%= link_to "订阅", feed_url, target: "_blank", class: "rss"%>
+    </h1>
   </div>
 
   <div class="content">

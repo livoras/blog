@@ -32,14 +32,15 @@ initSubmitComment = ->
 
     req.error (error)->
       isSending = no
-      alert('发送失败：' + error.responseJSON.error[0])
+      alert "表单填写不正确"
 
 checkValid = (data)->
   EMAIL_REG =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  NAME_RE = /^[_\w\d\u4e00-\u9fa5]{2,31}$/i
   if not EMAIL_REG.test(data.email)
     utils.shake $emailInput
     return no
-  if not (2 <= data.name.length <= 16)
+  if not NAME_RE.test(data.name)
     utils.shake $usernameInput
     return no
   if not (1 <= data.content.length <= 140)
@@ -58,4 +59,8 @@ showComment = ($comment)->
   $comment.hide()
   $comment.fadeIn(1000)
 
+removeTitle = ->
+  $("head title").remove()
+
 initSubmitComment()
+removeTitle()
