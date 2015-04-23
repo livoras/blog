@@ -1,6 +1,7 @@
 <%= render "sider_bar" %>
 
-<%= stylesheet_link_tag 'index'%>
+<%= stylesheet_link_tag 'post_detail', "data-turbolinks-track" => true %>
+<%= stylesheet_link_tag 'index', "data-turbolinks-track" => true %>
 <p id="notice"><%= notice %></p>
 
 <div class="posts pull-left width-66">
@@ -17,9 +18,9 @@
       <h3 class="post-title">
         <%= link_to post.title, post%>
       </h3>
-      <p class="content-abs">
-        <%= truncate post.content, :length => 300 %>
-      </p>
+      <div class="content-abs post-content no-bottom">
+        <%= cut_content post.content %>
+      </div>
       <div class="comments-count">共有条 <%= post.comments.size %> 评论</div>
     </div>
     <% end %>

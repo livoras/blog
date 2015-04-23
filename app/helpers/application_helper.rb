@@ -20,4 +20,13 @@ module ApplicationHelper
     end
   end
 
+  def cut_content(text)
+    result = text[/(?<=\<!--\sstart\s--\>)[\S\s]*?(?=\<!--\smore\s--\>)/]
+    unless result
+      return markdown text
+    else  
+      return markdown result
+    end
+  end
+
 end
