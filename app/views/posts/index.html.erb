@@ -21,7 +21,9 @@
       <div class="content-abs post-content no-bottom">
         <%= cut_content post.content %>
       </div>
-      <div class="comments-count">共有条 <%= post.comments.size %> 评论</div>
+      <div class="comments-count">
+        共有条 <%= post.comments.size %> 评论 | <%= link_to "阅读全文", post%>
+      </div>
     </div>
     <% end %>
 
