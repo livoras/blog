@@ -25,7 +25,7 @@ module ApplicationHelper
     unless result
       return markdown text
     else  
-      return markdown result
+      return (markdown result) + "..."
     end
   end
 
