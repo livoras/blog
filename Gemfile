@@ -35,6 +35,8 @@ gem "browserify-rails", "~> 0.7"
 
 gem 'jquery-turbolinks'
 
+gem 'nprogress-rails'
+
 gem 'pg'
 
 # Use ActiveModel has_secure_password
