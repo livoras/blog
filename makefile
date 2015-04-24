@@ -10,3 +10,7 @@ load:
 	rake db:schema:load
 	rake db:seed
 	rails runner scripts/load-old-data.rb
+launch:
+	git pull origin
+	make compile
+	apachectl restart
