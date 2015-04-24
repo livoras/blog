@@ -3,11 +3,15 @@ require 'test_helper'
 class PostsControllerTest < ActionController::TestCase
   setup do
     @post = posts(:one)
+    attrs = @post.attributes
+    Post.destroy_all
+    @post = Post.new attrs
     @post.tags.build :name => "fuck"
     @post.tags.build :name => "you"
     @post.save
     @post.user_id = users(:one).id
     @post.save
+    @post = Post.find @post.id
     session[:user_id] = users(:one).id
   end
 
@@ -77,5 +81,13 @@ class PostsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to posts_path
+  end
+
+  test "should never show private post" do
+    @post.status = "private"
+    @post.save
+    session[:user_id] = nil
+    get :show, id: @post
+    assert_redirected_to login_url
   end
 end

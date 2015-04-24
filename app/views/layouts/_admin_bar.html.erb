@@ -1,5 +1,7 @@
-Hello! <%= @user.name %>
-<%= link_to 'logout', logout_url, 
-    :method => :delete, 
-    :data => {:confirm => "Are you sure to logout?"} %>
-<%= link_to 'New Post', new_post_path %>
+<div class="admin-bar">
+  Hello! <%= @user.name %> |
+  <%= link_to 'Logout', logout_url, 
+      :method => :delete, 
+      :data => {:confirm => "Are you sure to logout?"} %> |
+  <%= link_to 'New Post', new_post_path %>
+</div>

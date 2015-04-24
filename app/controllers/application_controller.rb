@@ -14,8 +14,12 @@ class ApplicationController < ActionController::Base
     end
 
     def authentication
-      unless session[:user_id] and User.exists?(session[:user_id])
+      unless logined?
         redirect_to login_url
       end
+    end
+
+    def logined?
+      session[:user_id] and User.exists?(session[:user_id])
     end
 end

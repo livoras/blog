@@ -15,6 +15,11 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    if @post.private?
+      unless logined?
+        redirect_to login_url
+      end
+    end
   end
 
   # GET /posts/new

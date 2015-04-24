@@ -8,6 +8,10 @@ class Post < ActiveRecord::Base
   end
 
   def author
-    self.user
+    user
+  end
+
+  def private?
+    status == "private"
   end
 end
