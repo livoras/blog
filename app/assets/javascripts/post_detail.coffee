@@ -60,7 +60,7 @@ showComment = ($comment)->
   $comment.fadeIn(1000)
 
 removeTitle = ->
-  $("head title").remove()
+  $("head title").html(window.post_title)
 
 initSubmitComment()
 removeTitle()

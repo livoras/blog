@@ -33,6 +33,8 @@ gem 'less-rails', '~> 2.7.0'
 
 gem "browserify-rails", "~> 0.7"
 
+gem 'jquery-turbolinks'
+
 gem 'pg'
 
 # Use ActiveModel has_secure_password
