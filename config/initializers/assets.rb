@@ -14,6 +14,9 @@ Rails.application.config.assets.precompile += %w(
   sidebar.css
   no_content.css
   post_detail.css
+  edit_post.css
+  edit_post_area.css
+  admin_login.css
 
   post_detail.js
 )

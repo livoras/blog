@@ -4,8 +4,8 @@
   <title><%= APP_CONFIG['blog_name'] %></title>
   <meta charset='utf-8'>
   <meta name="viewport" content="width=device-width">
-  <%= stylesheet_link_tag 'layout' %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag 'layout', "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <%= auto_discovery_link_tag(:rss, root_url) %>
 </head>

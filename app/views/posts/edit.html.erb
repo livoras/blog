@@ -1,6 +1,19 @@
-<h1>Editing Post</h1>
+<%= stylesheet_link_tag "edit_post.css" %>
+<div class="edit-post">
+  <%= render 'form' %>
+</div>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @post %> |
-<%= link_to 'Back', posts_path %>
+<div class="comments" id="comments">
+  <div class="title">Comments(<%= @post.comments.size %>)</div>
+  <ul>
+    <% @post.comments.each do |comment| %>
+    <li>
+      <div>Username: <%= comment.name %></div>
+      <div>Email: <%= comment.email %></div>
+      <div>Content: <%= comment.content %></div>
+      <div>Create Time: <%= comment.created_at.strftime('%Y-%m-%d %H:%M:%S') %></div>
+      <%= button_to "Delete", comment_path(comment), method: "delete", class: "delete-comment btn", data: {confirm: "Are you sure to delete this comment?" }%>
+    </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,4 +1,6 @@
-<%= form_for(@post) do |f| %>
+<%= stylesheet_link_tag "edit_post_area.css" %>
+
+<%= form_for(@post, class: "edit-post-form") do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -11,26 +13,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="section">
+    <%= f.text_field :title, placeholder: "Title", class: "input-title" %>
   </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="field">
-    <%= f.label :tags %><br>
-    <%= f.text_field :tags, :value => @post.all_tags.join(';') %>
-  </div>
-  <div class="field">
-    <%= f.radio_button :status, 'public' %>
-    <%= f.label :status_public %>公开<br>
 
-    <%= f.radio_button :status, 'private' %>
-    <%= f.label :status_private %>私密<br>
+  <div class="section">
+    public: <%= f.radio_button :status, 'public' %> &nbsp;
+    private: <%= f.radio_button :status, 'private' %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="section">
+    Tags: <%= f.text_field :tags, :value => @post.all_tags.join(';'), class: "input-tags" %>
+  </div>
+
+  <div class="section">
+    Content: <%= f.text_area :content, class: "editor" %>
+  </div>
+
+  <div class="btn-wrapper">
+    <button type="submit" class= "update btn">Submit</button>
   </div>
 <% end %>

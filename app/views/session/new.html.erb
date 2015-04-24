@@ -1,18 +1,23 @@
+<%= stylesheet_link_tag "admin_login.css" %>
+
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, class: name %>
 <% end %>
 
 <%= form_tag(login_url, :method => :post) do %>
-  <div>
-    <%= label_tag(:email, 'Email: ') %>
-    <%= text_field_tag(:email) %>
+<div class="admin-login-form">
+  <div class="field">
+    <label>
+      <div class="label">Username: </div>
+      <%= text_field_tag(:email) %>
+    </label>
   </div>
-
-  <div>
-    <%= label_tag(:password, 'Password: ') %>
-    <%= password_field_tag(:password) %>
+  <div class="field">
+    <label>
+      <div class="label">Password: </div>
+      <%= password_field_tag(:password) %>
+    </label>
   </div>
-
-  <%= submit_tag('Submit')%>
-
+  <button type="submit" id="submit">Login</button>
+</div>
 <% end %>
