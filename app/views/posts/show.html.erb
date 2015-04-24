@@ -8,7 +8,6 @@
 
   <% if session[:user_id] %>
     <div class="fixed">
-      <div><%= @post.status %></div>
       <%= link_to "编辑", edit_post_path(@post)%>
       <%= link_to "删除", post_path(@post), :method => :delete, :data => {confirm: "你确定要删除这篇博客？"}%>
     </div>
@@ -21,6 +20,9 @@
       <time class="create-time"><%= @post.created_at.strftime('%b %d, %y') %></time>
       <span class="on">last updated on</span>
       <time class="create-time"><%= @post.updated_at.strftime('%b %d, %y') %></time>
+      <% if session[:user_id] %>
+        ( <%= @post.status %> )
+      <% end %>
     </div>
   </div>
 
