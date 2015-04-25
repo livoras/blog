@@ -46,10 +46,19 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_profile
+    respond_to do |format|
+      @user.update_attribute(:email, profile_params[:email])
+      @user.update_attribute(:name, profile_params[:name])
+      format.js
     end
   end
 
@@ -72,5 +81,9 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :name, :plain_password, :plain_password_confirmation)
+    end
+
+    def profile_params
+      params.require(:user).permit(:email, :name)
     end
 end

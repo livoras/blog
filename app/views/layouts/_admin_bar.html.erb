@@ -1,5 +1,6 @@
 <div class="admin-bar">
   Hello! <%= @user.name %> |
+  <%= link_to 'Admin', admin_url %> | 
   <%= link_to 'Logout', logout_url, 
       :method => :delete, 
       :data => {:confirm => "Are you sure to logout?"} %> |

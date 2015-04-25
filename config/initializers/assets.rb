@@ -17,6 +17,7 @@ Rails.application.config.assets.precompile += %w(
   edit_post.css
   edit_post_area.css
   admin_login.css
+  admin.css
 
   post_detail.js
 )

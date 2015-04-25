@@ -1,0 +1,57 @@
+<%= stylesheet_link_tag "admin.css" %>
+<div class="admin-content">
+
+  <!--update user profile-->
+  <div class="hero">
+    <div class="title">Profile</div>
+    <%= form_tag(update_user_profile_user_path(@user), method: 'patch', remote: true, class: "profile-update") do |f| %>
+
+      <%= hidden_field_tag :id, @user.id %>
+
+      <label>
+        <div class="type">name: </div>
+        <%= text_field_tag 'user[name]', @user.name %>
+      </label>
+
+      <label>
+        <div class="type">email: </div>
+        <%= text_field_tag 'user[email]', @user.email, type: "email" %>
+      </label>
+
+      <button class="update-profile" type="submit">update</button>
+    <% end %>
+  </div>
+
+  <!--update user password-->
+  <div class="hero">
+    <div class="title">Password</div>
+    <form class="password-update">
+      <label>
+        <div class="type">old password:</div>
+        <input name="old_password" type="password">
+      </label>
+      <label>
+        <div class="type">new password: </div>
+        <input name="new_password" type="password"></label>
+      <button class="update-password">update</button>
+    </form>
+  </div>
+
+  <!--posts list with edit functionality-->
+  <div class="hero">
+    <div class="title">Posts(<span id="post-count"><%= @posts.size %></span>)</div>
+    <ul class="posts">
+    <% @posts.each do |post| %>
+    <li class="post" id="post-<%= post.id %>">
+      <div>title: <%= link_to post.title, post %></div>
+      <div>last update time: <%= post.updated_at.strftime('%Y/%D %H:%M') %></div>
+      <div>status: <%= post.status %></div>
+      <%= link_to "编辑", edit_post_path(post) %>
+      <%= link_to "删除", post, class: "delete-post", method: "delete", remote: true, data: {confirm: "确定？"} %>
+    </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <!--images management-->
+</div>

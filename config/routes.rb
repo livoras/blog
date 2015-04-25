@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
 
-  resources :users
+  get 'admin/index'
+
+  resources :users do
+    patch '/profile', :action => :update_profile, :as => 'update_user_profile', :on => :member
+  end
 
   resources :comments
 
 
   get '/feed', :to => 'posts#feed', :as => 'feed', :defaults => {format: 'xml'}
+
+  get '/admin', :to => 'admin#index', :as => 'admin'
+
 
   resources :posts do
     get '/tags/:name', :action => :search_by_tag, :on => :collection, :as => 'search_by_tag'
