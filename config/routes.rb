@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :users do
     patch '/profile', :action => :update_profile, :as => 'update_user_profile', :on => :member
+    patch '/password', :action => :update_password, :as => 'update_user_password', :on => :member
   end
 
   resources :comments

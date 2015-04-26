@@ -3,8 +3,8 @@ require 'digest/sha2'
 class User < ActiveRecord::Base
   validates :name, :presence => true
   validates :email, :presence => true, :uniqueness => true
-  validates :plain_password, :presence => true, :confirmation => true
-  validates :plain_password_confirmation, :presence => true
+  validates :plain_password, length: {:in => 4..255, allow_nil: true}, :confirmation => true
+  validates :plain_password_confirmation, :presence => true, :if => ->(user) { user.plain_password.present? }
   has_many :posts, :dependent => :destroy
 
   attr_reader :plain_password

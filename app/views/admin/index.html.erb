@@ -25,16 +25,22 @@
   <!--update user password-->
   <div class="hero">
     <div class="title">Password</div>
-    <form class="password-update">
+    <%= form_tag(update_user_password_user_path(@user), method: 'patch', remote: true, class: "password-update") do |f| %>
+      <%= hidden_field_tag :id, @user.id %>
       <label>
         <div class="type">old password:</div>
-        <input name="old_password" type="password">
+        <%= password_field_tag :old_password %>
       </label>
       <label>
         <div class="type">new password: </div>
-        <input name="new_password" type="password"></label>
+        <%= password_field_tag :plain_password %>
+      </label>
+      <label>
+        <div class="type">confirmation: </div>
+        <%= password_field_tag :plain_password_confirmation %>
+      </label>
       <button class="update-password">update</button>
-    </form>
+    <% end %>
   </div>
 
   <!--posts list with edit functionality-->

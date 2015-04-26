@@ -56,9 +56,19 @@ class UsersController < ApplicationController
 
   def update_profile
     respond_to do |format|
-      @user.update_attribute(:email, profile_params[:email])
-      @user.update_attribute(:name, profile_params[:name])
+      @user.update profile_params
       format.js
+    end
+  end
+
+  def update_password
+    respond_to do |format|
+      if User.encrypt(params[:old_password]) == @user.password && (@user.update password_params)
+        format.js
+      else
+        @user.errors[:password] << "Not match!"
+        format.js { render status: :unprocessable_entity }
+      end
     end
   end
 
@@ -85,5 +95,9 @@ class UsersController < ApplicationController
 
     def profile_params
       params.require(:user).permit(:email, :name)
+    end
+
+    def password_params
+      params.permit(:plain_password, :plain_password_confirmation)
     end
 end
