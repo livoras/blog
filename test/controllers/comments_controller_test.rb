@@ -6,6 +6,8 @@ class CommentsControllerTest < ActionController::TestCase
     post = posts(:one)
     post.user_id = users(:one).id
     post.save
+    @comment.update(:post_id => post.id)
+    @comment = Comment.find @comment.id
     session[:user_id] = users(:one).id
   end
 
@@ -39,16 +41,11 @@ class CommentsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update comment" do
-    patch :update, id: @comment, comment: { content: @comment.content, email: @comment.email, name: @comment.name }
-    assert_response :success
-  end
-
   test "should destroy comment" do
     assert_difference('Comment.count', -1) do
-      delete :destroy, id: @comment
+      delete :destroy, id: @comment.id
     end
 
-    assert_redirected_to comments_path
+    assert_redirected_to edit_post_path(@comment.post) + "#comments"
   end
 end

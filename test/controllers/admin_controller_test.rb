@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
-  test "should get index" do
+  test "should lead to login page when not login" do
     get :index
-    assert_response :success
+    assert_redirected_to login_url
   end
 
 end

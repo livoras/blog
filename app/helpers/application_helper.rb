@@ -15,7 +15,7 @@ module ApplicationHelper
 
   class HTMLwithCodeRay < Redcarpet::Render::HTML
     def block_code(code, language)
-      lan = :javascript if language.nil? else language
+      lan = language.nil? ? :javascript : language
       code = CodeRay.scan(code, lan).div(:tab_width=>2)
     end
   end
