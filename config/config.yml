@@ -1,5 +1,5 @@
 defaults: &defaults
-  blog_name: "Livoras's Blog"
+  blog_name: "SIMPLE BLOG"
   blog_description: "I seldom talk!"
 
 development:
@@ -12,4 +12,4 @@ test:
 
 production:
   <<: *defaults
-  host: "blog.livoras.com"
+  host: "the.host.com"
