@@ -1,3 +1,10 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+</head>
+
+<body>
 <div>
 input: <input id="input" /><button id="btn-input">set input</button></br>
 </div>
@@ -23,15 +30,16 @@ var input = $("input")
 var textBtn = $("btn-text")
 var inputBtn = $("btn-input")
 
-textBtn.addEventListener("click", function() {
+textBtn.addEventListener("touchstart", function() {
   var start = +new Date
   text.value = (start + " - good")
   log(+new Date - start)
 })
 
-inputBtn.addEventListener("click", function() {
+inputBtn.addEventListener("touchstart", function() {
   var start = +new Date
   input.value = (start + " - good")
   log(+new Date - start)
 })
 </script>
+</body>
