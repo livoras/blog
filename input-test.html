@@ -1,0 +1,37 @@
+<div>
+input: <input id="input" /><button id="btn-input">set input</button></br>
+</div>
+
+<div>
+textarea: <textarea id="text"></textarea>
+<button id="btn-text">set area</button></br>
+</div>
+<span id="log"></span>
+
+
+<script type="text/javascript">
+function $(s) {
+  return document.getElementById(s);
+}
+
+function log(info) {
+  $("log").innerHTML = info
+}
+
+var text = $("text")
+var input = $("input")
+var textBtn = $("btn-text")
+var inputBtn = $("btn-input")
+
+textBtn.addEventListener("click", function() {
+  var start = +new Date
+  text.value = (start + " - good")
+  log(+new Date - start)
+})
+
+inputBtn.addEventListener("click", function() {
+  var start = +new Date
+  input.value = (start + " - good")
+  log(+new Date - start)
+})
+</script>
